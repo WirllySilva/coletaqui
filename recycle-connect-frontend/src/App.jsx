@@ -1,18 +1,15 @@
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import './styles/App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+
 
 function App() {
     return (
-        <div>
-            <Header />
-            <main>
-                <h1>Welcome to Recycling Platform</h1>
-                <p>Manage and optimize waste collection efficiently!</p>
-            </main>
-            <Footer />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Login />} />
+            </Routes>
+        </Router>
     );
 }
 
