@@ -1,0 +1,13 @@
+nav {
+    margin-top: 0.5rem;
+}
+
+nav a {
+    margin: 0 1rem;
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
