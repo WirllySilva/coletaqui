@@ -1,0 +1,17 @@
+.welcome-page {
+    background-color: #f5f5f5;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    max-width: 150px;
+}
+
+.tagline {
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #2c662d;
+    margin-bottom: 20px;
+}

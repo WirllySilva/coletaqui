@@ -17,3 +17,12 @@ main {
     padding: 2rem;
     text-align: center;
 }
+
+.tagline {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    color: #2e7d32; 
+    text-align: center;
+    margin: 20px 0;
+}
+
