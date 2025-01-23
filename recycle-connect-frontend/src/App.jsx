@@ -5,16 +5,21 @@ import Register from "./pages/Register";
 import RecoverPassword from "./pages/RecoverPassword";
 import Welcome from "./pages/Welcome";
 import WelcomePage from "./pages/WelcomePage"
+import AccountTypeChoice from "./pages/AccountTypeChoice";
+import CollectorRegister from "./pages/CollectorRegister";
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Welcome/>} />
+                <Route path="/" element={<WelcomePage/>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/recoverpassword" element={<RecoverPassword />} />
-                <Route path="/WelcomePage" element={<WelcomePage/>} />
+                <Route path="/account-typechoice" element={<AccountTypeChoice/>}/>
+                <Route path="/collector-register" element={<CollectorRegister />} />
+                <Route path="/welcome" element={<Welcome/>} />
+                
             </Routes>
         </Router>
     );

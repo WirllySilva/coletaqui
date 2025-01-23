@@ -52,7 +52,7 @@ function Login() {
           </div>
           <div className="text-center mt-3">
             <a href="recoverpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
-            <a href="register" className="text-decoration-none">Crie uma conta</a>
+            <a href="account-typechoice" className="text-decoration-none">Crie uma conta</a>
           </div>
         </form>
       </div>
