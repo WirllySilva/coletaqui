@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Login() {
+function CommonUserLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -52,7 +52,7 @@ function Login() {
           </div>
           <div className="text-center mt-3">
             <a href="recoverpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
-            <a href="account-typechoice" className="text-decoration-none">Crie uma conta</a>
+            <a href="commonuser-register" className="text-decoration-none">Crie uma conta</a>
           </div>
         </form>
       </div>

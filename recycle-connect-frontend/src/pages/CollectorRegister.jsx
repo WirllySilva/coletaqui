@@ -30,7 +30,7 @@ function CollectorRegister() {
                                 id="password"
                                 placeholder="Digite sua senha"
                             />
-                            <span
+                            <button
                                 className="input-group-text"
                                 onClick={togglePasswordVisibility}
                                 style={{ cursor: "pointer" }}
@@ -40,7 +40,7 @@ function CollectorRegister() {
                                 ) : (
                                     <i className="bi bi-eye"></i> // Olho aberto
                                 )}
-                            </span>
+                            </button>
                         </div>
                     </div>
                     <div className="mb-3">
@@ -56,7 +56,7 @@ function CollectorRegister() {
                     </div>
                 </form>
                 <p className="text-center mt-3">
-                    Já tem uma conta? <a href="/login" className="text-decoration-none">Faça login</a>
+                    Já tem uma conta? <a href="/collectorloginpage" className="text-decoration-none">Faça login</a>
                 </p>
             </div>
         </div>

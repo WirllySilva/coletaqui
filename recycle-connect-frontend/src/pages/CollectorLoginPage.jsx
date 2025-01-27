@@ -1,55 +1,63 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const CollectorLoginPage = () => {
-    const [passwordVisible, setPasswordVisible] = useState(false);
+function CollectorLoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-    return (
-        <div className="container mt-5">
-            <h1 className="text-center">Login EcoColetor</h1>
-            <form className="mt-4">
-                <div className="form-group">
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        placeholder="Digite seu e-mail"
-                        required
-                    />
-                </div>
-                <div className="form-group mt-3">
-                    <label htmlFor="password">Senha</label>
-                    <div className="input-group">
-                        <input
-                            type={passwordVisible ? "text" : "password"}
-                            id="password"
-                            className="form-control"
-                            placeholder="Digite sua senha"
-                            required
-                        />
-                        <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            onClick={togglePasswordVisibility}
-                        >
-                            {passwordVisible ? (
-                                <i className="bi bi-eye-slash"></i> // Olho fechado
-                            ) : (
-                                <i className="bi bi-eye"></i> // Olho aberto
-                            )}
-                        </button>
-                    </div>
-                </div>
-                <button type="submit" className="btn btn-success btn-lg mt-4 w-100">
-                    Entrar
-                </button>
-            </form>
-        </div>
-    );
-};
+  return (
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow" style={{ maxWidth: "400px", width: "100%" }}>
+        <h2 className="text-center">Bem vindo de volta</h2>
+        <p className="text-center">Faça login para continuar</p>
+        <form>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">E-mail</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              placeholder="Digite seu e-mail"
+              required
+            />
+          </div>
+          <div className="mb-3 position-relative">
+            <label htmlFor="password" className="form-label">Senha</label>
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                id="password"
+                placeholder="Digite sua senha"
+                required
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <i className="bi bi-eye-slash"></i> // Ícone de olho fechado
+                ) : (
+                  <i className="bi bi-eye"></i> // Ícone de olho aberto
+                )}
+              </button>
+            </div>
+          </div>
+          <div className="d-grid">
+            <button type="submit" className="btn btn-success">Login</button>
+          </div>
+          <div className="text-center mt-3">
+            <a href="recoverpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
+            <a href="collector-register" className="text-decoration-none">Crie uma conta</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 export default CollectorLoginPage;

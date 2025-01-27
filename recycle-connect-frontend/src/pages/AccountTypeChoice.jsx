@@ -10,7 +10,7 @@ function AccountTypeChoice() {
                 <h2 className="mb-3">Escolha seu tipo de conta</h2>
                 <p className="mb-4">Faça a diferença hoje! Escolha uma opção abaixo para começar:</p>
                 <div className="d-grid gap-3">
-                    <Link to="/register" className="btn btn-success">Separador de materiais</Link>
+                    <Link to="/commonuser-register" className="btn btn-success">Separador de materiais recicláveis</Link>
                     <Link to="/collector-register" className="btn btn-primary">Coletor de Materiais</Link>
                 </div>
             </div>

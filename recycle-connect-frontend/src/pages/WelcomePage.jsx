@@ -19,7 +19,7 @@ function WelcomePage() {
 
                 {/* Ações */}
                 <div className="mt-4">
-                    <Link to="login" className="btn btn-success btn-lg me-3">
+                    <Link to="loginselectionpage" className="btn btn-success btn-lg me-3">
                         Entrar
                     </Link>
                     <Link to="account-typechoice" className="btn btn-outline-success btn-lg">

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function Register() {
+function CommonUserRegister() {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
@@ -94,11 +94,11 @@ function Register() {
                     </div>
                 </form>
                 <p className="text-center mt-3">
-                    Já tem uma conta? <Link to="/login">Faça login</Link>
+                    Já tem uma conta? <Link to="/commonuserloginpage">Faça login</Link>
                 </p>
             </div>
         </div>
     );
 }
 
-export default Register;
+export default CommonUserRegister;

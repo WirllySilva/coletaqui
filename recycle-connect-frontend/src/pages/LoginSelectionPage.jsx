@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginSelectionPage = () => {
     const navigate = useNavigate();
@@ -11,15 +12,15 @@ const LoginSelectionPage = () => {
             <div className="mt-4">
                 <button
                     className="btn btn-success btn-lg mx-2"
-                    onClick={() => navigate("/login-ecoamigo")}
+                    onClick={() => navigate("/commonuserloginpage")}
                 >
-                    Login como EcoAmigo
+                    Login como Separador de materiais
                 </button>
                 <button
                     className="btn btn-success btn-lg mx-2"
-                    onClick={() => navigate("/login-ecocoletor")}
+                    onClick={() => navigate("/collectorloginpage")}
                 >
-                    Login como EcoColetor
+                    Login como Coletor de materiais
                 </button>
             </div>
         </div>
