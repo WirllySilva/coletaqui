@@ -51,8 +51,8 @@ function CollectorLoginPage() {
             <button type="submit" className="btn btn-success">Login</button>
           </div>
           <div className="text-center mt-3">
-            <a href="recoverpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
-            <a href="collector-register" className="text-decoration-none">Crie uma conta</a>
+            <a href="/recovercollectorpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
+            <a href="/collector-register" className="text-decoration-none">Crie uma conta</a>
           </div>
         </form>
       </div>

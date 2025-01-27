@@ -51,8 +51,8 @@ function CommonUserLoginPage() {
             <button type="submit" className="btn btn-success">Login</button>
           </div>
           <div className="text-center mt-3">
-            <a href="recoverpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
-            <a href="commonuser-register" className="text-decoration-none">Crie uma conta</a>
+            <a href="/recovercommonuserpassword" className="text-decoration-none">Esqueceu a senha?</a> |{" "}
+            <a href="/commonuser-register" className="text-decoration-none">Crie uma conta</a>
           </div>
         </form>
       </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CommonUserRegister from "./pages/CommonUserRegister";
-import RecoverPassword from "./pages/RecoverPassword";
+import RecoverCommonUserPassword from "./pages/RecoverCommonUserPassword";
+import RecoverCollectorPassword from "./pages/RecoverCollectorPassword";
 import Welcome from "./pages/Welcome";
 import WelcomePage from "./pages/WelcomePage";
 import AccountTypeChoice from "./pages/AccountTypeChoice";
@@ -17,7 +18,8 @@ function App() {
                 <Route path="/" element={<WelcomePage/>} />
                 <Route path="/commonuserloginpage" element={<CommonUserLoginPage />} />
                 <Route path="/commonuser-register" element={<CommonUserRegister />} />
-                <Route path="/recoverpassword" element={<RecoverPassword />} />
+                <Route path="/recovercommonuserpassword" element={<RecoverCommonUserPassword />} />
+                <Route path="/recovercollectorpassword" element={<RecoverCollectorPassword />} />
                 <Route path="/account-typechoice" element={<AccountTypeChoice/>}/>
                 <Route path="/collector-register" element={<CollectorRegister />} />
                 <Route path="/welcome" element={<Welcome/>} />

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function RecoverPassword() {
+function RecoverCommonUserPassword() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
@@ -26,11 +26,11 @@ function RecoverPassword() {
                     </div>
                 </form>
                 <p className="text-center mt-3">
-                    Lembrou sua senha? <Link to="/login">Faça login</Link>
+                    Lembrou sua senha? <Link to="/commonuserloginpage">Faça login</Link>
                 </p>
             </div>
         </div>
     );
 }
 
-export default RecoverPassword;
+export default RecoverCommonUserPassword;

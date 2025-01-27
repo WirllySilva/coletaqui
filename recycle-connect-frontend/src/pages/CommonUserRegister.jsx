@@ -22,7 +22,7 @@ function CommonUserRegister() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
-                <h2 className="text-center mb-4">Criar Conta</h2>
+                <h2 className="text-center mb-4">Criar conta de Separador</h2>
                 <form>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">
