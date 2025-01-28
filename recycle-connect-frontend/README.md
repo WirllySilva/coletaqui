@@ -75,13 +75,13 @@ Abaixo está a estrutura dos arquivos relevantes para essa fase:
 
 ## 7. Screenshots e Demonstrações
 ### **Tela Inicial de Seleção**
-![Tela Inicial](caminho/para/imagem.png)
+![Tela inicial](image-1.png)
 
 ### **Tela de Login de Usuário**
-![Tela de Login de Usuário](caminho/para/imagem.png)
+![Tela de Login do usuário separador](image-2.png)
 
 ### **Tela de Login de Coletor**
-![Tela de Login de Coletor](caminho/para/imagem.png)
+![Tela de Login de Coletor](image-2.png)
 
 ---
 
