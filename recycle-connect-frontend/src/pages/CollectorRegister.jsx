@@ -36,9 +36,9 @@ function CollectorRegister() {
                                 style={{ cursor: "pointer" }}
                             >
                                 {passwordVisible ? (
-                                    <i className="bi bi-eye-slash"></i> // Olho fechado
+                                    <i className="bi bi-eye-slash"></i> // Closed eye
                                 ) : (
-                                    <i className="bi bi-eye"></i> // Olho aberto
+                                    <i className="bi bi-eye"></i> // Open eye
                                 )}
                             </button>
                         </div>

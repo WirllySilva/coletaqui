@@ -15,7 +15,7 @@ function CommonUserRegister() {
     };
 
     const handleFocusOnConfirmPassword = () => {
-        // Esconde a senha no primeiro campo ao focar no segundo campo
+        // Hide the password in the first field when focusing on the second  field
         setPasswordVisible(false);
     };
 
@@ -56,7 +56,7 @@ function CommonUserRegister() {
                                 className="form-control"
                                 id="password"
                                 placeholder="Digite sua senha"
-                                onBlur={handleFocusOnConfirmPassword} // Chamado ao sair do campo
+                                onBlur={handleFocusOnConfirmPassword} // Called when leaving the field
                             />
                             <button
                                 type="button"

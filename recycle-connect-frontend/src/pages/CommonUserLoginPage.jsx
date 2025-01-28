@@ -40,9 +40,9 @@ function CommonUserLoginPage() {
                 onClick={togglePasswordVisibility}
               >
                 {showPassword ? (
-                  <i className="bi bi-eye-slash"></i> // Ícone de olho fechado
+                  <i className="bi bi-eye-slash"></i> // Closed eye icon
                 ) : (
-                  <i className="bi bi-eye"></i> // Ícone de olho aberto
+                  <i className="bi bi-eye"></i> // Open eye icon
                 )}
               </button>
             </div>
