@@ -1,30 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const LoginSelectionPage = () => {
-    const navigate = useNavigate();
-
+function LoginSelectionPage() {
     return (
-        <div className="container text-center">
-            <h1 className="mt-5">Bem-vindo!</h1>
-            <p className="lead mt-3">Escolha como deseja fazer login:</p>
-            <div className="mt-4">
-                <button
-                    className="btn btn-success btn-lg mx-2"
-                    onClick={() => navigate("/commonuserloginpage")}
-                >
+        <div className="container d-flex flex-column justify-content-center align-items-center vh-100 text-center">
+            <h2>Bem-vindo!</h2>
+            <p>Escolha como deseja fazer login:</p>
+            <div className="w-100 d-flex flex-column gap-3">
+                <Link to="/commonuserloginpage" className="btn btn-success btn-lg w-100">
                     Login como Separador de materiais
-                </button>
-                <button
-                    className="btn btn-success btn-lg mx-2"
-                    onClick={() => navigate("/collectorloginpage")}
-                >
+                </Link>
+                <Link to="/collectorloginpage" className="btn btn-success btn-lg w-100">
                     Login como Coletor de materiais
-                </button>
+                </Link>
             </div>
         </div>
     );
-};
+}
 
 export default LoginSelectionPage;
