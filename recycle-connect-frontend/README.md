@@ -46,38 +46,7 @@ Essa fase buscou criar uma interface funcional e amigável, utilizando component
 ## 4. Estrutura de Arquivos e Código
 Abaixo está a estrutura dos arquivos relevantes para essa fase:
 
-src/
-├── assets/
-├── components/
-│   ├── Footer.jsx
-│   ├── Header.jsx
-│   ├── Map.jsx
-├── pages/
-│   ├── About.jsx
-│   ├── AccountTypeChoice.jsx
-│   ├── CollectorLoginPage.jsx
-│   ├── CollectorRegister.jsx
-│   ├── CommonUserLoginPage.jsx
-│   ├── CommonUserRegister.jsx
-│   ├── Home.jsx
-│   ├── LoginSelectionPage.jsx
-│   ├── RecoverCollectorPassword.jsx
-│   ├── RecoverCommonUserPassword.jsx
-│   ├── Rewards.jsx
-│   ├── WelcomePage.jsx
-├── styles/
-│   ├── components/
-│   │   ├── Footer.css
-│   │   ├── Header.css
-│   │   ├── Map.css
-│   ├── pages/
-│       ├── AccountTypeChoice.css
-│       ├── Login.css
-│       ├── Register.css
-│       ├── WelcomePage.css
-├── App.jsx
-├── Index.css
-├── Main.jsx    
+![alt text](image.png)   
    
 ---
 
