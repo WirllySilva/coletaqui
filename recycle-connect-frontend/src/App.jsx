@@ -10,6 +10,7 @@ import CollectorRegister from "./pages/CollectorRegister";
 import LoginSelectionpage from "./pages/LoginSelectionPage";
 import CommonUserLoginPage from "./pages/CommonUserLoginPage";
 import CollectorLoginPage from "./pages/CollectorLoginPage";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/welcome" element={<Welcome/>} />
                 <Route path="/loginselectionpage" element={<LoginSelectionpage/>} />
                 <Route path="/collectorloginpage" element={<CollectorLoginPage/>} />
+                <Route path="/dashboard" element={<Dashboard/>} />
                 
             </Routes>
         </Router>

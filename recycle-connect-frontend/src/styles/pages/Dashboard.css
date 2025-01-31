@@ -1,0 +1,43 @@
+.dashboard-container {
+    background-color: #f0f8ff; /* Azul claro */
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .dashboard-header {
+    background-color: #008000; /* Verde */
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+  }
+  
+  .coletas-section {
+    background-color: #008000; /* Verde */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+  }
+  
+  .acoes-rapidas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+  }
+  
+  .dicas-reciclagem {
+    margin-top: 20px;
+  }
+  
+  .dica-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+  

@@ -1,12 +1,14 @@
-import React from 'react';
-import '../styles/components/Footer.css';
+import React from "react";
+import { FaHome, FaMap, FaBars } from "react-icons/fa";
 
-function Footer() {
-    return (
-        <footer>
-            <p>&copy; 2025 Recycle Connect. All rights reserved.</p>
-        </footer>
-    );
-}
+const Footer = () => {
+  return (
+    <nav className="footer-nav bg-white py-2 d-flex justify-content-around fixed-bottom">
+      <FaHome size={24} />
+      <FaMap size={24} />
+      <FaBars size={24} />
+    </nav>
+  );
+};
 
 export default Footer;

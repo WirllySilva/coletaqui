@@ -1,13 +1,29 @@
-nav {
-    margin-top: 0.5rem;
-}
+.custom-header {
+    background-color: #28a745; /* Verde */
+    min-height: 150px; /* Faz o header "invadir" um pouco o body */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Mantém tudo alinhado à esquerda */
+    border-bottom-left-radius: 30px; /* Arredondado para suavizar a transição */
+    border-bottom-right-radius: 30px;
+  }
+  
+  .user-container {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Espaço entre o ícone e o texto */
+  }
+  
+  #dropdown-user img {
+    cursor: pointer;
+    border: 2px solid white;
+  }
+  
+  h5 {
+    font-weight: bold;
+  }
 
-nav a {
-    margin: 0 1rem;
+  .mb-0 {
     color: white;
-    text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
+  }
+  
