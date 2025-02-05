@@ -7,19 +7,21 @@ import "../styles/components/Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="custom-footer">
-      <div className="footer-container">
-        <Link to="/home" className="home-link">
-          <img src={homeIcon} alt="Home" className="footer-icon" />
-        </Link>
-        <Link to="/recycle" className="recycle-link">
-          <img src={recycleIcon} alt="Reciclagem" className="footer-icon" />
-        </Link>
-        <Link to="/chat" className="chat-link">
-          <img src={chatIcon} alt="Chat" className="footer-icon" />
-        </Link>
-      </div>
-    </footer>
+    <div className="footer-background">
+      <footer className="custom-footer">
+        <div className="footer-container">
+          <Link to="/home" className="footer-link home-link">
+            <img src={homeIcon} alt="Home" className="footer-icon" />
+          </Link>
+          <Link to="/recycle" className="footer-link recycle-link">
+            <img src={recycleIcon} alt="Reciclagem" className="footer-icon" />
+          </Link>
+          <Link to="/chat" className="footer-link chat-link">
+            <img src={chatIcon} alt="Chat" className="footer-icon" />
+          </Link>
+        </div>
+      </footer>
+    </div>
   );
 };
 

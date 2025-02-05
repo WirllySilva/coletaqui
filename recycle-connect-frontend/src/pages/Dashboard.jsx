@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import MapPreview from "../components/MapPreview"; // Importando o novo componente
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { FaRecycle, FaUsers, FaTree, FaTrophy } from "react-icons/fa";
 
@@ -10,11 +11,12 @@ const Dashboard = () => {
       <Header />
 
       <Container className="mt-3">
-        <Card className="p-3 text-center">
-          <h5>Espaço para mapa da cidade, apenas da cidade de Araçoiaba.</h5>
-        </Card>
+        {/* Novo componente MapPreview para substituir o espaço do mapa */}
+        <MapPreview />
 
-        <p className="text-center mt-2">Encontre no mapa pontos para deixar seu material reciclável.</p>
+        <p className="text-center mt-2">
+          Encontre no mapa pontos para deixar seu material reciclável.
+        </p>
 
         <Row className="text-center">
           <Col xs={3}>
