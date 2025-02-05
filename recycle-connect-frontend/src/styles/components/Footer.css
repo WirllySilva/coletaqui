@@ -1,0 +1,22 @@
+.custom-footer {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* Alinha os ícones corretamente */
+    align-items: center;
+    width: 80%;
+    max-width: 300px; /* Mantém um tamanho adequado */
+  }
+  
+  .custom-footer img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Container, Dropdown, Image } from "react-bootstrap";
-import userIcon from "../assets/user-icon.png"; // Adicione a imagem na pasta assets
+import { Dropdown, Image } from "react-bootstrap";
+import { FaUser, FaShareAlt, FaPhoneAlt, FaCog, FaSignOutAlt, FaWhatsapp } from "react-icons/fa";
+import userIcon from "../assets/user-icon.png"; 
 import "../styles/components/Header.css"; 
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <header className="custom-header d-flex align-items-center px-3 pt-4"> {/* Adicionado pt-4 para espaçamento no topo */}
+    <header className="custom-header d-flex align-items-center px-3 pt-4">
       <div className="user-container d-flex align-items-center">
         <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)}>
           <Dropdown.Toggle variant="link" id="dropdown-user" className="p-0 border-0">
@@ -15,12 +16,12 @@ const Header = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu align="end">
-            <Dropdown.Item>Alterar Nome</Dropdown.Item>
-            <Dropdown.Item>Alterar Endereço</Dropdown.Item>
-            <Dropdown.Item>Trocar Número</Dropdown.Item>
-            <Dropdown.Item>Alterar Foto</Dropdown.Item>
+            <Dropdown.Item><FaUser className="me-2" /> Dados do Usuário</Dropdown.Item>
+            <Dropdown.Item><FaShareAlt className="me-2" /> Compartilhar App</Dropdown.Item>
+            <Dropdown.Item><FaWhatsapp className="me-2" style={{color: "green"}} /> Fale Conosco</Dropdown.Item>
+            <Dropdown.Item><FaCog className="me-2" /> Configurações</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className="text-danger">Sair da Conta</Dropdown.Item>
+            <Dropdown.Item className="text-danger"><FaSignOutAlt className="me-2" /> Sair da Conta</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 
