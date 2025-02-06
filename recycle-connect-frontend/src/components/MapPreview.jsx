@@ -9,7 +9,7 @@
     return (
       <button
         className="map-container"
-        onClick={() => navigate("/mapa")}
+        onClick={() => navigate("/map")}
         aria-label="Visualizar mapa" // Adiciona uma descrição para leitores de tela
       >
         <img src={mapIcon} alt="Mapa" className="map-icon" />

@@ -3,7 +3,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MapPreview from "../components/MapPreview"; // Importando o novo componente
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { FaRecycle, FaUsers, FaTree, FaTrophy } from "react-icons/fa";
+import rankingIcon from "../assets/ranking-icon.png";
+import collectorsIcon from "../assets/collector-icon.png";
+import plantATree from "../assets/plant-a-tree-icon.png";
+import recycleBottonicon from "../assets/recyclebotton-icon.png";
+
+import "../styles/pages/DashBoard.css";
 
 const Dashboard = () => {
   return (
@@ -17,28 +22,28 @@ const Dashboard = () => {
         <p className="text-center mt-2">
           Encontre no mapa pontos para deixar seu material reciclável.
         </p>
-
-        <Row className="text-center">
-          <Col xs={3}>
-            <FaRecycle size={40} />
-            <p>Como separar</p>
-          </Col>
-          <Col xs={3}>
-            <FaUsers size={40} />
-            <p>Condutas</p>
-          </Col>
-          <Col xs={3}>
-            <FaTree size={40} />
-            <p>Plante uma árvore</p>
-          </Col>
-          <Col xs={3}>
-            <FaTrophy size={40} />
-            <p>Ranking</p>
-          </Col>
-        </Row>
-
-        <h5 className="mt-4 text-success">Dicas de reciclagem</h5>
-        <Card className="p-3 text-center mt-2">
+        
+          <Row className="text-center icon-buttons">
+            <Col className="icon-col">
+              <img src={recycleBottonicon} alt="Recycle" className="feature-icon" />
+              <p>Como separar</p>
+            </Col>
+            <Col className="icon-col">
+              <img src={collectorsIcon} alt="Collectors" className="feature-icon" />
+              <p>Catadores</p>
+            </Col>
+            <Col className="icon-col">
+              <img src={plantATree} alt="Plant a tree" className="feature-icon" />
+              <p>Plante uma árvore</p>
+            </Col>
+            <Col className="icon-col">
+              <img src={rankingIcon} alt="Ranking" className="feature-icon" />
+              <p>Ranking</p>
+            </Col>
+          </Row>
+        
+        <h5 className="mt-4 recycling-tips-text">Dicas de reciclagem</h5>
+        <Card className="p-3 card-tips mt-2">
           <p>Espaço reservado para dicas de reciclagem</p>
         </Card>
       </Container>
