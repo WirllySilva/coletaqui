@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { appendDots, customPaging } from "../utils/sliderUtils"; // Importa as funções
 import "../styles/components/RecyclingTips.css";
 
 const RecyclingTips = ({ tips }) => {
@@ -18,24 +19,8 @@ const RecyclingTips = ({ tips }) => {
     slidesToScroll: 1, // Quantidade de slides a rolar por vez
     arrows: true, // Mostra setas de navegação
     beforeChange: (current, next) => setCurrentSlide(next), // Atualiza o slide atual
-    appendDots: (dots) => (
-      <div className="dots-container">
-        <ul style={{ margin: "0", padding: "0", display: "flex", gap: "8px" }}>
-          {dots}
-        </ul>
-      </div>
-    ),
-    customPaging: (i) => (
-      <div
-        style={{
-          width: "10px",
-          height: "10px",
-          borderRadius: "50%",
-          backgroundColor: i === currentSlide ? "#218838" : "#c3e6cb", // Verde escuro para o atual, verde claro para os demais
-          transition: "background-color 0.3s ease", // Suaviza a transição de cor
-        }}
-      ></div>
-    ),
+    appendDots: appendDots, // Passa a função appendDots
+    customPaging: (i) => customPaging(i, currentSlide), // Passa a função customPaging com o estado currentSlide
   };
 
   return (

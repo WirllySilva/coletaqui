@@ -1,6 +1,6 @@
 .custom-header {
     background-color: #28a745; /* Verde */
-    min-height: 150px; /* Faz o header "invadir" um pouco o body */
+    min-height: 130px; /* Faz o header "invadir" um pouco o body */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Mantém tudo alinhado à esquerda */
@@ -11,6 +11,7 @@
     left: 0;
     width: 100vw; /* Ocupa toda a largura da tela */
     z-index: 1000; /* Mantém acima de outros elementos */
+    padding: 40px;
   }
   
   .user-container {
