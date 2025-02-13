@@ -11,6 +11,8 @@ import LoginSelectionpage from "./pages/LoginSelectionPage";
 import CommonUserLoginPage from "./pages/CommonUserLoginPage";
 import CollectorLoginPage from "./pages/CollectorLoginPage";
 import Dashboard from "./pages/Dashboard";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
     return (

@@ -1,0 +1,74 @@
+.recycling-tips {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.recycling-tips-title {
+  text-align: center;
+  margin-bottom: 0.9rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.card-tips {
+  margin: 0 auto;
+  max-width: 600px; /* Largura máxima do card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  position: relative; /* Permite posicionar os dots dentro do card */
+  padding-bottom: 30px; /* Espaço para os dots */
+  min-height: 200px; /* Altura mínima ajustada */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content {
+  flex: 1; /* Faz o conteúdo ocupar o espaço disponível */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espaço entre o conteúdo e o botão */
+  padding: 20px;
+}
+
+.card-tips .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-tips .card-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Estilos para os dots */
+.dots-container {
+  position: absolute;
+  bottom: 10px; /* Distância do fundo */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.slick-dots li {
+  margin: 0;
+}
+
+.slick-dots li button {
+  display: none; /* Esconde o botão padrão */
+}
+
+.slick-dots li div {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #c3e6cb; /* Verde claro para dots inativos */
+  transition: background-color 0.3s ease;
+}
+
+.slick-dots li.slick-active div {
+  background-color: #218838; /* Verde escuro para o dot ativo */
+}
