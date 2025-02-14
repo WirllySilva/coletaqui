@@ -1,4 +1,4 @@
-// utils/sliderUtils.js
+// utils/sliderUtils.jsx
 
 // Função appendDots
 export const appendDots = (dots) => (

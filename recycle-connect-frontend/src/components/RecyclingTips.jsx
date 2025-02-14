@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { appendDots, customPaging } from "../utils/sliderUtils"; // Importa as funções
+import { appendDots, customPaging } from "../utils/SlideUtils.jsx"; // Importa as funções
 import "../styles/components/RecyclingTips.css";
 
 const RecyclingTips = ({ tips }) => {
