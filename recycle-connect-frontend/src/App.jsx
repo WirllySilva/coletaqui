@@ -1,4 +1,6 @@
 import React from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CommonUserRegister from "./pages/CommonUserRegister";
 import RecoverCommonUserPassword from "./pages/RecoverCommonUserPassword";
@@ -10,9 +12,11 @@ import CollectorRegister from "./pages/CollectorRegister";
 import LoginSelectionpage from "./pages/LoginSelectionPage";
 import CommonUserLoginPage from "./pages/CommonUserLoginPage";
 import CollectorLoginPage from "./pages/CollectorLoginPage";
-import Dashboard from "./pages/Dashboard";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Home from "./pages/Home";
+import HowToSeparate from "./pages/HowToSeparate";
+import PlantATree from "./pages/PlantATree";
+import Ranking from "./pages/Ranking";
+import Collectors from "./pages/Collectors";
 
 function App() {
     return (
@@ -28,7 +32,12 @@ function App() {
                 <Route path="/welcome" element={<Welcome/>} />
                 <Route path="/loginselectionpage" element={<LoginSelectionpage/>} />
                 <Route path="/collectorloginpage" element={<CollectorLoginPage/>} />
-                <Route path="/dashboard" element={<Dashboard/>} />
+                <Route path="/home" element={<Home/>} />
+                <Route path="/howtoseparate" element={<HowToSeparate/>} />
+                <Route path="/collectors" element={<Collectors/>} />
+                <Route path="/plantatree" element={<PlantATree/>} />
+                <Route path="/ranking" element={<Ranking/>} />
+
                 
             </Routes>
         </Router>
