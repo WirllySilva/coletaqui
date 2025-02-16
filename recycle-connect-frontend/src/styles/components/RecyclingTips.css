@@ -1,3 +1,11 @@
+.card {
+  height: 250px; /* Altura fixa */
+  overflow: hidden; /* Esconde o conteúdo que ultrapassar o tamanho do card */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribui o conteúdo dentro do card */
+}
+
 .recycling-tips {
   margin-top: 2rem;
   padding: 1rem;
