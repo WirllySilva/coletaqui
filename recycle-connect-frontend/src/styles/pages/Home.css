@@ -36,6 +36,13 @@
     /* Reduz um pouco o tamanho */
     height: 85px;
     margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+  }
+
+  .feature-icon:hover {
+    transform: scale(1.1);
+    filter: brightness(0.7);
   }
 
   .icon-buttons p {

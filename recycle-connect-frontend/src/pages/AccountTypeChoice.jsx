@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function AccountTypeChoice() {
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
-            <div className="card shadow p-4 text-center" style={{ maxWidth: "400px", width: "100%" }}>
+        <div className="d-flex justify-content-center align-items-center min-vh-100">
+            <div style={{ maxWidth: "400px", width: "100%", padding:"20px", textAlign: "center"}}> 
                 <h2 className="mb-3">Escolha seu tipo de conta</h2>
                 <p className="mb-4">Faça a diferença hoje! Escolha uma opção abaixo para começar:</p>
                 <div className="d-grid gap-3">

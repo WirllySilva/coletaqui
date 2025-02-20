@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
+
 function WelcomePage() {
     return (
         <div className="welcome-page d-flex flex-column justify-content-center align-items-center vh-100">
-            <div className="text-center">
+            <div className="text-center" style={{padding:"10px"}}>
                 {/* Logo */}
                 <img
                     src="/logo.png" // Substitua pelo caminho correto do logo

@@ -10,7 +10,7 @@ function CommonUserLoginPage() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ maxWidth: "400px", width: "100%" }}>
+    <div style={{ maxWidth: "400px", width: "100%", padding: "20px"}}>
         <h2 className="text-center">Bem vindo de volta</h2>
         <p className="text-center">Faça login para continuar</p>
         <form>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import MapPreview from "../components/MapPreview";
@@ -51,19 +52,27 @@ const Home = () => {
 
         <Row className="text-center icon-buttons">
           <Col className="icon-col">
-            <img src={recycleBottonicon} alt="Recycle" className="feature-icon" />
+            <Link to="/howtoseparate" className="icon-link">
+              <img src={recycleBottonicon} alt="Recycle" className="feature-icon" />
+            </Link>
             <p>Como separar</p>
           </Col>
           <Col className="icon-col">
+            <Link to="/collector" className="icon-link">
             <img src={collectorsIcon} alt="Collectors" className="feature-icon" />
+            </Link>
             <p>Catadores</p>
           </Col>
           <Col className="icon-col">
+            <Link to="/plantatree" className="icon-link">
             <img src={plantATree} alt="Plant a tree" className="feature-icon" />
+            </Link>
             <p>Plante uma árvore</p>
           </Col>
           <Col className="icon-col">
-            <img src={rankingIcon} alt="Ranking" className="feature-icon" />
+            <Link to="/ranking" className="icon-link">
+            <img src={rankingIcon} alt="Ranking" className="feature-icon" />            
+            </Link>
             <p>Ranking</p>
           </Col>
         </Row>
