@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown, Image } from "react-bootstrap";
-import { FaUser, FaShareAlt, FaPhoneAlt, FaCog, FaSignOutAlt, FaWhatsapp } from "react-icons/fa";
+import { FaUser, FaShareAlt, FaCog, FaSignOutAlt, FaWhatsapp } from "react-icons/fa";
 import userIcon from "../assets/user-icon.png"; 
 import "../styles/components/Header.css"; 
 

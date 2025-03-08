@@ -1,0 +1,27 @@
+.how-to-separate-header {
+    background-color: #218838; /* Verde escuro */
+    min-height: 130px; /* Faz o header "invadir" um pouco o body */
+    display: flex;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    position: fixed; /* Fixa no topo */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ocupa toda a largura da tela */
+    z-index: 1000; /* Mantém acima de outros elementos */
+    padding: 38px;
+  }
+
+  h5 {
+    font-weight: bold;
+  }
+
+  .mb-0 {
+    color: white;
+  }
+  
+  
