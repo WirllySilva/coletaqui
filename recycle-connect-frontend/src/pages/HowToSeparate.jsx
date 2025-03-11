@@ -21,7 +21,7 @@ const HowToSeparate = () => {
         <HowToSeparateHeader/>
 
         <div className="recycle-buttons">
-          <Link to="/home" className="recycle-button">
+          <Link to="/infobanner" className="recycle-button">
             <img src={infoBannerButton} alt="O que precisa saber?"/>
           </Link>
           <Link to="/" className="recycle-button">

@@ -17,6 +17,7 @@ import HowToSeparate from "./pages/HowToSeparate";
 import PlantATree from "./pages/PlantATree";
 import Ranking from "./pages/Ranking";
 import Collectors from "./pages/Collectors";
+import InfoBanner from "./pages/InfoBanner";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/collectors" element={<Collectors/>} />
                 <Route path="/plantatree" element={<PlantATree/>} />
                 <Route path="/ranking" element={<Ranking/>} />
+                <Route path="/infobanner" element={<InfoBanner/>} />
 
                 
             </Routes>

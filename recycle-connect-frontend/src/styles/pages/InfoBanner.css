@@ -1,0 +1,144 @@
+:root {
+    --blue-recycle: #0077b6;
+    --red-recycle: #e63946;
+    --green-recycle: #2a9d8f;
+    --yellow-recycle: #ffb703;
+    --brown-recycle: #774936;
+    --gray-recycle: #6c757d;
+  }
+  
+  .info-banner {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+    min-height: 100vh; /* Garante que o fundo cubra toda a tela */
+  }
+
+  .first-paragraph {
+    padding-top: 10px;
+    font-size: 20px;
+  }
+
+
+  .hero-section {
+    background-color: var(--green-recycle);
+    display: flex;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Ocupa toda a largura da tela */
+    padding: 30px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 1.5rem;
+
+  }
+  
+  .section-title {
+    border-left: 5px solid var(--green-recycle);
+    padding-left: 15px;
+    margin: 2rem 0 1.5rem;
+  }
+  
+  .color-box {
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .blue { background-color: var(--blue-recycle); }
+  .red { background-color: var(--red-recycle); }
+  .green { background-color: var(--green-recycle); }
+  .yellow { background-color: var(--yellow-recycle); }
+  .brown { background-color: var(--brown-recycle); }
+  .gray { background-color: var(--gray-recycle); }
+  
+  .benefit-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .benefit-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--green-recycle);
+  }
+  
+   
+  .recycle-list {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer {
+    background-color: var(--green-recycle);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 2rem;
+    padding-bottom: 100px; /* Adiciona espaço extra no final para evitar sobreposição do footer */
+  }
+
+  .steps-container {
+    margin-bottom: 2rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .step-number {
+    background-color: var(--green-recycle);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .step-content {
+    flex-grow: 1;
+  }
+  
+  .step-content h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step-content p {
+    margin-bottom: 0;
+  }
