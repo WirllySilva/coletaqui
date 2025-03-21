@@ -18,6 +18,13 @@ import PlantATree from "./pages/PlantATree";
 import Ranking from "./pages/Ranking";
 import Collectors from "./pages/Collectors";
 import InfoBanner from "./pages/InfoBanner";
+import Paper from "./pages/Paper";
+import Plastic from "./pages/Plastic";
+import Glass from "./pages/Glass";
+import Metal from "./pages/Metal";
+import Organic from "./pages/Organic";
+import Battery from "./pages/Battery";
+
 
 function App() {
     return (
@@ -39,6 +46,12 @@ function App() {
                 <Route path="/plantatree" element={<PlantATree/>} />
                 <Route path="/ranking" element={<Ranking/>} />
                 <Route path="/infobanner" element={<InfoBanner/>} />
+                <Route path="/paper" element={<Paper/>} />
+                <Route path="/plasatic" element={<Plastic/>} />
+                <Route path="/organic" element={<Organic/>} />
+                <Route path="/battery" element={<Battery/>} />
+                <Route path="/glass" element={<Glass/>} />
+                <Route path="/metal" element={<Metal/>} />
 
                 
             </Routes>

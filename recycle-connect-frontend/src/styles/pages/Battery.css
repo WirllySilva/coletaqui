@@ -1,0 +1,99 @@
+:root {
+    --orange-recycle: #fb8500;
+  }
+  
+  .battery-banner {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+  }
+  
+  .hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url('/api/placeholder/1200/400') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 5rem 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    border-left: 5px solid var(--orange-recycle);
+    padding-left: 15px;
+    margin: 2rem 0 1.5rem;
+  }
+  
+  .recycle-list {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .steps-container {
+    margin-bottom: 2rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  
+  .step-number {
+    background-color: var(--orange-recycle);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .step-content {
+    flex-grow: 1;
+  }
+  
+  .step-content h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step-content p {
+    margin-bottom: 0;
+  }
+  
+  .benefit-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .benefit-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--orange-recycle);
+  }
+  
+  .footer {
+    background-color: var(--orange-recycle);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 2rem;
+  }
