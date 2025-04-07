@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Paper.css";
+import Footer from "../components/Footer";
 
 const Paper = () => {
   return (
@@ -8,11 +9,13 @@ const Paper = () => {
       <div className="hero-section">
         <Container>
           <h1>Coleta de Papel: Guia Completo de Reciclagem</h1>
-          <p className="subtitle">
-            A coleta de papel é uma parte fundamental da reciclagem, economizando recursos naturais e reduzindo significativamente o impacto ambiental. Veja tudo o que você precisa saber sobre como reciclar papel corretamente:
-          </p>
         </Container>
       </div>
+        <Container>
+            <p className="subtitle">
+                A coleta de papel é uma parte fundamental da reciclagem, economizando recursos naturais e reduzindo significativamente o impacto ambiental. Veja tudo o que você precisa saber sobre como reciclar papel corretamente:
+            </p>
+        </Container>
 
       <Container>
         <h2 className="section-title">Identificação e Separação</h2>
@@ -111,12 +114,41 @@ const Paper = () => {
         </Row>
       </Container>
 
+      <h2 className="section-title">Dicas práticas para o dia a dia</h2>
+        <Row>
+          <Col lg={8} className="mx-auto">
+            <ul className="tips-list">
+              <li>Utilize os dois lados das folhas antes de descartá-las.</li>
+              <li>Prefira recibos digitais aos impressos.</li>
+              <li>Reutilize caixas de papelão para armazenamento antes de enviá-las para reciclagem.</li>
+              <li>Cancele correspondências impressas desnecessárias.</li>
+              <li>Crie um ponto de coleta de papel dedicado em sua casa ou escritório.</li>
+              <li>Verifique se há cooperativas de catadores na sua região que recolhem papel.</li>
+              <li>Dê preferência a produtos feitos com papel reciclado para fechar o ciclo.</li>
+            </ul>
+          </Col>
+        </Row>
+
+        <h2 className="section-title">Curiosidades</h2>
+        <Row>
+          <Col lg={8} className="mx-auto">
+            <ul className="curiosities-list">
+              <li>O papel pode ser reciclado de 5 a 7 vezes antes que suas fibras fiquem curtas demais.</li>
+              <li>O Brasil recicla aproximadamente 68% do papel ondulado consumido.</li>
+              <li>Um brasileiro produz, em média, 96 kg de resíduos de papel por ano.</li>
+              <li>A reciclagem de papel reduz em 70% o consumo de água em comparação com a produção a partir de fibras virgens.</li>
+            </ul>
+          </Col>
+        </Row>
+
       <div className="footer">
         <Container>
           <p>Adotar práticas adequadas de reciclagem de papel é um passo simples mas poderoso para contribuir com a preservação ambiental.</p>
         </Container>
       </div>
+      <Footer/>;
     </div>
+    
   );
 };
 

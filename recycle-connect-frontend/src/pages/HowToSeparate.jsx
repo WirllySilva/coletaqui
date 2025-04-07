@@ -24,22 +24,22 @@ const HowToSeparate = () => {
           <Link to="/infobanner" className="recycle-button">
             <img src={infoBannerButton} alt="O que precisa saber?"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/paper" className="recycle-button">
             <img src={paperButton} alt="Papel"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/glass" className="recycle-button">
             <img src={glassButton} alt="Vidro"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/plastic" className="recycle-button">
             <img src={plasticButton} alt="recycle-button"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/organic" className="recycle-button">
             <img src={organicButton} alt="Orgânico"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/metal" className="recycle-button">
             <img src={metalButton} alt="Metal"/>
           </Link>
-          <Link to="/" className="recycle-button">
+          <Link to="/battery" className="recycle-button">
             <img src={batteryButton} alt="Baterias e Pilhas"/>
           </Link>
 
