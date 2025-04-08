@@ -6,18 +6,17 @@ import Footer from "../components/Footer";
 const Paper = () => {
   return (
     <div className="paper-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Papel: Guia Completo de Reciclagem</h1>
+          <h5 className="title">Coleta de Papel: Guia Completo de Reciclagem</h5>
         </Container>
-      </div>
-        <Container>
-            <p className="subtitle">
-                A coleta de papel é uma parte fundamental da reciclagem, economizando recursos naturais e reduzindo significativamente o impacto ambiental. Veja tudo o que você precisa saber sobre como reciclar papel corretamente:
-            </p>
-        </Container>
+      </header>
 
       <Container>
+        <p className="subtitle">
+          A coleta de papel é uma parte fundamental da reciclagem, economizando recursos naturais e reduzindo significativamente o impacto ambiental. Veja tudo o que você precisa saber sobre como reciclar papel corretamente:
+        </p>
+
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -112,9 +111,9 @@ const Paper = () => {
             </div>
           </Col>
         </Row>
-      </Container>
 
-      <h2 className="section-title">Dicas práticas para o dia a dia</h2>
+
+        <h2 className="section-title">Dicas práticas para o dia a dia</h2>
         <Row>
           <Col lg={8} className="mx-auto">
             <ul className="tips-list">
@@ -141,14 +140,15 @@ const Paper = () => {
           </Col>
         </Row>
 
-      <div className="footer">
-        <Container>
-          <p>Adotar práticas adequadas de reciclagem de papel é um passo simples mas poderoso para contribuir com a preservação ambiental.</p>
-        </Container>
-      </div>
-      <Footer/>;
+        <div className="footer">
+          
+            <p>Adotar práticas adequadas de reciclagem de papel é um passo simples mas poderoso para contribuir com a preservação ambiental.</p>
+         
+        </div>
+      </Container>
+      <Footer />
     </div>
-    
+
   );
 };
 
