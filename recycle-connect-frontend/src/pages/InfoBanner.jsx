@@ -6,14 +6,14 @@ import Footer from "../components/Footer";
 const InfoBanner = () => {
     return (
         <div className="info-banner">
-            <div className="hero-section">
+            <header className="custom-header d-flex align-items-center px-3 pt-4">            
                 <Container>
                     <h5 className="title">O QUE VOCÊ PRECISA SABER SOBRE COLETA SELETIVA</h5>
                     <p className="subtitle">
                         Um pequeno gesto individual com grande impacto coletivo para a preservação do meio ambiente e o futuro sustentável do planeta.
                     </p>
-                </Container>
-            </div>
+                </Container>        
+            </header>
             <Container>
                 <p className="first-paragraph">
                     A coleta seletiva é um sistema de recolhimento de materiais recicláveis que podem ser reaproveitados, diminuindo o impacto ambiental e contribuindo para a sustentabilidade. Veja os principais pontos que você precisa conhecer:

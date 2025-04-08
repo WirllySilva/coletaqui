@@ -11,10 +11,10 @@
   align-items: center;
   width: 80%;
   max-width: 300px;
+  border: 3px solid rgb(200, 209, 205);
 }
 
 .footer-background {
-  background-color: #e0f7e9; /* Cor esverdeada clara */
   padding: 20px 0; /* Aumenta o padding para cobrir o botão */
   position: fixed;
   bottom: 0;
@@ -58,7 +58,7 @@
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); /* Sombra padrão */
 }
 
-/* Sombra específica para cada ícone (opcional) */
+
 .home-link img {
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); /* Sombra no ícone Home */
 }
@@ -68,5 +68,5 @@
 }
 
 .chat-link img {
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)) !important; /* Sombra no ícone Chat */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1)); /* Sombra no ícone Chat */
 }

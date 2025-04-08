@@ -1,5 +1,5 @@
 .how-to-separate-header {
-    background-color: #218838; /* Verde escuro */
+    background-color: var(--info-green);
     min-height: 130px; /* Faz o header "invadir" um pouco o body */
     display: flex;
     color: #ffffff;

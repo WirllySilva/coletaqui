@@ -1,5 +1,5 @@
 .custom-header {
-    background-color: #218838;
+    background-color: var(--info-green);
     min-height: 130px; /* Faz o header "invadir" um pouco o body */
     display: flex;
     align-items: center;
