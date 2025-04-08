@@ -2,9 +2,6 @@
 
 > Uma plataforma sustentável para mapear pontos de reciclagem e incentivar práticas ecológicas por meio de um sistema de recompensas.
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![License](https://img.shields.io/github/license/SeuUsuario/recycle-connect)
-
 ---
 
 ## 📱 Sobre o Projeto
@@ -14,8 +11,20 @@
 - 🎁 Recompensar usuários que reciclam corretamente;
 - 🌱 Oferecer dicas sustentáveis e educativas;
 - 🧑‍🤝‍🧑 Engajar a comunidade por meio de rankings e gamificação.
+  
+---
 
-<img src="https://via.placeholder.com/600x300?text=Preview+do+Dashboard" alt="Preview do app" style="border-radius: 8px;" />
+## 🖼️ Pré-visualização
+
+### 📱 Dashboard Principal
+<img src="assets/dashboard.png" alt="Dashboard principal" width="300"/>
+
+### ℹ️ Tela de Informações - como reciclar
+<img src="assets/tela-como-reciclar.png" alt="Informações sobre coleta" width="300"/>
+
+### ℹ️ Tela como reciclar papel
+<img src="assets/infopaper.png" alt="Informações sobre coleta" width="300"/>
+
 
 ---
 
@@ -44,3 +53,50 @@ npm install
 
 # Rode o projeto
 npm run dev
+```
+
+> Certifique-se de ter o **Node.js** instalado na sua máquina.
+
+---
+
+## 💡 Funcionalidades já disponíveis
+
+- [x] Tela de login (em andamento)
+- [x] Dashboard com:
+  - Mapa da cidade
+  - Dicas de reciclagem (carrossel)
+  - Acesso a páginas: Separação, Condutas, Plante uma árvore, Ranking
+- [x] Navegação inferior fixa
+- [x] Suporte mobile
+
+---
+
+## 📸 Imagens
+
+| Dashboard | Dicas de Reciclagem |
+|----------|----------------------|
+| ![Dashboard](<img src="assets/dashboard.png" alt="Dashboard principal" width="100"/>) | ![Dicas](<img src="assets/tela-como-reciclar.png" alt="Dashboard principal" width="100"/>) |
+
+---
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Abra uma issue ou envie um PR. 🌟  
+Se quiser sugerir algo ou ajudar no design, sinta-se à vontade!
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença [Apache 2.0](./LICENSE).
+
+---
+
+## 🙋‍♂️ Desenvolvedor
+
+Feito com 💚 por **Wirlly Silva**  
+[LinkedIn](https://linkedin.com/in/seu-usuario) | [GitHub](https://github.com/SeuUsuario)
+
+---
+
+> *Ajude o mundo começando pelo seu bairro. Recycle, connect and grow.* 🌎
