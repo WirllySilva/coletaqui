@@ -23,7 +23,7 @@
 <img src="assets/tela-como-reciclar.png" alt="Informações sobre coleta" width="300"/>
 
 ### ℹ️ Tela como reciclar papel
-<img src="assets/infopaper.png" alt="Informações sobre coleta" width="300"/>
+<img src="assets/info-paper.png" alt="Informações sobre coleta" width="300"/>
 
 
 ---
