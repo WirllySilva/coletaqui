@@ -17,13 +17,13 @@
 ## 🖼️ Pré-visualização
 
 ### 📱 Dashboard Principal
-<img src="assets/dashboard.png" alt="Dashboard principal" width="300"/>
+<img src="recycle-connect-frontend/src/assets/dashboard.png" alt="Dashboard principal" width="200"/>
 
 ### ℹ️ Tela de Informações - como reciclar
-<img src="assets/tela-como-reciclar.png" alt="Informações sobre coleta" width="300"/>
+<img src="recycle-connect-frontend/src/assets/tela-como-reciclar.png" alt="Informações sobre coleta" width="200"/>
 
 ### ℹ️ Tela como reciclar papel
-<img src="assets/info-paper.png" alt="Informações sobre coleta" width="300"/>
+<img src="recycle-connect-frontend/src/assets/info-paper.png" alt="Informações sobre coleta" width="200"/>
 
 
 ---
@@ -75,7 +75,7 @@ npm run dev
 
 | Dashboard | Dicas de Reciclagem |
 |----------|----------------------|
-| ![Dashboard](<img src="assets/dashboard.png" alt="Dashboard principal" width="100"/>) | ![Dicas](<img src="assets/tela-como-reciclar.png" alt="Dashboard principal" width="100"/>) |
+| ![Dashboard](<img src="recycle-connect-frontend/src/assets/dashboard.png" alt="Dashboard principal" width="50"/>) | ![Dicas](<img src="recycle-connect-frontend/src/assets/tela-como-reciclar.png" alt="Dashboard principal" width="50"/>) |
 
 ---
 
@@ -95,7 +95,7 @@ Este projeto está sob a licença [Apache 2.0](./LICENSE).
 ## 🙋‍♂️ Desenvolvedor
 
 Feito com 💚 por **Wirlly Silva**  
-[LinkedIn](https://linkedin.com/in/seu-usuario) | [GitHub](https://github.com/SeuUsuario)
+[LinkedIn](https://linkedin.com/in/wirlly-pereira/) | [GitHub](https://github.com/WirllySilva)
 
 ---
 
