@@ -17,7 +17,7 @@ const Home = () => {
       id: 1,
       title: "Como separar materiais recicláveis",
       summary: "Aprenda a separar corretamente os materiais recicláveis.",
-      link: "/dica/1", // Link para a página completa
+      link: "/dica/1",
     },
     {
       id: 2,

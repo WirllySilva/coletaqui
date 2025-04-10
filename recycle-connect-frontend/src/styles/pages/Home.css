@@ -1,7 +1,6 @@
   /* Estilos gerais do dashboard */
   .dashboard {
     background-color: #e0f7e9;
-    /* Verde claro */
     min-height: 100vh; /* Garante que o fundo cubra toda a tela */
     padding: 10px;
     padding-top: 140px;
@@ -14,11 +13,9 @@
   .icon-buttons {
     display: flex;
     justify-content: center;
-    /* Centraliza os ícones corretamente */
     align-items: center;
     margin-top: 20px;
     gap: 15px;
-    /* Adiciona espaço uniforme entre os ícones */
   }
 
   .icon-col {
@@ -27,13 +24,11 @@
     align-items: center;
     text-align: center;
     width: 40px;
-    /* Define uma largura fixa para cada coluna */
   }
 
   /* Ajuste no tamanho dos ícones */
   .feature-icon {
     width: 85px;
-    /* Reduz um pouco o tamanho */
     height: 85px;
     margin-bottom: 5px;
     cursor: pointer;
@@ -49,5 +44,4 @@
     font-size: 9px;
     font-weight: bold;
     margin: -10px;
-    /* Remove margens padrão do parágrafo */
   }

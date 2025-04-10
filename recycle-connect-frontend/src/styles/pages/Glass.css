@@ -1,18 +1,25 @@
   .glass-banner {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background-color: ;
     color: #343a40;
     line-height: 1.6;
   }
   
-  .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-      url('/api/placeholder/1200/400') center/cover no-repeat;
-    color: white;
-    text-align: center;
-    padding: 5rem 1rem;
-    margin-bottom: 2rem;
-    border-radius: 0 0 10px 10px;
+  .glass-banner .custom-header {
+  background-color: var(--info-green);
+  display: flex;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 30px;
+  position: relative;
+  margin-bottom: 20px;
   }
   
   .subtitle {
@@ -21,32 +28,32 @@
     margin: 0 auto;
   }
   
-  .section-title {
-    border-left: 5px solid var(--green-recycle);
+  .glass-banner .section-title {
+    border-left: 5px solid var(--info-green);
     padding-left: 15px;
     margin: 2rem 0 1.5rem;
+    color: rgb(1, 1, 36)
   }
   
-  .recycle-list {
+  .glass-banner .recycle-list {
     background-color: white;
     border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;    
     margin-bottom: 1.5rem;
   }
   
-  .steps-container {
+  .glass-banner .steps-container {
     margin-bottom: 2rem;
   }
   
-  .step {
+  .glass-banner .step {
     display: flex;
     align-items: flex-start;
     margin-bottom: 1.5rem;
   }
   
-  .step-number {
-    background-color: var(--green-recycle);
+  .glass-banner .step-number {
+    background-color: var(--info-green);
     color: white;
     width: 40px;
     height: 40px;
@@ -59,37 +66,44 @@
     flex-shrink: 0;
   }
   
-  .step-content {
+  .glass-banner .step-content {
     flex-grow: 1;
   }
   
-  .step-content h4 {
+  .glass-banner .step-content h4 {
     margin-top: 0;
     margin-bottom: 0.5rem;
   }
   
-  .step-content p {
+  .glass-banner .step-content p {
     margin-bottom: 0;
   }
   
-  .benefit-card {
+  .glass-banner .benefit-card {
     background-color: white;
     border-radius: 8px;
     padding: 1.5rem;
     height: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .benefit-card i {
+  .glass-banner .benefit-card i {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: var(--green-recycle);
+    color: var(--info-green);
   }
   
-  .footer {
-    background-color: var(--green-recycle);
+  .glass-banner .footer {
+    background-color: var(--info-green);
     color: white;
-    padding: 20px 0;
+    padding: 20px 15px;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: auto;
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;    
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding-bottom: 70px;
   }
+

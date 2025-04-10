@@ -1,13 +1,3 @@
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-}
-
-.container {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
 
 .paper-banner {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

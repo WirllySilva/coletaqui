@@ -1,20 +1,22 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Glass.css";
+import Footer from "../components/Footer";
 
 const Glass = () => {
   return (
     <div className="glass-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Vidro: Guia Completo de Reciclagem</h1>
-          <p className="subtitle">
-            A reciclagem de vidro é um processo eficiente que permite reutilizar o material infinitas vezes sem perda de qualidade. Conheça todos os detalhes para fazer a coleta seletiva de vidro corretamente:
-          </p>
+          <h5>Coleta de Vidro: Guia Completo de Reciclagem</h5>
+          
         </Container>
-      </div>
+      </header>
 
       <Container>
+        <p className="subtitle">
+            A reciclagem de vidro é um processo eficiente que permite reutilizar o material infinitas vezes sem perda de qualidade. Conheça todos os detalhes para fazer a coleta seletiva de vidro corretamente:
+          </p>
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -109,6 +111,7 @@ const Glass = () => {
           <p>A reciclagem de vidro representa um ciclo perfeito de sustentabilidade, pois permite que o material seja reaproveitado infinitamente com o mesmo padrão de qualidade.</p>
         </Container>
       </div>
+      <Footer/>
     </div>
   );
 };
