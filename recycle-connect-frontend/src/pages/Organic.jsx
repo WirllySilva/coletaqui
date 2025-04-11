@@ -1,20 +1,21 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Organic.css";
+import Footer from "../components/Footer";
 
 const Organic = () => {
   return (
     <div className="organic-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Resíduos Orgânicos: Guia Completo</h1>
-          <p className="subtitle">
-            Os resíduos orgânicos representam mais de 50% do lixo doméstico brasileiro e seu tratamento adequado é essencial para reduzir o impacto ambiental. Veja como fazer a coleta seletiva de resíduos orgânicos corretamente:
-          </p>
+          <h5>Coleta de Resíduos Orgânicos: Guia Completo</h5>         
         </Container>
-      </div>
+      </header>
 
       <Container>
+      <p className="subtitle">
+            Os resíduos orgânicos representam mais de 50% do lixo doméstico brasileiro e seu tratamento adequado é essencial para reduzir o impacto ambiental. Veja como fazer a coleta seletiva de resíduos orgânicos corretamente:
+          </p>
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -111,6 +112,7 @@ const Organic = () => {
           <p>Separar corretamente os resíduos orgânicos é uma das atitudes mais efetivas para reduzir nosso impacto ambiental.</p>
         </Container>
       </div>
+      <Footer/>
     </div>
   );
 };

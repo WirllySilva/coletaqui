@@ -47,7 +47,7 @@ function App() {
                 <Route path="/ranking" element={<Ranking/>} />
                 <Route path="/infobanner" element={<InfoBanner/>} />
                 <Route path="/paper" element={<Paper/>} />
-                <Route path="/plasatic" element={<Plastic/>} />
+                <Route path="/plastic" element={<Plastic/>} />
                 <Route path="/organic" element={<Organic/>} />
                 <Route path="/battery" element={<Battery/>} />
                 <Route path="/glass" element={<Glass/>} />

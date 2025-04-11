@@ -1,20 +1,21 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Battery.css";
+import Footer from "../components/Footer";
 
 const Battery = () => {
   return (
     <div className="battery-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Baterias e Pilhas: Guia Completo de Descarte</h1>
-          <p className="subtitle">
-            Baterias e pilhas contêm substâncias tóxicas e metais pesados que podem contaminar o meio ambiente quando descartados incorretamente. Veja como fazer o descarte adequado desses materiais:
-          </p>
+          <h5>Coleta de Baterias e Pilhas: Guia Completo de Descarte</h5>
         </Container>
-      </div>
+      </header>
 
       <Container>
+        <p className="subtitle">
+          Baterias e pilhas contêm substâncias tóxicas e metais pesados que podem contaminar o meio ambiente quando descartados incorretamente. Veja como fazer o descarte adequado desses materiais:
+        </p>
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -104,6 +105,7 @@ const Battery = () => {
           <p>O descarte correto de pilhas e baterias é uma responsabilidade compartilhada entre consumidores, comerciantes e fabricantes.</p>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };

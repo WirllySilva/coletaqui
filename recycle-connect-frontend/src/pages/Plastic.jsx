@@ -1,20 +1,21 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Plastic.css";
+import Footer from "../components/Footer";
 
 const Plastic = () => {
   return (
     <div className="plastic-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Plástico: Guia Completo de Reciclagem</h1>
-          <p className="subtitle">
-            O plástico é um dos materiais mais abundantes em nosso cotidiano e sua reciclagem adequada é essencial para reduzir o impacto ambiental. Confira como fazer a coleta seletiva de plásticos corretamente:
-          </p>
+          <h5>Coleta de Plástico: Guia Completo de Reciclagem</h5>
         </Container>
-      </div>
+      </header>
 
       <Container>
+        <p className="subtitle">
+          O plástico é um dos materiais mais abundantes em nosso cotidiano e sua reciclagem adequada é essencial para reduzir o impacto ambiental. Confira como fazer a coleta seletiva de plásticos corretamente:
+        </p>
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -101,6 +102,7 @@ const Plastic = () => {
           <p>A separação correta dos plásticos para reciclagem é um passo fundamental para combater a poluição causada por este material tão presente em nosso dia a dia.</p>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,20 +1,21 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/pages/Metal.css";
+import Footer from "../components/Footer"
 
 const Metal = () => {
   return (
     <div className="metal-banner">
-      <div className="hero-section">
+      <header className="custom-header d-flex align-items-center px-3 pt-4">
         <Container>
-          <h1>Coleta de Metal: Guia Completo de Reciclagem</h1>
-          <p className="subtitle">
-            A reciclagem de metais é um dos processos mais eficientes e economicamente viáveis dentro da cadeia de reciclagem. Confira como fazer a coleta seletiva de metais corretamente:
-          </p>
+          <h5>Coleta de Metal: Guia Completo de Reciclagem</h5>
         </Container>
-      </div>
+      </header>
 
       <Container>
+        <p className="subtitle">
+          A reciclagem de metais é um dos processos mais eficientes e economicamente viáveis dentro da cadeia de reciclagem. Confira como fazer a coleta seletiva de metais corretamente:
+        </p>
         <h2 className="section-title">Identificação e Separação</h2>
         <Row>
           <Col lg={8} className="mx-auto">
@@ -107,6 +108,7 @@ const Metal = () => {
           <p>A reciclagem de metais é um exemplo de sucesso na economia circular, combinando benefícios ambientais com vantagens econômicas significativas.</p>
         </Container>
       </div>
+      <Footer/>
     </div>
   );
 };
