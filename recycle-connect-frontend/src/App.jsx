@@ -24,6 +24,8 @@ import Glass from "./pages/Glass";
 import Metal from "./pages/Metal";
 import Organic from "./pages/Organic";
 import Battery from "./pages/Battery";
+import UserData from "./pages/UserData";
+
 
 
 function App() {
@@ -52,6 +54,7 @@ function App() {
                 <Route path="/battery" element={<Battery/>} />
                 <Route path="/glass" element={<Glass/>} />
                 <Route path="/metal" element={<Metal/>} />
+                <Route path="/userdata" element={<UserData/>} />               
 
                 
             </Routes>
