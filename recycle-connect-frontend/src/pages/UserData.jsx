@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Image, Alert } from 'react-bootstrap';
 import userIcon from '../assets/user-icon.png'; // Imagem padrão
-import '../styles/pages/UserData.css'; // CSS específico dessa página
+import '../styles/pages/UserData.css';
+import Footer from '../components/Footer';
 
 const UserData = () => {
     const [user, setUser] = useState({
@@ -52,28 +53,12 @@ const UserData = () => {
 
             <div className="userdata-photo-container">
                 <Image src={user.photo} roundedCircle width={100} height={100} className="userdata-photo" />
-
                 {editing && (
-                    <>
-                        <input
-                            type="file"
-                            id="photoUpload"
-                            accept="image/*"
-                            onChange={handlePhotoChange}
-                            style={{ display: 'none' }}
-                        />
-                        <Button
-                            variant="outline-success"
-                            size="sm"
-                            className="mt-2"
-                            onClick={() => document.getElementById('photoUpload').click()}
-                        >
-                            Trocar Foto
-                        </Button>
-                    </>
+                    <Form.Group controlId="formPhoto" className="mt-2">
+                        <Form.Control type="file" accept="image/*" onChange={handlePhotoChange} />
+                    </Form.Group>
                 )}
             </div>
-
 
             {message.text && (
                 <Alert variant={message.type} className="userdata-alert">
@@ -116,20 +101,25 @@ const UserData = () => {
                         disabled={!editing}
                     />
                 </Form.Group>
-
-                <div className="d-grid">
-                    {!editing ? (
-                        <Button variant="success" onClick={handleEdit}>
-                            Editar Dados
-                        </Button>
-                    ) : (
+                {editing && (
+                    <div className="d-grid mt-3">
                         <Button variant="primary" type="submit">
                             Salvar Alterações
                         </Button>
-                    )}
-                </div>
+                    </div>
+                )}
             </Form>
+
+            {!editing && (
+                <div className="d-grid mt-3">
+                    <Button variant="success" onClick={handleEdit}>
+                        Editar Dados
+                    </Button>
+                </div>
+            )}
+            <Footer />
         </Container>
+        
     );
 };
 
