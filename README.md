@@ -1,4 +1,4 @@
-# ♻️ recycle-connect
+# ♻️ Coletaqui
 
 > Uma plataforma sustentável para mapear pontos de reciclagem e incentivar práticas ecológicas por meio de um sistema de recompensas.
 
@@ -6,7 +6,7 @@
 
 ## 📱 Sobre o Projeto
 
-**recycle-connect** é uma aplicação web/mobile que permite:
+**Coletaqui** é uma aplicação web/mobile que permite:
 - 📍 Mapear locais de coleta de recicláveis;
 - 🎁 Recompensar usuários que reciclam corretamente;
 - 🌱 Oferecer dicas sustentáveis e educativas;
@@ -43,10 +43,10 @@
 
 ```bash
 # Clone este repositório
-git clone https://github.com/SeuUsuario/recycle-connect-frontend.git
+git clone https://github.com/SeuUsuario/coletaqui.git
 
 # Acesse a pasta do projeto
-cd recycle-connect-frontend
+cd coletaqui
 
 # Instale as dependências
 npm install
@@ -75,7 +75,7 @@ npm run dev
 
 | Dashboard | Dicas de Reciclagem |
 |----------|----------------------|
-| ![Dashboard](<img src="recycle-connect-frontend/src/assets/dashboard.png" alt="Dashboard principal" width="50"/>) | ![Dicas](<img src="recycle-connect-frontend/src/assets/tela-como-reciclar.png" alt="Dashboard principal" width="50"/>) |
+| ![Dashboard](<img src="coletaqui/frontend/src/assets/dashboard.png" alt="Dashboard principal" width="50"/>) | ![Dicas](<img src="coletaqui/frontend/src/assets/tela-como-reciclar.png" alt="Dashboard principal" width="50"/>) |
 
 ---
 
