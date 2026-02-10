@@ -1,5 +1,5 @@
 {
-  "name": "recycle-connect-frontend",
+  "name": "frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -20,7 +20,6 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.1.1",
     "react-slick": "^0.30.3",
-    "recycle-connect-frontend": "file:",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.14"
   },
