@@ -1,0 +1,35 @@
+<section class="recycling-tips">
+  <h5 class="recycling-tips-title">Dicas de reciclagem e noticias</h5>
+
+  <div class="carousel-shell" *ngIf="tips.length > 0; else emptyTips">
+    <button class="carousel-arrow" type="button" aria-label="Dica anterior" (click)="previous()">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <article class="card card-tips">
+      <div class="card-body card-content">
+        <h5 class="card-title">{{ activeTip.title }}</h5>
+        <p class="card-text">{{ activeTip.summary }}</p>
+        <a class="btn btn-success" [routerLink]="activeTip.link">Leia mais</a>
+      </div>
+
+      <ul class="dots-container" aria-label="Indicadores do carrossel">
+        <li *ngFor="let tip of tips; let i = index" [class.slick-active]="i === currentSlide">
+          <button type="button" [attr.aria-label]="'Ir para dica ' + (i + 1)" (click)="goTo(i)">
+            <span></span>
+          </button>
+        </li>
+      </ul>
+    </article>
+
+    <button class="carousel-arrow" type="button" aria-label="Proxima dica" (click)="next()">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+
+  <ng-template #emptyTips>
+    <article class="card card-tips p-3 mt-2">
+      <p>Nenhuma dica disponivel no momento.</p>
+    </article>
+  </ng-template>
+</section>

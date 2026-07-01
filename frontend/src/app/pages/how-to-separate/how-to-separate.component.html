@@ -1,0 +1,15 @@
+<div class="how-to-separate">
+  <main class="container content">
+    <header class="how-to-separate-header">
+      <h5 class="mb-0 ms-2">Aprenda a separar cada tipo de material reciclável</h5>
+    </header>
+
+    <div class="recycle-buttons">
+      <a *ngFor="let item of materials" [routerLink]="item.route" class="recycle-button">
+        <img [src]="item.image" [alt]="item.alt" />
+      </a>
+    </div>
+  </main>
+
+  <app-footer />
+</div>

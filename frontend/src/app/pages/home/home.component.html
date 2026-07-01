@@ -1,0 +1,17 @@
+<div class="dashboard">
+  <app-header />
+  <main class="container mt-3">
+    <app-map-preview />
+    <p class="text-center mt-2">Encontre no mapa pontos para deixar seu material reciclável.</p>
+    <div class="row text-center icon-buttons">
+      <div class="col icon-col" *ngFor="let item of actions">
+        <a [routerLink]="item.route" class="icon-link">
+          <img [src]="item.icon" [alt]="item.label" class="feature-icon" />
+        </a>
+        <p>{{ item.label }}</p>
+      </div>
+    </div>
+    <app-recycling-tips [tips]="tips" />
+  </main>
+  <app-footer />
+</div>

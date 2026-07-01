@@ -1,0 +1,53 @@
+import { Routes } from '@angular/router';
+import { AboutPageComponent } from './pages/about/about.component';
+import { AccountTypeChoicePageComponent } from './pages/account-type-choice/account-type-choice.component';
+import { BatteryPageComponent } from './pages/battery/battery.component';
+import { CollectorLoginPageComponent } from './pages/collector-login/collector-login.component';
+import { CollectorRegisterPageComponent } from './pages/collector-register/collector-register.component';
+import { CollectorsPageComponent } from './pages/collectors/collectors.component';
+import { CommonUserLoginPageComponent } from './pages/common-user-login/common-user-login.component';
+import { CommonUserRegisterPageComponent } from './pages/common-user-register/common-user-register.component';
+import { GlassPageComponent } from './pages/glass/glass.component';
+import { HomeComponent } from './pages/home/home.component';
+import { HowToSeparatePageComponent } from './pages/how-to-separate/how-to-separate.component';
+import { InfoBannerPageComponent } from './pages/info-banner/info-banner.component';
+import { MetalPageComponent } from './pages/metal/metal.component';
+import { OrganicPageComponent } from './pages/organic/organic.component';
+import { PaperPageComponent } from './pages/paper/paper.component';
+import { PlantATreePageComponent } from './pages/plant-a-tree/plant-a-tree.component';
+import { PlasticPageComponent } from './pages/plastic/plastic.component';
+import { RankingPageComponent } from './pages/ranking/ranking.component';
+import { RecoverCollectorPasswordPageComponent } from './pages/recover-collector-password/recover-collector-password.component';
+import { RecoverCommonUserPasswordPageComponent } from './pages/recover-common-user-password/recover-common-user-password.component';
+import { RegisterChoicePageComponent } from './pages/register-choice/register-choice.component';
+import { UserDataPageComponent } from './pages/user-data/user-data.component';
+import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
+
+export const routes: Routes = [
+  { path: '', component: WelcomePageComponent },
+  { path: 'welcome', component: WelcomePageComponent },
+  { path: 'loginselectionpage', component: AccountTypeChoicePageComponent },
+  { path: 'account-typechoice', component: RegisterChoicePageComponent },
+  { path: 'commonuserloginpage', component: CommonUserLoginPageComponent },
+  { path: 'collectorloginpage', component: CollectorLoginPageComponent },
+  { path: 'commonuser-register', component: CommonUserRegisterPageComponent },
+  { path: 'collector-register', component: CollectorRegisterPageComponent },
+  { path: 'recovercommonuserpassword', component: RecoverCommonUserPasswordPageComponent },
+  { path: 'recovercollectorpassword', component: RecoverCollectorPasswordPageComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'howtoseparate', component: HowToSeparatePageComponent },
+  { path: 'collectors', component: CollectorsPageComponent },
+  { path: 'collector', redirectTo: 'collectors', pathMatch: 'full' },
+  { path: 'plantatree', component: PlantATreePageComponent },
+  { path: 'ranking', component: RankingPageComponent },
+  { path: 'infobanner', component: InfoBannerPageComponent },
+  { path: 'paper', component: PaperPageComponent },
+  { path: 'plastic', component: PlasticPageComponent },
+  { path: 'organic', component: OrganicPageComponent },
+  { path: 'battery', component: BatteryPageComponent },
+  { path: 'glass', component: GlassPageComponent },
+  { path: 'metal', component: MetalPageComponent },
+  { path: 'userdata', component: UserDataPageComponent },
+  { path: 'about', component: AboutPageComponent },
+  { path: '**', redirectTo: '' },
+];

@@ -1,0 +1,140 @@
+<div class="guide-page" [style.--guide-color]="data.theme">
+  <header class="guide-header">
+    <div class="container">
+      <h5>{{ data.title }}</h5>
+      <p *ngIf="data.subtitle" class="guide-header-subtitle">{{ data.subtitle }}</p>
+    </div>
+  </header>
+
+  <main class="container guide-content">
+    <p *ngIf="data.intro" class="first-paragraph">{{ data.intro }}</p>
+
+    <ng-container *ngIf="data.layout !== 'info'; else infoLayout">
+    <section *ngIf="data.colorLabel || data.colorText">
+      <h2 class="section-title">Identificação e Separação</h2>
+      <div class="mx-auto guide-lead">
+        <p *ngIf="data.colorLabel" class="lead">Cor da categoria: <strong>{{ data.colorLabel }}</strong></p>
+        <p *ngIf="data.colorText">{{ data.colorText }}</p>
+      </div>
+    </section>
+
+    <section *ngIf="data.sections.length">
+      <h2 class="section-title">{{ data.listTitle }}</h2>
+      <div class="row">
+        <div class="col-md-6" *ngFor="let section of data.sections">
+          <div class="recycle-list">
+            <h4>{{ section.title }}</h4>
+            <ul>
+              <li *ngFor="let item of section.items">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="data.steps.length">
+      <h2 class="section-title">{{ data.stepsTitle }}</h2>
+      <div class="steps-container">
+        <div class="step" *ngFor="let step of data.steps; let i = index">
+          <div class="step-number">{{ i + 1 }}</div>
+          <div class="step-content">
+            <h4>{{ step.title }}</h4>
+            <p>{{ step.text }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">{{ data.cycleTitle }}</h2>
+      <div class="mx-auto guide-lead">
+        <p>{{ data.cycleText }}</p>
+      </div>
+    </section>
+
+    <section *ngIf="data.benefits.length">
+      <h2 class="section-title">{{ data.benefitsTitle }}</h2>
+      <div class="row">
+        <div class="col-md-6 mb-4" *ngFor="let benefit of data.benefits">
+          <div class="benefit-card">
+            <i class="bi" [class]="benefit.icon"></i>
+            <h4>{{ benefit.title }}</h4>
+            <p>{{ benefit.text }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section *ngFor="let extra of data.extraLists || []">
+      <h2 class="section-title">{{ extra.title }}</h2>
+      <div class="mx-auto guide-lead">
+        <ul class="extra-list">
+          <li *ngFor="let item of extra.items">{{ item }}</li>
+        </ul>
+      </div>
+    </section>
+    </ng-container>
+
+    <ng-template #infoLayout>
+      <section>
+        <h2 class="section-title">{{ data.cycleTitle }}</h2>
+        <div class="mx-auto guide-lead">
+          <p>{{ data.cycleText }}</p>
+        </div>
+      </section>
+
+      <section *ngIf="data.colorBoxes?.length">
+        <h2 class="section-title">Cores da coleta seletiva</h2>
+        <div class="color-grid">
+          <div *ngFor="let box of data.colorBoxes || []" class="color-box" [class]="box.className">{{ box.text }}</div>
+        </div>
+      </section>
+
+      <section *ngIf="data.benefits.length">
+        <h2 class="section-title">{{ data.benefitsTitle }}</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4" *ngFor="let benefit of data.benefits">
+            <div class="benefit-card">
+              <i class="bi" [class]="benefit.icon"></i>
+              <h4>{{ benefit.title }}</h4>
+              <p>{{ benefit.text }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="data.steps.length">
+        <h2 class="section-title">{{ data.stepsTitle }}</h2>
+        <div class="steps-container">
+          <div class="step" *ngFor="let step of data.steps; let i = index">
+            <div class="step-number">{{ i + 1 }}</div>
+            <div class="step-content">
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.text }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section *ngIf="data.sections.length">
+        <h2 class="section-title">{{ data.listTitle }}</h2>
+        <div class="row">
+          <div class="col-md-6" *ngFor="let section of data.sections">
+            <div class="recycle-list">
+              <h4>{{ section.title }}</h4>
+              <ul>
+                <li *ngFor="let item of section.items">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </ng-template>
+
+    <div class="guide-footer">
+      <p>{{ data.footerText }}</p>
+    </div>
+  </main>
+
+  <app-footer />
+</div>

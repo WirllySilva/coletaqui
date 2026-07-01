@@ -1,0 +1,121 @@
+.recycling-tips {
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.recycling-tips-title {
+  color: #1f2933;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  text-align: center;
+}
+
+.carousel-shell {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  margin: 0 auto;
+  max-width: 680px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.card-tips {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 600px;
+  min-height: 200px;
+  padding-bottom: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.card-tips .card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.card-tips .card-text {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.carousel-arrow {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #c3e6cb;
+  border-radius: 50%;
+  color: #218838;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  width: 34px;
+}
+
+.carousel-arrow:hover {
+  background: #218838;
+  color: #fff;
+}
+
+.dots-container {
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+  left: 50%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.dots-container button {
+  background: transparent;
+  border: 0;
+  display: block;
+  padding: 0;
+}
+
+.dots-container span {
+  background-color: #c3e6cb;
+  border-radius: 50%;
+  display: block;
+  height: 10px;
+  transition: background-color 0.3s ease;
+  width: 10px;
+}
+
+.dots-container li.slick-active span {
+  background-color: #218838;
+}
+
+@media (max-width: 420px) {
+  .carousel-shell {
+    grid-template-columns: 28px minmax(0, 1fr) 28px;
+  }
+
+  .carousel-arrow {
+    height: 28px;
+    width: 28px;
+  }
+}

@@ -1,340 +1,792 @@
 # Arquitetura
+
 ## Projeto: Coletaqui
-## Versão: 1.0
-## Data: [10/02/2026]
+## Versão: 2.0
+## Data: 01/07/2026
 
 ---
 
-# 1. Visão Geral da Arquitetura
+## 1. Visão Geral
 
-O Coletaqui é uma aplicação mobile-only composta por dois componentes principais:
+O Coletaqui é uma aplicação PWA mobile-first voltada à educação ambiental, mapeamento de pontos de coleta, agendamento de coletas e análise de impacto da reciclagem.
 
-- Frontend: React + Vite
-- Backend: Spring Boot (API REST)
-- Banco de Dados: MySQL
+Objetivos principais:
 
-A comunicação entre frontend e backend ocorre via HTTP utilizando JSON.
+1. Mapear pontos de coleta de recicláveis, óleo de cozinha usado, pilhas e baterias.
+2. Permitir o agendamento de coleta de materiais recicláveis.
+3. Disponibilizar relatórios e dashboards para análise de impacto e eficácia da plataforma.
 
-O backend seguirá arquitetura em camadas (Controller → Service → Repository → Entity) e o frontend será estruturado por páginas e componentes reutilizáveis.
+A arquitetura é composta por:
+
+- Frontend: Angular PWA.
+- Backend: Java com Spring Boot, API REST.
+- Banco de dados: PostgreSQL.
+- ORM: Spring Data JPA/Hibernate.
+- Autenticação: OTP por telefone + JWT.
+- Containerização: Docker e Docker Compose.
+
+A comunicação entre frontend e backend será feita por HTTP/HTTPS utilizando JSON.
 
 ---
 
-# 2. Estrutura do Repositório (Monorepo)
-```bash
+## 2. Estrutura do Repositório
+
+```text
 coletaqui/
-backend/
-frontend/
-docs/
-README.md
-LICENSE
+  backend/
+    Dockerfile
+  frontend/
+    Dockerfile
+    nginx.conf
+  docs/
+  docker-compose.yml
+  README.md
+  LICENSE
 ```
+
+Diretórios principais:
+
+- `backend/`: API Java/Spring Boot.
+- `frontend/`: frontend atual em Angular PWA.
+- `docs/`: documentação técnica, requisitos, arquitetura, banco e diagramas.
+- `docker-compose.yml`: orquestra frontend, backend e banco PostgreSQL.
+
 ---
 
-# 3. Arquitetura do Frontend (React + Vite)
+## 3. Arquitetura do Frontend
 
-## 3.1 Objetivos
+### 3.1 Tecnologia
 
-- Interface exclusivamente mobile
-- Separação clara entre páginas, componentes e estilos
-- Camada centralizada de comunicação com a API
-- Código organizado e escalável
+O frontend atual é uma aplicação Angular PWA, com foco em dispositivos móveis.
 
-## 3.2 Estrutura do Frontend
-```bash
+Principais tecnologias:
+
+- Angular.
+- Angular Router.
+- Angular Service Worker.
+- Bootstrap.
+- Bootstrap Icons.
+- TypeScript.
+
+### 3.2 Objetivos do Frontend
+
+- Oferecer experiência mobile-first.
+- Funcionar como PWA instalável.
+- Permitir navegação simples entre telas educativas, mapa, catadores, ranking e perfil.
+- Consumir a API REST do backend.
+- Separar telas, componentes reutilizáveis e modelos de dados.
+
+### 3.3 Estrutura do Frontend Angular
+
+```text
 frontend/
-public/
-src/
-assets/
-components/
-pages/
-services/
-styles/
-components/
-pages/
-Global.css
-utils/
-App.jsx
-main.jsx
+  public/
+    manifest.webmanifest
+    icons/
+  src/
+    assets/
+    app/
+      components/
+        footer/
+        header/
+        map-preview/
+        recycling-tips/
+      models/
+      pages/
+        home/
+        how-to-separate/
+        paper/
+        plastic/
+        glass/
+        metal/
+        organic/
+        battery/
+        info-banner/
+        auth/
+        collectors/
+        ranking/
+        user-data/
+      app.routes.ts
+      app.config.ts
+      app.ts
+    styles.css
 ```
+
 Descrição:
 
-- `pages/`: telas principais (Login, Cadastro, Dashboard, etc.)
-- `components/`: componentes reutilizáveis (Header, Footer, Map, etc.)
-- `services/`: camada responsável por chamadas à API
-- `styles/`: arquivos CSS organizados por páginas e componentes
-- `utils/`: funções auxiliares
-- `App.jsx`: definição de rotas
-- `main.jsx`: ponto de entrada da aplicação
+- `components/`: componentes reutilizáveis, como header, footer, preview do mapa e carrossel de dicas.
+- `pages/`: páginas acessadas por rota.
+- `models/`: tipos TypeScript usados pela aplicação.
+- `app.routes.ts`: definição das rotas do Angular.
+- `app.config.ts`: configuração global da aplicação, incluindo roteamento e service worker.
+- `public/manifest.webmanifest`: manifesto PWA.
 
-## 3.3 Rotas
+### 3.4 Rotas Frontend
 
-Rotas públicas:
+Rotas públicas iniciais:
+
 - `/`
-- `/login`
-- `/cadastro`
-- `/otp`
+- `/welcome`
+- `/loginselectionpage`
+- `/account-typechoice`
+- `/commonuserloginpage`
+- `/collectorloginpage`
+- `/commonuser-register`
+- `/collector-register`
+- `/recovercommonuserpassword`
+- `/recovercollectorpassword`
 
-Rotas protegidas:
-- `/dashboard-cliente`
-- `/dashboard-fornecedor`
+Rotas funcionais/educativas:
 
-Rotas protegidas exigem JWT válido armazenado no frontend.
+- `/home`
+- `/howtoseparate`
+- `/infobanner`
+- `/paper`
+- `/plastic`
+- `/glass`
+- `/metal`
+- `/organic`
+- `/battery`
+- `/collectors`
+- `/ranking`
+- `/plantatree`
+- `/userdata`
 
-## 3.4 Integração com API
+Quando a autenticação estiver integrada, rotas como `/home`, `/collectors`, `/ranking`, `/userdata`, agendamentos e dashboards deverão ser protegidas por autenticação JWT.
 
-Recomenda-se criar:
+### 3.5 Integração com a API
 
-- `apiClient.js` → instância central do Axios
-- `authService.js` → funções de autenticação (request OTP, verify OTP)
-- outros serviços conforme módulos futuros
+Recomenda-se criar uma camada de serviços no Angular:
 
-Variável de ambiente:
+```text
+src/app/services/
+  api.service.ts
+  auth.service.ts
+  collection-point.service.ts
+  schedule.service.ts
+  report.service.ts
+```
 
-`VITE_API_URL`=http://localhost:8080
+Variável de ambiente sugerida:
+
+```text
+API_URL=http://localhost:8080
+```
+
+Em ambiente containerizado, o frontend Angular é compilado e servido por Nginx. O Nginx também pode atuar como proxy para chamadas iniciadas por `/api/`, encaminhando essas requisições para o serviço `backend` na rede interna do Docker.
 
 ---
 
-# 4. Arquitetura do Backend (Spring Boot)
+## 4. Arquitetura do Backend
 
-## 4.1 Objetivos
+### 4.1 Tecnologia
 
-- Separação clara de responsabilidades
-- Organização por módulos de domínio
-- Segurança via OTP + JWT
-- Fácil manutenção e expansão
+O backend será uma API REST em Java com Spring Boot.
 
-## 4.2 Estrutura do Backend
+Principais tecnologias:
 
-```bash
+- Java 17.
+- Spring Boot.
+- Spring Web MVC.
+- Spring Security.
+- Spring Validation.
+- Spring Data JPA.
+- Hibernate.
+- PostgreSQL.
+- Lombok.
+
+O backend utiliza o driver PostgreSQL em tempo de execução e recebe a configuração do banco por variáveis de ambiente.
+
+### 4.2 Objetivos do Backend
+
+- Expor API REST para o PWA.
+- Gerenciar usuários, perfis e autenticação.
+- Gerenciar pontos de coleta.
+- Gerenciar agendamentos de coleta.
+- Registrar dados para relatórios e dashboards.
+- Aplicar regras de segurança, validação e auditoria.
+
+### 4.3 Estrutura Recomendada
+
+```text
 backend/
-src/
-main/
-java/
-br/
-com/
-coletaqui/
-ColetaquiApplication.java
+  src/main/java/br/com/coletaqui/backend/
+    ColetaquiBackendApplication.java
+    config/
+    common/
+      exception/
+      security/
+      dto/
+    auth/
+      controller/
+      service/
+      dto/
+      entity/
+      repository/
+    user/
+      controller/
+      service/
+      dto/
+      entity/
+      repository/
+    collectionpoint/
+      controller/
+      service/
+      dto/
+      entity/
+      repository/
+    schedule/
+      controller/
+      service/
+      dto/
+      entity/
+      repository/
+    report/
+      controller/
+      service/
+      dto/
+      projection/
 ```
-```pgsql
-config/
-  CorsConfig.java
-  OpenApiConfig.java
 
-auth/
-  controller/
-  service/
-  dto/
-  entity/
-  repository/
-
-user/
-  controller/
-  service/
-  dto/
-  entity/
-  repository/
-
-common/
-  exceptions/
-  security/
-    JwtService.java
-    JwtAuthenticationFilter.java
-```
-
-Módulos futuros:
-- collectionpoint/
-- schedule/
-- rewards/
-
-## 4.3 Responsabilidades por Camada
+### 4.4 Camadas
 
 Controller:
-- Define endpoints
-- Valida requisições
-- Retorna respostas HTTP
+
+- Recebe requisições HTTP.
+- Valida entrada via DTOs.
+- Retorna respostas padronizadas.
 
 Service:
-- Implementa regras de negócio
-- Orquestra operações
+
+- Implementa regras de negócio.
+- Orquestra transações.
+- Coordena repositories e integrações externas.
 
 Repository:
-- Comunicação com banco de dados via JPA
+
+- Acessa o banco de dados via Spring Data JPA.
+- Encapsula consultas SQL/JPQL.
 
 Entity:
-- Representação das tabelas do banco
+
+- Representa tabelas do banco.
+- Define relacionamentos.
 
 DTO:
-- Objetos de entrada e saída da API
 
----
+- Define objetos de entrada e saída da API.
+- Evita expor entidades diretamente ao frontend.
 
-# 5. Arquitetura de Autenticação (OTP + JWT)
+### 4.5 Containerização do Backend
 
-## 5.1 Fluxo Geral
+O backend possui um `Dockerfile` próprio com build em múltiplos estágios:
 
-1. Usuário escolhe perfil (CLIENT ou SUPPLIER)
-2. Usuário informa telefone
-3. Backend valida formato
-4. Backend gera OTP e armazena com expiração
-5. Usuário informa código OTP
-6. Backend valida OTP
-7. Backend gera JWT
-8. Frontend armazena token
-9. Usuário acessa dashboard protegido
+1. Imagem com JDK para compilar a aplicação via Maven Wrapper.
+2. Imagem com JRE para executar o arquivo `.jar` final.
 
-## 5.2 Regras do OTP
+O serviço `backend` no Docker Compose depende do serviço `db` e se conecta ao PostgreSQL usando:
 
-- Código numérico de 6 dígitos
-- Expiração padrão de 5 minutos
-- Novo OTP invalida o anterior
-- OTP não pode ser reutilizado
-
-## 5.3 Regras do JWT
-
-O token deve conter:
-- userId
-- role (CLIENT ou SUPPLIER)
-
-O token deve ser enviado no header:
-`Authorization`: Bearer <token>
-
----
-
-# 6. Modelo de Dados Inicial (MVP)
-
-## 6.1 Entidade User
-
-Finalidade: representar usuários do sistema.
-
-Campos mínimos:
-
-- id (UUID)
-- phone (String)
-- role (Enum: CLIENT, SUPPLIER)
-- name (String, opcional no início)
-- createdAt
-- updatedAt
-
-Restrição:
-- unique(phone, role)
-
----
-
-## 6.2 Entidade OtpCode
-
-Finalidade: armazenar códigos OTP gerados.
-
-Campos mínimos:
-
-- id (UUID)
-- phone (String)
-- role (Enum)
-- code (String - 6 dígitos)
-- expiresAt (DateTime)
-- usedAt (DateTime, opcional)
-- createdAt
-
-Regras:
-- Apenas o último OTP ativo é válido
-- Novo OTP invalida o anterior
-
----
-
-# 7. Endpoints do MVP
-
-## 7.1 Health Check
-
-GET /health
-
-Resposta:
-```json
-{ "status": "ok" }
+```text
+DATABASE_URL=jdbc:postgresql://db:5432/coletaqui
+DATABASE_USERNAME=coletaqui
+DATABASE_PASSWORD=coletaqui
 ```
 
 ---
 
-## 7.2 Autenticação
+### 4.6 Containerização do Frontend
 
-### POST /auth/request-otp
+O frontend possui um `Dockerfile` próprio com build em múltiplos estágios:
+
+1. Imagem Node.js para instalar dependências e gerar o build Angular.
+2. Imagem Nginx para servir os arquivos estáticos gerados em `dist/`.
+
+No ambiente Docker, o serviço `frontend` é exposto em:
+
+```text
+http://localhost:4200
+```
+
+Internamente, o Nginx escuta na porta `80`.
+
+---
+
+## 5. Banco de Dados
+
+### 5.1 Tecnologia
+
+O banco definido para o projeto é PostgreSQL.
+
+O acesso aos dados será feito via ORM:
+
+- Spring Data JPA.
+- Hibernate.
+
+### 5.2 Por que PostgreSQL
+
+- Banco relacional robusto.
+- Bom suporte a dados geográficos no futuro com PostGIS.
+- Adequado para consultas de relatórios e dashboards.
+- Boa integração com Spring Boot e JPA.
+
+### 5.3 Entidades Principais
+
+Entidades previstas:
+
+- `User`
+- `OtpCode`
+- `CollectionPoint`
+- `MaterialType`
+- `Schedule`
+- `CollectionRecord`
+- `ImpactMetric`
+
+### 5.4 Entidade User
+
+Representa usuários do sistema.
+
+Campos sugeridos:
+
+- `id`
+- `phone`
+- `name`
+- `role`
+- `status`
+- `createdAt`
+- `updatedAt`
+
+Perfis iniciais:
+
+- `COMMON_USER`
+- `COLLECTOR`
+- `ADMIN`
+
+### 5.5 Entidade OtpCode
+
+Representa códigos OTP emitidos para autenticação.
+
+Campos sugeridos:
+
+- `id`
+- `phone`
+- `codeHash`
+- `purpose`
+- `expiresAt`
+- `usedAt`
+- `attempts`
+- `createdAt`
+
+O código deve ser armazenado preferencialmente em formato hash, não em texto puro.
+
+### 5.6 Entidade CollectionPoint
+
+Representa pontos de coleta.
+
+Campos sugeridos:
+
+- `id`
+- `name`
+- `description`
+- `address`
+- `city`
+- `state`
+- `latitude`
+- `longitude`
+- `active`
+- `createdAt`
+- `updatedAt`
+
+Materiais aceitos:
+
+- recicláveis em geral;
+- óleo de cozinha usado;
+- pilhas;
+- baterias;
+- outros materiais definidos pelo sistema.
+
+### 5.7 Entidade Schedule
+
+Representa um agendamento de coleta.
+
+Campos sugeridos:
+
+- `id`
+- `user`
+- `collector`
+- `materialType`
+- `address`
+- `scheduledDate`
+- `status`
+- `notes`
+- `createdAt`
+- `updatedAt`
+
+Status sugeridos:
+
+- `REQUESTED`
+- `ACCEPTED`
+- `IN_PROGRESS`
+- `COMPLETED`
+- `CANCELED`
+
+---
+
+## 6. Autenticação e Autorização
+
+### 6.1 Decisão Arquitetural
+
+O sistema deve utilizar autenticação por telefone com OTP, seguida da emissão de JWT.
+
+Para simplificar a experiência, recomenda-se um fluxo unificado de entrada:
+
+```text
+Entrar ou criar conta
+→ informar telefone
+→ receber OTP
+→ validar código
+→ sistema verifica se o usuário já existe
+→ se existir: login concluído
+→ se não existir: completar cadastro
+→ emitir JWT
+```
+
+Essa abordagem reduz fricção para usuários comuns e evita separar excessivamente os fluxos de login e cadastro.
+
+### 6.2 Fluxo para Usuário Comum
+
+1. Usuário informa telefone.
+2. Backend valida o formato.
+3. Backend gera OTP.
+4. Usuário informa o código.
+5. Backend valida OTP.
+6. Se o telefone já existir, login é concluído.
+7. Se não existir, o usuário completa cadastro.
+8. Backend emite JWT.
+9. Frontend armazena o token e libera acesso às rotas protegidas.
+
+### 6.3 Fluxo para Catador/Coletor
+
+O catador também pode usar OTP, mas o cadastro deve exigir dados adicionais:
+
+- nome;
+- telefone;
+- região de atuação;
+- materiais coletados;
+- disponibilidade;
+- dados opcionais de identificação ou validação.
+
+O perfil de catador pode exigir aprovação administrativa antes de ficar visível publicamente.
+
+### 6.4 Fluxo para Administrador
+
+Para administrador, recomenda-se não usar OTP simples como único fator.
+
+Opções recomendadas:
+
+- e-mail + senha forte;
+- autenticação interna;
+- autenticação com segundo fator no futuro.
+
+### 6.5 Regras do OTP
+
+- Código numérico de 6 dígitos.
+- Expiração padrão: 5 minutos.
+- Novo OTP invalida o anterior.
+- OTP não pode ser reutilizado.
+- Deve haver limite de tentativas.
+- Deve haver tempo mínimo para reenvio.
+- Em produção, o OTP nunca deve ser retornado na resposta da API.
+- Em desenvolvimento, o OTP pode ser exibido/logado para facilitar testes.
+
+### 6.6 Regras do JWT
+
+O JWT deve conter:
+
+- `userId`
+- `role`
+- `phone`
+- `issuedAt`
+- `expiresAt`
+
+O token deve ser enviado pelo frontend no header:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+## 7. Módulos Funcionais
+
+### 7.1 Módulo de Pontos de Coleta
+
+Responsável por:
+
+- cadastrar pontos de coleta;
+- listar pontos próximos;
+- filtrar por tipo de material;
+- exibir detalhes do ponto;
+- manter localização geográfica.
+
+Endpoints previstos:
+
+- `GET /collection-points`
+- `GET /collection-points/{id}`
+- `POST /collection-points`
+- `PUT /collection-points/{id}`
+- `DELETE /collection-points/{id}`
+
+### 7.2 Módulo de Agendamento
+
+Responsável por:
+
+- solicitar coleta;
+- aceitar ou recusar solicitação;
+- acompanhar status;
+- registrar conclusão;
+- cancelar agendamento.
+
+Endpoints previstos:
+
+- `POST /schedules`
+- `GET /schedules`
+- `GET /schedules/{id}`
+- `PATCH /schedules/{id}/status`
+- `DELETE /schedules/{id}`
+
+### 7.3 Módulo de Relatórios e Dashboards
+
+Responsável por:
+
+- total de coletas realizadas;
+- volume estimado por tipo de material;
+- pontos de coleta mais usados;
+- regiões com maior demanda;
+- impacto ambiental estimado;
+- taxa de conclusão/cancelamento de agendamentos.
+
+Endpoints previstos:
+
+- `GET /reports/impact`
+- `GET /reports/collections`
+- `GET /reports/schedules`
+- `GET /reports/collection-points`
+
+### 7.4 Módulo Educativo
+
+Responsável por:
+
+- dicas de reciclagem;
+- guias por tipo de material;
+- informações sobre coleta seletiva;
+- conteúdo exibido no PWA.
+
+No MVP, esse conteúdo pode permanecer estático no frontend.
+No futuro, pode ser gerenciado via backend.
+
+---
+
+## 8. Endpoints Base do MVP
+
+### 8.1 Health Check
+
+```http
+GET /health
+```
+
+Resposta:
+
+```json
+{
+  "status": "ok"
+}
+```
+
+### 8.2 Autenticação
+
+Solicitar OTP:
+
+```http
+POST /auth/request-otp
+```
 
 Request:
-- phone
-- role
 
-Response:
-- message
-- expiresInSeconds
-- otp (apenas ambiente de desenvolvimento)
+```json
+{
+  "phone": "85999999999",
+  "role": "COMMON_USER"
+}
+```
 
----
+Validar OTP:
 
-### POST /auth/verify-otp
+```http
+POST /auth/verify-otp
+```
 
 Request:
-- phone
-- role
-- code
 
-Response:
-- token (JWT)
-- user (id, phone, role, name)
+```json
+{
+  "phone": "85999999999",
+  "role": "COMMON_USER",
+  "code": "123456"
+}
+```
+
+Resposta esperada:
+
+```json
+{
+  "token": "jwt-token",
+  "user": {
+    "id": "uuid",
+    "phone": "85999999999",
+    "role": "COMMON_USER",
+    "name": "Nome do usuário",
+    "profileComplete": true
+  }
+}
+```
+
+Completar cadastro:
+
+```http
+POST /auth/complete-profile
+```
+
+Requer JWT.
 
 ---
 
-### POST /auth/complete-profile (opcional)
+## 9. Configuração de Ambientes
 
-Requer JWT
+### 9.1 Desenvolvimento
 
-Permite preencher dados após autenticação inicial.
+Frontend Angular:
 
----
-
-# 8. Ambiente e Configuração
-
-## 8.1 Desenvolvimento
-
-Frontend:
-- http://localhost:5173
+```text
+http://localhost:4200
+```
 
 Backend:
-- http://localhost:8080
 
-Backend deve permitir CORS para o frontend.
+```text
+http://localhost:8080
+```
+
+Banco:
+
+```text
+PostgreSQL local ou via Docker
+```
+
+### 9.2 Docker Compose
+
+O ambiente containerizado é definido no arquivo `docker-compose.yml`.
+
+Serviços:
+
+- `frontend`: Angular PWA compilado e servido por Nginx.
+- `backend`: API Java/Spring Boot.
+- `db`: PostgreSQL com volume persistente.
+
+Portas expostas:
+
+```text
+Frontend:   http://localhost:4200
+Backend:    http://localhost:8080
+PostgreSQL: localhost:5432
+```
+
+Comando principal:
+
+```bash
+docker compose up --build
+```
+
+### 9.3 Variáveis Backend
+
+Variáveis sugeridas:
+
+```text
+DATABASE_URL=jdbc:postgresql://localhost:5432/coletaqui
+DATABASE_USERNAME=coletaqui
+DATABASE_PASSWORD=coletaqui
+JWT_SECRET=alterar-em-producao
+OTP_EXPIRATION_MINUTES=5
+JPA_DDL_AUTO=update
+```
+
+### 9.4 Produção
+
+Recomendações:
+
+- HTTPS obrigatório.
+- Frontend hospedado como PWA e servido por Nginx ou plataforma equivalente.
+- Backend exposto por API REST.
+- PostgreSQL gerenciado ou containerizado conforme o ambiente.
+- Secrets fora do repositório.
 
 ---
 
-## 8.2 Produção
+## 10. Segurança
 
-Opção 1:
-- Frontend e backend hospedados separadamente.
+Requisitos de segurança:
 
-Opção 2:
-- Build do frontend servido pelo Spring Boot.
-
----
-
-# 9. Logs e Monitoramento (MVP)
-
-- Log de geração de OTP
-- Log de validação de OTP
-- Log de erros de autenticação
-- Log de requisições importantes
+- JWT assinado com segredo forte.
+- OTP armazenado em hash.
+- OTP com expiração e limite de tentativas.
+- Rate limit para solicitação de OTP.
+- CORS restrito aos domínios permitidos.
+- HTTPS em produção.
+- Validação de entrada via DTOs.
+- Não expor dados sensíveis nas respostas.
+- Logs sem vazamento de OTP em produção.
 
 ---
 
-# 10. Segurança
+## 11. Logs, Auditoria e Observabilidade
 
-- JWT assinado com segredo armazenado em variável de ambiente
-- OTP não exposto em produção
-- Uso obrigatório de HTTPS em produção
-- Validação de formato de telefone
+Eventos importantes:
+
+- solicitação de OTP;
+- validação de OTP;
+- falha de autenticação;
+- criação de ponto de coleta;
+- solicitação de agendamento;
+- alteração de status de agendamento;
+- conclusão de coleta;
+- geração de relatórios.
+
+No MVP, logs estruturados da aplicação são suficientes.
+Em evolução futura, pode-se incluir métricas e rastreamento.
 
 ---
 
-# 11. Evoluções Futuras
+## 12. Evolução Planejada
 
-- Pontos de coleta com mapa
-- Agendamento de coleta
-- Sistema de recompensas
-- Ranking de usuários
-- Painel administrativo
+Evoluções futuras:
+
+- Integração com serviço real de SMS/WhatsApp para OTP.
+- Mapa interativo com geolocalização.
+- PostGIS para consultas geográficas avançadas.
+- Painel administrativo.
+- Dashboard de impacto ambiental.
+- Ranking e recompensas.
+- Notificações de status do agendamento.
+- Gestão dinâmica de conteúdo educativo.
+
+---
+
+## 13. Decisões Arquiteturais Atuais
+
+- Frontend principal será Angular PWA.
+- Backend será Java/Spring Boot.
+- Banco de dados será PostgreSQL.
+- ORM será Spring Data JPA/Hibernate.
+- Autenticação principal será telefone + OTP + JWT.
+- Fluxo recomendado de login/cadastro será unificado para reduzir fricção.
+- Administrador deve ter autenticação mais forte que OTP simples.
+- Conteúdo educativo pode iniciar estático no frontend e migrar para backend no futuro.

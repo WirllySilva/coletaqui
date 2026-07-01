@@ -1,0 +1,155 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  --info-blue: #1eaaf5;
+  --info-red: #e63946;
+  --info-green: #097756;
+  --info-yellow: #ffd723;
+  --info-brown: #774936;
+  --info-gray: #6c757d;
+  --info-orange: orange;
+  background: #f8f9fa;
+  color: #1f2933;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.welcome-page {
+  background: radial-gradient(circle at 50% 0%, #f4fff5 0, #e8f6ec 44%, #f8f9fa 100%);
+}
+
+.logo-mark {
+  align-items: center;
+  background: #198754;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  font-size: 4rem;
+  height: 132px;
+  justify-content: center;
+  width: 132px;
+}
+
+.welcome-page h1 {
+  color: #145f2a;
+  font-size: 2.6rem;
+  font-weight: 700;
+}
+
+.tagline {
+  color: #35523d;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.auth-page {
+  align-items: center;
+  background: #eef8f0;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.auth-panel {
+  background: #fff;
+  border: 1px solid #dfe8dc;
+  border-radius: 8px;
+  max-width: 460px;
+  padding: 28px;
+  width: 100%;
+}
+
+.auth-panel h1,
+.page-content h1 {
+  color: #145f2a;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.auth-panel p,
+.page-content p {
+  color: #59645d;
+}
+
+.back-link {
+  color: #287a3e;
+  display: inline-flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.content-shell {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 140px 10px 100px;
+}
+
+.page-content {
+  padding-top: 0;
+}
+
+.info-hero {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dfe8dc;
+  border-radius: 8px;
+  display: flex;
+  gap: 22px;
+  padding: 22px;
+}
+
+.info-hero img {
+  height: 92px;
+  object-fit: contain;
+  width: 92px;
+}
+
+.info-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.info-list article {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e3eadf;
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+}
+
+.info-list i {
+  color: #198754;
+}
+
+@media (max-width: 520px) {
+  .welcome-page .btn {
+    display: block;
+    margin: 10px 0 !important;
+    width: 100%;
+  }
+
+  .info-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

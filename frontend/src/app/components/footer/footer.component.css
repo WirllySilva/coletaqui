@@ -1,0 +1,53 @@
+.footer-background {
+  bottom: 0;
+  height: 80px;
+  left: 0;
+  padding: 20px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+.custom-footer {
+  align-items: center;
+  background: #fff;
+  border: 3px solid rgb(200, 209, 205);
+  border-radius: 30px;
+  bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  left: 50%;
+  max-width: 300px;
+  padding: 10px 20px;
+  position: fixed;
+  transform: translateX(-50%);
+  width: 80%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.footer-link {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.home-link {
+  padding-left: 20px;
+  text-align: left;
+}
+
+.chat-link {
+  padding-right: 20px;
+  text-align: right;
+}
+
+.footer-icon {
+  cursor: pointer;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  height: 30px;
+  width: 30px;
+}

@@ -1,0 +1,20 @@
+<div class="content-shell">
+  <app-header />
+  <main class="container page-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <section class="info-hero">
+      <img *ngIf="image" [src]="image" [alt]="title" />
+      <div>
+        <h1>{{ title }}</h1>
+        <p>{{ description }}</p>
+      </div>
+    </section>
+    <section class="info-list" *ngIf="items.length">
+      <article *ngFor="let item of items">
+        <i class="bi bi-check-circle"></i>
+        <span>{{ item }}</span>
+      </article>
+    </section>
+  </main>
+  <app-footer />
+</div>

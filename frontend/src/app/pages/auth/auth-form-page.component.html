@@ -1,0 +1,14 @@
+<main class="auth-page">
+  <section class="auth-panel">
+    <a routerLink="/" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
+    <form class="d-grid gap-3 mt-4">
+      <input class="form-control form-control-lg" type="text" placeholder="Nome" *ngIf="mode === 'register'" />
+      <input class="form-control form-control-lg" type="email" placeholder="E-mail" />
+      <input class="form-control form-control-lg" type="password" placeholder="Senha" *ngIf="mode !== 'recover'" />
+      <button class="btn btn-success btn-lg" type="button">{{ button }}</button>
+    </form>
+    <a class="small d-block mt-3" routerLink="/recovercommonuserpassword" *ngIf="mode === 'login'">Esqueci minha senha</a>
+  </section>
+</main>
