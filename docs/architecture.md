@@ -194,10 +194,36 @@ Principais tecnologias:
 - Hibernate.
 - PostgreSQL.
 - Lombok.
+- springdoc-openapi para documentação Swagger/OpenAPI.
 
 O backend utiliza o driver PostgreSQL em tempo de execução e recebe a configuração do banco por variáveis de ambiente.
 
-### 4.2 Objetivos do Backend
+### 4.2 Documentação da API
+
+A API deverá ser documentada com Swagger/OpenAPI usando a biblioteca `springdoc-openapi`.
+
+Objetivos:
+
+- Gerar documentação interativa das rotas REST.
+- Facilitar testes manuais durante o desenvolvimento.
+- Exibir contratos de request e response.
+- Documentar status HTTP, parâmetros, exemplos e autenticação.
+- Apoiar a apresentação técnica do projeto.
+
+URLs esperadas em ambiente local:
+
+```text
+Swagger UI: http://localhost:8080/swagger-ui/index.html
+OpenAPI JSON: http://localhost:8080/v3/api-docs
+```
+
+Quando a autenticação JWT estiver implementada, o Swagger UI deverá permitir informar o token pelo botão `Authorize`, usando o padrão:
+
+```text
+Authorization: Bearer <token>
+```
+
+### 4.3 Objetivos do Backend
 
 - Expor API REST para o PWA.
 - Gerenciar usuários, perfis e autenticação.
@@ -206,7 +232,7 @@ O backend utiliza o driver PostgreSQL em tempo de execução e recebe a configur
 - Registrar dados para relatórios e dashboards.
 - Aplicar regras de segurança, validação e auditoria.
 
-### 4.3 Estrutura Recomendada
+### 4.4 Estrutura Recomendada
 
 ```text
 backend/
@@ -248,7 +274,7 @@ backend/
       projection/
 ```
 
-### 4.4 Camadas
+### 4.5 Camadas
 
 Controller:
 
@@ -277,7 +303,7 @@ DTO:
 - Define objetos de entrada e saída da API.
 - Evita expor entidades diretamente ao frontend.
 
-### 4.5 Containerização do Backend
+### 4.6 Containerização do Backend
 
 O backend possui um `Dockerfile` próprio com build em múltiplos estágios:
 
@@ -294,7 +320,7 @@ DATABASE_PASSWORD=coletaqui
 
 ---
 
-### 4.6 Containerização do Frontend
+### 4.7 Containerização do Frontend
 
 O frontend possui um `Dockerfile` próprio com build em múltiplos estágios:
 
@@ -676,6 +702,13 @@ Backend:
 http://localhost:8080
 ```
 
+Swagger/OpenAPI:
+
+```text
+http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/v3/api-docs
+```
+
 Banco:
 
 ```text
@@ -744,6 +777,7 @@ Requisitos de segurança:
 - Validação de entrada via DTOs.
 - Não expor dados sensíveis nas respostas.
 - Logs sem vazamento de OTP em produção.
+- Swagger/OpenAPI em produção deve ser protegido, restrito ou desabilitado conforme o ambiente.
 
 ---
 
@@ -786,6 +820,7 @@ Evoluções futuras:
 - Backend será Java/Spring Boot.
 - Banco de dados será PostgreSQL.
 - ORM será Spring Data JPA/Hibernate.
+- Documentação da API será feita com Swagger/OpenAPI via springdoc-openapi.
 - Autenticação principal será telefone + OTP + JWT.
 - Fluxo recomendado de login/cadastro será unificado para reduzir fricção.
 - Administrador deve ter autenticação mais forte que OTP simples.

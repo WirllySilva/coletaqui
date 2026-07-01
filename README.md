@@ -39,6 +39,7 @@ Backend:
 - Spring Validation
 - Spring Data JPA
 - Hibernate
+- Swagger/OpenAPI com springdoc-openapi
 
 Banco de dados:
 
@@ -111,6 +112,8 @@ Serviços expostos:
 ```text
 Frontend:   http://localhost:4200
 Backend:    http://localhost:8080
+Swagger:    http://localhost:8080/swagger-ui/index.html
+OpenAPI:    http://localhost:8080/v3/api-docs
 PostgreSQL: localhost:5432
 ```
 
@@ -170,6 +173,18 @@ Por padrão, a API fica disponível em:
 http://localhost:8080
 ```
 
+Quando o Swagger/OpenAPI for configurado no backend, a documentação interativa da API ficará disponível em:
+
+```text
+http://localhost:8080/swagger-ui/index.html
+```
+
+O contrato OpenAPI em JSON ficará disponível em:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+
 ---
 
 ## Configuração de Ambiente
@@ -213,6 +228,7 @@ Planejadas para integração com backend:
 - Cadastro e consulta de pontos de coleta.
 - Agendamento de coleta.
 - Relatórios e dashboards de impacto.
+- Documentação e teste das rotas via Swagger/OpenAPI.
 
 ---
 
