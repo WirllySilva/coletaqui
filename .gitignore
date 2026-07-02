@@ -1,0 +1,16 @@
+.vscode/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+target/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
