@@ -15,10 +15,10 @@ import { Tip } from '../../models/tip.model';
 })
 export class HomeComponent {
   actions = [
-    { label: 'Como separar', route: '/howtoseparate', icon: 'assets/recyclebotton-icon.png' },
-    { label: 'Catadores', route: '/collectors', icon: 'assets/collector-icon.png' },
-    { label: 'Plante uma árvore', route: '/plantatree', icon: 'assets/plant-a-tree-icon.png' },
-    { label: 'Ranking', route: '/ranking', icon: 'assets/ranking-icon.png' },
+    { label: 'Como separar', route: '/howtoseparate', icon: 'bi-recycle' },
+    { label: 'Coletores', route: '/collectors', icon: 'bi-people-fill' },
+    { label: 'Plante uma árvore', route: '/plantatree', icon: 'bi-tree-fill' },
+    { label: 'Ranking', route: '/ranking', icon: 'bi-trophy-fill' },
   ];
 
   tips: Tip[] = [

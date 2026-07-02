@@ -17,8 +17,6 @@ import { PaperPageComponent } from './pages/paper/paper.component';
 import { PlantATreePageComponent } from './pages/plant-a-tree/plant-a-tree.component';
 import { PlasticPageComponent } from './pages/plastic/plastic.component';
 import { RankingPageComponent } from './pages/ranking/ranking.component';
-import { RecoverCollectorPasswordPageComponent } from './pages/recover-collector-password/recover-collector-password.component';
-import { RecoverCommonUserPasswordPageComponent } from './pages/recover-common-user-password/recover-common-user-password.component';
 import { RegisterChoicePageComponent } from './pages/register-choice/register-choice.component';
 import { UserDataPageComponent } from './pages/user-data/user-data.component';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
@@ -32,8 +30,6 @@ export const routes: Routes = [
   { path: 'collectorloginpage', component: CollectorLoginPageComponent },
   { path: 'commonuser-register', component: CommonUserRegisterPageComponent },
   { path: 'collector-register', component: CollectorRegisterPageComponent },
-  { path: 'recovercommonuserpassword', component: RecoverCommonUserPasswordPageComponent },
-  { path: 'recovercollectorpassword', component: RecoverCollectorPasswordPageComponent },
   { path: 'home', component: HomeComponent },
   { path: 'howtoseparate', component: HowToSeparatePageComponent },
   { path: 'collectors', component: CollectorsPageComponent },

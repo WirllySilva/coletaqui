@@ -30,34 +30,6 @@ a {
   text-decoration: none;
 }
 
-.welcome-page {
-  background: radial-gradient(circle at 50% 0%, #f4fff5 0, #e8f6ec 44%, #f8f9fa 100%);
-}
-
-.logo-mark {
-  align-items: center;
-  background: #198754;
-  border-radius: 50%;
-  color: #fff;
-  display: inline-flex;
-  font-size: 4rem;
-  height: 132px;
-  justify-content: center;
-  width: 132px;
-}
-
-.welcome-page h1 {
-  color: #145f2a;
-  font-size: 2.6rem;
-  font-weight: 700;
-}
-
-.tagline {
-  color: #35523d;
-  font-size: 1.35rem;
-  font-weight: 500;
-}
-
 .auth-page {
   align-items: center;
   background: #eef8f0;

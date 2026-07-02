@@ -1,3 +1,70 @@
 :host {
   display: block;
 }
+
+.back-link {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.auth-steps {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 22px;
+}
+
+.auth-steps span {
+  background: #edf5ee;
+  border-radius: 6px;
+  color: #5f6e64;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px;
+  text-align: center;
+}
+
+.auth-steps span.active {
+  background: #198754;
+  color: #fff;
+}
+
+.form-label {
+  color: #224b2f;
+  font-weight: 700;
+  margin: 0;
+}
+
+.helper-text,
+.profile-note {
+  color: #5d6a61;
+  font-size: 0.94rem;
+  margin: 0;
+}
+
+.otp-input {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.error-message {
+  background: #fff0f0;
+  border: 1px solid #f2c0c0;
+  border-radius: 6px;
+  color: #9b1c1c;
+  margin: 0;
+  padding: 10px 12px;
+}
+
+.dev-code {
+  background: #eaf7ef;
+  border: 1px solid #b9e5ca;
+  border-radius: 6px;
+  color: #155f34;
+  font-size: 0.94rem;
+  margin: 0;
+  padding: 10px 12px;
+}

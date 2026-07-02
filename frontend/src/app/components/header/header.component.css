@@ -29,6 +29,10 @@ button img {
   cursor: pointer;
 }
 
+.dropdown-item {
+  cursor: pointer;
+}
+
 .dropdown-menu.show {
   display: block;
   position: absolute;

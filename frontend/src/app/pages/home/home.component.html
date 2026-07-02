@@ -3,14 +3,16 @@
   <main class="container mt-3">
     <app-map-preview />
     <p class="text-center mt-2">Encontre no mapa pontos para deixar seu material reciclável.</p>
-    <div class="row text-center icon-buttons">
-      <div class="col icon-col" *ngFor="let item of actions">
-        <a [routerLink]="item.route" class="icon-link">
-          <img [src]="item.icon" [alt]="item.label" class="feature-icon" />
-        </a>
-        <p>{{ item.label }}</p>
-      </div>
-    </div>
+
+    <nav class="action-grid" aria-label="Ações principais">
+      <a [routerLink]="item.route" class="action-card" *ngFor="let item of actions">
+        <span class="action-icon">
+          <i class="bi" [ngClass]="item.icon" aria-hidden="true"></i>
+        </span>
+        <span class="action-label">{{ item.label }}</span>
+      </a>
+    </nav>
+
     <app-recycling-tips [tips]="tips" />
   </main>
   <app-footer />

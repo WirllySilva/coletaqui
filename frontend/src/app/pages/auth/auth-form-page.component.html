@@ -1,14 +1,67 @@
 <main class="auth-page">
   <section class="auth-panel">
-    <a routerLink="/" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <button type="button" class="back-link" (click)="back()"><i class="bi bi-arrow-left"></i> Voltar</button>
     <h1>{{ title }}</h1>
     <p>{{ subtitle }}</p>
+
+    <div class="auth-steps" aria-label="Etapas de acesso">
+      <span [class.active]="step === 'phone'">Telefone</span>
+      <span [class.active]="step === 'otp'">OTP</span>
+      <span [class.active]="step === 'profile'">Cadastro</span>
+    </div>
+
     <form class="d-grid gap-3 mt-4">
-      <input class="form-control form-control-lg" type="text" placeholder="Nome" *ngIf="mode === 'register'" />
-      <input class="form-control form-control-lg" type="email" placeholder="E-mail" />
-      <input class="form-control form-control-lg" type="password" placeholder="Senha" *ngIf="mode !== 'recover'" />
-      <button class="btn btn-success btn-lg" type="button">{{ button }}</button>
+      <ng-container *ngIf="step === 'phone'">
+        <label class="form-label" for="phone">Telefone com DDD</label>
+        <input
+          id="phone"
+          class="form-control form-control-lg"
+          type="tel"
+          inputmode="numeric"
+          placeholder="(85) 99999-9999"
+          [(ngModel)]="phone"
+          name="phone"
+        />
+        <p class="helper-text">Usaremos esse número para enviar o código OTP pelo WhatsApp. Se sua conta já existir, o login será concluído após a validação.</p>
+      </ng-container>
+
+      <ng-container *ngIf="step === 'otp'">
+        <label class="form-label" for="otp">Código OTP</label>
+        <input
+          id="otp"
+          class="form-control form-control-lg otp-input"
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          placeholder="000000"
+          [(ngModel)]="otp"
+          name="otp"
+        />
+        <p class="helper-text">Enviamos um código de 6 dígitos para {{ formattedPhone }}. Ele expira em 5 minutos.</p>
+        <p class="dev-code" *ngIf="devOtp">Código de desenvolvimento: <strong>{{ devOtp }}</strong></p>
+      </ng-container>
+
+      <ng-container *ngIf="step === 'profile'">
+        <p class="profile-note">Se esse telefone ainda não tiver cadastro, complete os dados de {{ profileLabel }}.</p>
+        <label class="form-label" for="name">Nome</label>
+        <input id="name" class="form-control form-control-lg" type="text" placeholder="Seu nome" [(ngModel)]="name" name="name" />
+
+        <ng-container *ngIf="profile === 'collector'">
+          <label class="form-label" for="region">Região de atuação</label>
+          <input id="region" class="form-control form-control-lg" type="text" placeholder="Bairro, cidade ou região" [(ngModel)]="region" name="region" />
+
+          <label class="form-label" for="materials">Materiais coletados</label>
+          <input id="materials" class="form-control form-control-lg" type="text" placeholder="Papel, plástico, metal..." [(ngModel)]="materials" name="materials" />
+
+          <label class="form-label" for="availability">Disponibilidade</label>
+          <input id="availability" class="form-control form-control-lg" type="text" placeholder="Ex.: segunda a sexta, manhã" [(ngModel)]="availability" name="availability" />
+        </ng-container>
+      </ng-container>
+
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+      <button class="btn btn-success btn-lg" type="button" (click)="continue()" [disabled]="isLoading">
+        {{ isLoading ? 'Aguarde...' : step === 'phone' ? 'Enviar código' : step === 'otp' ? 'Validar código' : 'Concluir' }}
+      </button>
     </form>
-    <a class="small d-block mt-3" routerLink="/recovercommonuserpassword" *ngIf="mode === 'login'">Esqueci minha senha</a>
   </section>
 </main>
