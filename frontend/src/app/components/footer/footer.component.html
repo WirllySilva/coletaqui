@@ -1,15 +1,17 @@
 <div class="footer-background">
-  <footer class="custom-footer">
-    <div class="footer-container">
-      <a routerLink="/home" class="footer-link home-link">
-        <img src="assets/home-icon.png" alt="Home" class="footer-icon" />
+  <footer class="custom-footer" aria-label="Navegação principal">
+    <nav class="footer-container">
+      <a
+        *ngFor="let item of items"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="footer-link"
+        [attr.aria-label]="item.label"
+      >
+        <i class="bi footer-icon" [ngClass]="item.icon" aria-hidden="true"></i>
+        <span>{{ item.label }}</span>
       </a>
-      <a routerLink="/howtoseparate" class="footer-link recycle-link">
-        <img src="assets/recycle-icon.png" alt="Reciclagem" class="footer-icon" />
-      </a>
-      <a routerLink="/collectors" class="footer-link chat-link">
-        <img src="assets/chat-icon.png" alt="Catadores" class="footer-icon" />
-      </a>
-    </div>
+    </nav>
   </footer>
 </div>

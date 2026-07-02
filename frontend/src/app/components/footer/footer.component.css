@@ -1,8 +1,8 @@
 .footer-background {
   bottom: 0;
-  height: 80px;
+  height: 84px;
   left: 0;
-  padding: 20px 0;
+  padding: 16px 0;
   position: fixed;
   width: 100%;
   z-index: 1000;
@@ -11,43 +11,60 @@
 .custom-footer {
   align-items: center;
   background: #fff;
-  border: 3px solid rgb(200, 209, 205);
-  border-radius: 30px;
+  border: 1px solid #c8d1cd;
+  border-radius: 28px;
   bottom: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.16);
   display: flex;
   left: 50%;
-  max-width: 300px;
-  padding: 10px 20px;
+  max-width: 320px;
+  padding: 8px 10px;
   position: fixed;
   transform: translateX(-50%);
-  width: 80%;
+  width: min(88%, 320px);
 }
 
 .footer-container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   width: 100%;
 }
 
 .footer-link {
-  flex-grow: 1;
+  align-items: center;
+  border-radius: 20px;
+  color: #78bed1;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.68rem;
+  font-weight: 800;
+  gap: 2px;
+  justify-content: center;
+  min-height: 48px;
   text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.home-link {
-  padding-left: 20px;
-  text-align: left;
-}
-
-.chat-link {
-  padding-right: 20px;
-  text-align: right;
+.footer-link:hover,
+.footer-link:focus-visible,
+.footer-link:active {
+  background: #e9f8ef;
+  color: #198754;
+  outline: none;
 }
 
 .footer-icon {
-  cursor: pointer;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-  height: 30px;
-  width: 30px;
+  font-size: 1.28rem;
+  line-height: 1;
+}
+
+@media (max-width: 340px) {
+  .custom-footer {
+    width: 92%;
+  }
+
+  .footer-link {
+    font-size: 0.62rem;
+  }
 }

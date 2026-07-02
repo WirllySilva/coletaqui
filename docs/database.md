@@ -67,6 +67,7 @@ Observação: em evolução futura, o projeto pode usar PostGIS para consultas g
 Entidades planejadas:
 
 - `users`
+- `user_addresses`
 - `otp_codes`
 - `collection_points`
 - `material_types`
@@ -88,6 +89,7 @@ Entidades de apoio recomendadas para evolução:
 ```mermaid
 erDiagram
     USERS ||--o{ OTP_CODES : "recebe"
+    USERS ||--o{ USER_ADDRESSES : "possui"
     USERS ||--o{ SCHEDULES : "solicita"
     USERS ||--o{ SCHEDULES : "atua_como_coletor"
     USERS ||--o{ COLLECTION_POINTS : "cria"
@@ -97,6 +99,7 @@ erDiagram
     MATERIAL_TYPES ||--o{ COLLECTION_POINT_MATERIALS : "classifica"
 
     MATERIAL_TYPES ||--o{ SCHEDULES : "material_agendado"
+    USER_ADDRESSES ||--o{ SCHEDULES : "endereco_da_coleta"
     SCHEDULES ||--o| COLLECTION_RECORDS : "gera"
     MATERIAL_TYPES ||--o{ COLLECTION_RECORDS : "material_coletado"
     COLLECTION_POINTS ||--o{ COLLECTION_RECORDS : "local_de_coleta"
@@ -109,6 +112,27 @@ erDiagram
         varchar role
         varchar status
         boolean profile_complete
+        varchar region
+        varchar materials
+        varchar availability
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    USER_ADDRESSES {
+        uuid id PK
+        uuid user_id FK
+        varchar label
+        varchar street
+        varchar number
+        varchar complement
+        varchar neighborhood
+        varchar city
+        varchar state
+        varchar zip_code
+        numeric latitude
+        numeric longitude
+        boolean default_address
         timestamptz created_at
         timestamptz updated_at
     }
@@ -159,6 +183,7 @@ erDiagram
         uuid id PK
         uuid user_id FK
         uuid collector_id FK
+        uuid address_id FK
         uuid material_type_id FK
         text address
         timestamptz scheduled_date
@@ -209,6 +234,9 @@ Representa usuários do sistema, incluindo usuário comum, catador/coletor e adm
 |`role`             |`varchar(30)` |Sim         | `COMMON_USER`, `COLLECTOR`, `ADMIN`                 |
 |`status`           |`varchar(30)` |Sim         | `ACTIVE`, `PENDING_APPROVAL`, `INACTIVE`, `BLOCKED` |
 |`profile_complete` |`boolean`     |Sim         | Indica se o cadastro foi finalizado                 |
+|`region`           |`varchar(120)`|Nao         | Bairro ou regiao resumida do perfil                 |
+|`materials`         |`varchar(255)`|Nao         | Materiais de interesse                              |
+|`availability`      |`varchar(120)`|Nao         | Disponibilidade informada pelo usuario              |
 |`created_at`       |`timestamptz` |Sim         | Data de criação                                     |
 |`updated_at`       |`timestamptz` |Sim         | Data de atualização                                 |
 
@@ -228,7 +256,44 @@ Cardinalidades:
 
 ---
 
-## 5.2 otp_codes
+## 5.2 user_addresses
+
+Representa os enderecos vinculados ao usuario autenticado. Essa entidade foi normalizada porque o mesmo usuario pode ter mais de um local de coleta, como casa, trabalho, condominio ou associacao.
+
+|Campo              |Tipo sugerido  |Obrigatorio |Observacao                                  |
+|-------------------|--------------:|-----------:|--------------------------------------------|
+|`id`               |`uuid`         |Sim         |Chave primaria                              |
+|`user_id`          |`uuid`         |Sim         |FK para `users.id`                          |
+|`label`            |`varchar(80)`  |Sim         |Identificacao do endereco: Casa, Trabalho  |
+|`street`           |`varchar(160)` |Sim         |Rua, avenida ou logradouro                  |
+|`number`           |`varchar(20)`  |Nao         |Numero do local                             |
+|`complement`       |`varchar(120)` |Nao         |Apto, bloco, referencia ou complemento      |
+|`neighborhood`     |`varchar(120)` |Sim         |Bairro                                      |
+|`city`             |`varchar(100)` |Sim         |Cidade                                      |
+|`state`            |`varchar(2)`   |Sim         |UF                                          |
+|`zip_code`         |`varchar(12)`  |Nao         |CEP                                         |
+|`latitude`         |`numeric(10,7)`|Nao         |Latitude para mapa/geolocalizacao           |
+|`longitude`        |`numeric(10,7)`|Nao         |Longitude para mapa/geolocalizacao          |
+|`default_address`  |`boolean`      |Sim         |Indica o endereco padrao do usuario         |
+|`created_at`       |`timestamptz`  |Sim         |Data de criacao                             |
+|`updated_at`       |`timestamptz`  |Sim         |Data de atualizacao                         |
+
+Regras:
+
+- Um endereco pertence a apenas um usuario.
+- Um usuario pode cadastrar varios enderecos.
+- O primeiro endereco cadastrado deve ser marcado como padrao.
+- Ao marcar um endereco como padrao, os demais enderecos do mesmo usuario devem deixar de ser padrao.
+- Agendamentos futuros devem poder referenciar um endereco do usuario em vez de duplicar todo o texto do endereco.
+
+Cardinalidades:
+
+- Um usuario possui zero ou muitos enderecos.
+- Um endereco pertence a exatamente um usuario.
+
+---
+
+## 5.3 otp_codes
 
 Representa códigos OTP emitidos para login ou início de cadastro.
 
@@ -259,7 +324,7 @@ Cardinalidades:
 
 ---
 
-## 5.3 material_types
+## 5.4 material_types
 
 Representa os tipos de materiais aceitos pelo sistema.
 
@@ -294,7 +359,7 @@ Cardinalidades:
 
 ---
 
-## 5.4 collection_points
+## 5.5 collection_points
 
 Representa pontos de coleta disponíveis para a comunidade.
 
@@ -327,7 +392,7 @@ Cardinalidades:
 
 ---
 
-## 5.5 collection_point_materials
+## 5.6 collection_point_materials
 
 Tabela associativa entre pontos de coleta e tipos de material.
 
@@ -352,7 +417,7 @@ Relacionamento:
 
 ---
 
-## 5.6 schedules
+## 5.7 schedules
 
 Representa solicitações/agendamentos de coleta.
 
@@ -393,7 +458,7 @@ Cardinalidades:
 
 ---
 
-## 5.7 collection_records
+## 5.8 collection_records
 
 Representa registros de coletas realizadas, usados para histórico, relatórios e dashboards.
 
@@ -425,7 +490,7 @@ Cardinalidades:
 
 ---
 
-## 5.8 impact_metrics
+## 5.9 impact_metrics
 
 Representa fatores de cálculo para dashboards de impacto.
 
@@ -459,6 +524,7 @@ Cardinalidades:
 | Relacionamento                           |Cardinalidade |Descrição                                                               |
 |------------------------------------------|-------------:|------------------------------------------------------------------------|
 |`users` → `otp_codes`                     |1:N           | Um usuário/telefone pode solicitar vários OTPs ao longo do tempo       |
+|`users` → `user_addresses`                |1:N           | Um usuario pode possuir varios enderecos de coleta                     |
 |`users` → `schedules` como solicitante    |1:N           | Um usuário pode solicitar vários agendamentos                          |
 |`users` → `schedules` como coletor        |1:N           | Um catador/coletor pode atender vários agendamentos                    |
 |`users` → `collection_points`             |1:N           | Um usuário autorizado pode cadastrar vários pontos                     |
@@ -480,6 +546,7 @@ Cardinalidades:
 |`users`                     |`unique(phone)`                                     | Impedir múltiplas contas para o mesmo telefone|
 |`users`                     |`check(role in (...))`                              | Restringir perfis válidos                     |
 |`users`                     |`check(status in (...))`                            | Restringir status válidos                     |
+|`user_addresses`            |`foreign key(user_id) references users(id)`         | Vincular endereco ao usuario                  |
 |`otp_codes`                 |`check(attempts >= 0)`                              | Evitar tentativas negativas                   |
 |`material_types`            |`unique(name)`                                      | Evitar duplicidade de material                |
 |`material_types`            |`unique(slug)`                                      | Garantir identificador estável                |
@@ -494,6 +561,8 @@ Cardinalidades:
 |--------------------|-----------------------------------------|------------------------------------|
 |`users`             |`idx_users_phone`                        |Busca por telefone no login/cadastro|
 |`users`             |`idx_users_role_status`                  |Filtros administrativos             |
+|`user_addresses`    |`idx_user_addresses_user_id`             |Listar enderecos do usuario         |
+|`user_addresses`    |`idx_user_addresses_default_address`     |Encontrar endereco padrao           |
 |`otp_codes`         |`idx_otp_codes_phone_created_at`         |Buscar OTP recente por telefone     |
 |`otp_codes`         |`idx_otp_codes_expires_at`               |Limpeza de OTPs expirados           |
 |`collection_points` |`idx_collection_points_city_state`       |Filtro por cidade/UF                |

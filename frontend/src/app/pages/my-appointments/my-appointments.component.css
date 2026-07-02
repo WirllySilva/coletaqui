@@ -1,0 +1,90 @@
+.menu-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 140px 16px 110px;
+}
+
+.menu-content {
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 6px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.page-heading p {
+  color: #4c6455;
+  margin: 0 0 16px;
+}
+
+.stats-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.stat-card,
+.empty-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+}
+
+.stat-card {
+  align-items: center;
+  color: #155f34;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 6px;
+  text-align: center;
+}
+
+.stat-card i {
+  font-size: 1.2rem;
+}
+
+.stat-card strong {
+  font-size: 1.2rem;
+}
+
+.stat-card span {
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.empty-card {
+  padding: 20px;
+  text-align: center;
+}
+
+.empty-card i {
+  color: #198754;
+  font-size: 2rem;
+}
+
+.empty-card h2 {
+  color: #124d2b;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 10px 0 6px;
+}
+
+.empty-card p {
+  color: #4c6455;
+}

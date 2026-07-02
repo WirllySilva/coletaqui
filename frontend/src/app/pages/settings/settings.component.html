@@ -1,0 +1,32 @@
+<div class="menu-page">
+  <app-header />
+
+  <main class="menu-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <h1>Configurações</h1>
+      <p>Ajustes gerais do aplicativo e preferências de uso.</p>
+    </section>
+
+    <section class="settings-card">
+      <label class="setting-row">
+        <span>
+          <strong>Notificações</strong>
+          <small>Receber avisos sobre agendamentos e novidades.</small>
+        </span>
+        <input type="checkbox" [(ngModel)]="notifications" />
+      </label>
+
+      <label class="setting-row">
+        <span>
+          <strong>Localização</strong>
+          <small>Usar localização para sugerir pontos próximos.</small>
+        </span>
+        <input type="checkbox" [(ngModel)]="location" />
+      </label>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

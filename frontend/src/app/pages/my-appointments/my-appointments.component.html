@@ -1,0 +1,29 @@
+<div class="menu-page">
+  <app-header />
+
+  <main class="menu-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <h1>Meus agendamentos</h1>
+      <p>Acompanhe solicitações de coleta e histórico de atendimentos.</p>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card" *ngFor="let item of statuses">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <strong>{{ item.value }}</strong>
+        <span>{{ item.label }}</span>
+      </article>
+    </section>
+
+    <section class="empty-card">
+      <i class="bi bi-calendar-plus"></i>
+      <h2>Nenhum agendamento ainda</h2>
+      <p>Quando a tela de agendamento estiver pronta, suas solicitações aparecerão aqui.</p>
+      <a routerLink="/home" class="btn btn-success">Agendar coleta</a>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

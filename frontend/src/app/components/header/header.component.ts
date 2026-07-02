@@ -29,6 +29,22 @@ export class HeaderComponent implements OnInit {
     void this.router.navigateByUrl('/');
   }
 
+  shareApp(): void {
+    this.menuOpen = false;
+    const shareData = {
+      title: 'Coletaqui',
+      text: 'Conheça o Coletaqui para encontrar pontos de coleta e agendar coleta de recicláveis.',
+      url: window.location.origin,
+    };
+
+    if (navigator.share) {
+      void navigator.share(shareData);
+      return;
+    }
+
+    void navigator.clipboard?.writeText(shareData.url);
+  }
+
   private getStoredUserName(): string {
     const storedUser = localStorage.getItem('coletaqui_user');
 

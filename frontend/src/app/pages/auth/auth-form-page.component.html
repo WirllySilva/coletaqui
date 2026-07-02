@@ -48,7 +48,7 @@
 
         <ng-container *ngIf="profile === 'collector'">
           <label class="form-label" for="region">Região de atuação</label>
-          <input id="region" class="form-control form-control-lg" type="text" placeholder="Bairro, cidade ou região" [(ngModel)]="region" name="region" />
+          <input id="region" class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Ex.: Centro, Araçoiaba" [(ngModel)]="region" name="region" />
 
           <label class="form-label" for="materials">Materiais coletados</label>
           <input id="materials" class="form-control form-control-lg" type="text" placeholder="Papel, plástico, metal..." [(ngModel)]="materials" name="materials" />

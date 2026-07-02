@@ -1,0 +1,84 @@
+.menu-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 140px 16px 110px;
+}
+
+.menu-content {
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 6px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.page-heading p {
+  color: #4c6455;
+  margin: 0 0 16px;
+}
+
+.contact-card,
+.list-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+  margin-bottom: 12px;
+  padding: 16px;
+}
+
+.contact-card {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.contact-card > i {
+  color: #198754;
+  font-size: 2rem;
+}
+
+.contact-card h2,
+.list-card h2 {
+  color: #124d2b;
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+}
+
+.contact-card p {
+  color: #4c6455;
+  margin: 0;
+}
+
+.list-card ul {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-card li {
+  align-items: flex-start;
+  color: #3f5147;
+  display: flex;
+  gap: 8px;
+}
+
+.list-card li i {
+  color: #198754;
+}

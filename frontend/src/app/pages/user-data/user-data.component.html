@@ -1,1 +1,133 @@
-<app-info-page title="Dados do Usuário" description="Tela de perfil migrada para Angular, pronta para conectar ao backend." image="assets/user-icon.png" [items]="items" />
+<div class="profile-page">
+  <app-header />
+
+  <main class="profile-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="profile-header">
+      <h1>Meu perfil</h1>
+      <p>Atualize seus dados principais para usar melhor o Coletaqui.</p>
+    </section>
+
+    <section class="profile-card" *ngIf="isLoading">
+      <p class="mb-0">Carregando perfil...</p>
+    </section>
+
+    <form class="profile-card" *ngIf="!isLoading" (ngSubmit)="save()">
+      <div class="profile-summary" *ngIf="profile">
+        <span><i class="bi bi-phone"></i> {{ profile.phone }}</span>
+        <span><i class="bi bi-person-badge"></i> {{ profile.role === 'COLLECTOR' ? 'Coletor' : 'Usuário comum' }}</span>
+      </div>
+
+      <label class="form-label" for="name">Nome</label>
+      <input id="name" class="form-control" type="text" [(ngModel)]="name" name="name" placeholder="Seu nome completo" />
+
+      <label class="form-label" for="region">Bairro ou região</label>
+      <input id="region" class="form-control" type="text" autocomplete="off" [(ngModel)]="region" name="region" placeholder="Ex.: Centro, Araçoiaba" />
+
+      <fieldset>
+        <legend>Materiais de interesse</legend>
+        <div class="check-grid">
+          <label class="check-option" *ngFor="let material of materialOptions" [class.selected]="isMaterialSelected(material)">
+            <input type="checkbox" [checked]="isMaterialSelected(material)" (change)="toggleMaterial(material)" />
+            <span>{{ material }}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Disponibilidade</legend>
+        <div class="check-grid">
+          <label class="check-option" *ngFor="let option of availabilityOptions" [class.selected]="isAvailabilitySelected(option)">
+            <input type="checkbox" [checked]="isAvailabilitySelected(option)" (change)="toggleAvailability(option)" />
+            <span>{{ option }}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <p class="success-message" *ngIf="message">{{ message }}</p>
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+
+      <button class="btn btn-success btn-lg" type="submit" [disabled]="isSaving">
+        {{ isSaving ? 'Salvando...' : 'Salvar perfil' }}
+      </button>
+    </form>
+
+    <section class="profile-card address-card" *ngIf="!isLoading">
+      <div class="section-title">
+        <div>
+          <h2>Meus enderecos</h2>
+          <p>Cadastre os locais que poderao ser usados nos agendamentos.</p>
+        </div>
+        <span class="address-count">{{ addresses.length }}</span>
+      </div>
+
+      <p class="muted-message" *ngIf="isLoadingAddresses">Carregando enderecos...</p>
+
+      <div class="address-list" *ngIf="!isLoadingAddresses && addresses.length">
+        <article class="address-item" *ngFor="let address of addresses">
+          <div>
+            <strong>{{ address.label }}</strong>
+            <span class="default-badge" *ngIf="address.defaultAddress">Padrao</span>
+            <p>{{ addressLine(address) }}</p>
+          </div>
+          <button class="icon-action" type="button" aria-label="Remover endereco" (click)="removeAddress(address)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </article>
+      </div>
+
+      <p class="muted-message" *ngIf="!isLoadingAddresses && !addresses.length">Nenhum endereco cadastrado ainda.</p>
+
+      <div class="address-form">
+        <label class="form-label" for="address-label">Identificacao</label>
+        <input id="address-label" class="form-control" type="text" [(ngModel)]="addressForm.label" name="addressLabel" placeholder="Ex.: Casa, trabalho" />
+
+        <label class="form-label" for="street">Rua</label>
+        <input id="street" class="form-control" type="text" [(ngModel)]="addressForm.street" name="street" placeholder="Nome da rua" />
+
+        <div class="form-row">
+          <div>
+            <label class="form-label" for="number">Numero</label>
+            <input id="number" class="form-control" type="text" [(ngModel)]="addressForm.number" name="number" placeholder="123" />
+          </div>
+          <div>
+            <label class="form-label" for="zipCode">CEP</label>
+            <input id="zipCode" class="form-control" type="text" [(ngModel)]="addressForm.zipCode" name="zipCode" placeholder="00000-000" />
+          </div>
+        </div>
+
+        <label class="form-label" for="complement">Complemento</label>
+        <input id="complement" class="form-control" type="text" [(ngModel)]="addressForm.complement" name="complement" placeholder="Apto, bloco, referencia" />
+
+        <label class="form-label" for="neighborhood">Bairro</label>
+        <input id="neighborhood" class="form-control" type="text" [(ngModel)]="addressForm.neighborhood" name="neighborhood" placeholder="Seu bairro" />
+
+        <div class="form-row">
+          <div>
+            <label class="form-label" for="city">Cidade</label>
+            <input id="city" class="form-control" type="text" autocomplete="off" [(ngModel)]="addressForm.city" name="city" placeholder="Araçoiaba" />
+          </div>
+          <div>
+            <label class="form-label" for="state">UF</label>
+            <input id="state" class="form-control" type="text" maxlength="2" autocomplete="off" [(ngModel)]="addressForm.state" name="state" placeholder="PE" />
+          </div>
+        </div>
+
+        <label class="check-option single-check" [class.selected]="addressForm.defaultAddress">
+          <input type="checkbox" [(ngModel)]="addressForm.defaultAddress" name="defaultAddress" />
+          <span>Usar como endereco padrao</span>
+        </label>
+
+        <p class="success-message" *ngIf="addressMessage">{{ addressMessage }}</p>
+        <p class="error-message" *ngIf="addressError">{{ addressError }}</p>
+
+        <button class="btn btn-outline-success" type="button" [disabled]="isSavingAddress" (click)="saveAddress()">
+          {{ isSavingAddress ? 'Salvando...' : 'Adicionar endereco' }}
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

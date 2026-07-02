@@ -5,10 +5,11 @@
         <img src="assets/user-icon.png" alt="Usuário" class="rounded-circle" width="40" height="40" />
       </button>
       <div class="dropdown-menu dropdown-menu-end" [class.show]="menuOpen">
-        <a class="dropdown-item" routerLink="/userdata"><i class="bi bi-person me-2"></i>Dados do Usuário</a>
-        <a class="dropdown-item" routerLink="/"><i class="bi bi-share me-2"></i>Compartilhar App</a>
-        <a class="dropdown-item" routerLink="/"><i class="bi bi-whatsapp me-2 text-success"></i>Fale Conosco</a>
-        <a class="dropdown-item" routerLink="/"><i class="bi bi-gear me-2"></i>Configurações</a>
+        <a class="dropdown-item" routerLink="/userdata" (click)="menuOpen = false"><i class="bi bi-person me-2"></i>Meu perfil</a>
+        <a class="dropdown-item" routerLink="/my-appointments" (click)="menuOpen = false"><i class="bi bi-calendar-check me-2"></i>Meus agendamentos</a>
+        <button class="dropdown-item" type="button" (click)="shareApp()"><i class="bi bi-share me-2"></i>Compartilhar app</button>
+        <a class="dropdown-item" routerLink="/help-contact" (click)="menuOpen = false"><i class="bi bi-whatsapp me-2 text-success"></i>Ajuda e contato</a>
+        <a class="dropdown-item" routerLink="/settings" (click)="menuOpen = false"><i class="bi bi-gear me-2"></i>Configurações</a>
         <div class="dropdown-divider"></div>
         <button class="dropdown-item text-danger" type="button" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Sair da Conta</button>
       </div>
