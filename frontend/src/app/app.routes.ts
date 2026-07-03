@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
+import { collectorHomeGuard, commonHomeGuard } from './guards/role-home.guard';
 import { AboutPageComponent } from './pages/about/about.component';
 import { AccountTypeChoicePageComponent } from './pages/account-type-choice/account-type-choice.component';
 import { BatteryPageComponent } from './pages/battery/battery.component';
+import { CollectorHomeComponent } from './pages/collector-home/collector-home.component';
 import { CollectorLoginPageComponent } from './pages/collector-login/collector-login.component';
 import { CollectorRegisterPageComponent } from './pages/collector-register/collector-register.component';
+import { CollectorRequestsComponent } from './pages/collector-requests/collector-requests.component';
+import { CollectorScheduleComponent } from './pages/collector-schedule/collector-schedule.component';
 import { CollectorsPageComponent } from './pages/collectors/collectors.component';
 import { CommonUserLoginPageComponent } from './pages/common-user-login/common-user-login.component';
 import { CommonUserRegisterPageComponent } from './pages/common-user-register/common-user-register.component';
@@ -33,10 +37,13 @@ export const routes: Routes = [
   { path: 'collectorloginpage', component: CollectorLoginPageComponent },
   { path: 'commonuser-register', component: CommonUserRegisterPageComponent },
   { path: 'collector-register', component: CollectorRegisterPageComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'collector-home', component: CollectorHomeComponent, canActivate: [collectorHomeGuard] },
+  { path: 'collector-requests', component: CollectorRequestsComponent, canActivate: [collectorHomeGuard] },
+  { path: 'collector-schedule', component: CollectorScheduleComponent, canActivate: [collectorHomeGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [commonHomeGuard] },
   { path: 'howtoseparate', component: HowToSeparatePageComponent },
   { path: 'collectors', component: CollectorsPageComponent },
-  { path: 'collector', redirectTo: 'collectors', pathMatch: 'full' },
+  { path: 'collector', redirectTo: 'collector-home', pathMatch: 'full' },
   { path: 'plantatree', component: PlantATreePageComponent },
   { path: 'ranking', component: RankingPageComponent },
   { path: 'my-appointments', component: MyAppointmentsPageComponent },

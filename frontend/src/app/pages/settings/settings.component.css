@@ -1,7 +1,11 @@
 .menu-page {
   background: #e0f7e9;
   min-height: 100vh;
-  padding: 140px 16px 110px;
+  padding: 118px 16px 110px;
+}
+
+.menu-page.collector-settings {
+  background: #eaf8fb;
 }
 
 .menu-content {
@@ -10,7 +14,10 @@
 }
 
 .back-link {
+  background: none;
+  border: 0;
   color: #0f6b3b;
+  cursor: pointer;
   display: inline-flex;
   font-weight: 700;
   gap: 6px;
@@ -18,11 +25,20 @@
   text-decoration: none;
 }
 
+.collector-settings .back-link {
+  color: #2c8da7;
+}
+
 .page-heading h1 {
   color: #124d2b;
   font-size: 1.55rem;
   font-weight: 800;
   margin: 0 0 6px;
+}
+
+.collector-settings .page-heading h1,
+.collector-settings .setting-row strong {
+  color: #174a5a;
 }
 
 .page-heading p {
@@ -38,6 +54,11 @@
   display: grid;
   gap: 12px;
   padding: 16px;
+}
+
+.collector-settings .settings-card {
+  border-color: #caedf4;
+  box-shadow: 0 8px 20px rgba(23, 74, 90, 0.1);
 }
 
 .setting-row {
@@ -63,4 +84,8 @@
   accent-color: #198754;
   height: 22px;
   width: 22px;
+}
+
+.collector-settings .setting-row input {
+  accent-color: #55b6ce;
 }

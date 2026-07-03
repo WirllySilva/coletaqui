@@ -1,12 +1,12 @@
-<div class="menu-page">
+<div class="menu-page" [class.collector-help]="isCollector">
   <app-header />
 
   <main class="menu-content">
-    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <button type="button" class="back-link" (click)="goBack()"><i class="bi bi-arrow-left"></i> Voltar</button>
 
     <section class="page-heading">
       <h1>Ajuda e contato</h1>
-      <p>Encontre orientação rápida para usar o Coletaqui na comunidade.</p>
+      <p>{{ isCollector ? 'Suporte para uso do painel do coletor.' : 'Encontre orientação rápida para usar o Coletaqui na comunidade.' }}</p>
     </section>
 
     <section class="contact-card">
@@ -20,7 +20,7 @@
     <section class="list-card">
       <h2>Podemos ajudar com</h2>
       <ul>
-        <li *ngFor="let topic of topics"><i class="bi bi-check-circle"></i>{{ topic }}</li>
+        <li *ngFor="let topic of (isCollector ? collectorTopics : topics)"><i class="bi bi-check-circle"></i>{{ topic }}</li>
       </ul>
     </section>
   </main>

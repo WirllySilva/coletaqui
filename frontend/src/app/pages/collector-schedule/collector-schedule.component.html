@@ -1,0 +1,35 @@
+<div class="collector-page">
+  <app-header />
+
+  <main class="collector-content">
+    <button type="button" class="back-link" (click)="goHome()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <section class="page-heading">
+      <h1>Agenda</h1>
+      <p>Acompanhe coletas aceitas e registre a conclusão do atendimento.</p>
+    </section>
+
+    <p class="state-card" *ngIf="isLoading">Carregando agenda...</p>
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <article class="request-card" *ngFor="let schedule of schedules">
+      <div class="request-head">
+        <strong>{{ schedule.requesterName || 'Solicitante' }}</strong>
+        <span [class.completed]="schedule.status === 'COMPLETED'">{{ statusLabel(schedule.status) }}</span>
+      </div>
+      <p><i class="bi bi-geo-alt"></i> {{ schedule.address }}</p>
+      <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
+      <p><i class="bi bi-clock"></i> {{ schedule.preferredPeriod }}</p>
+      <p *ngIf="schedule.requesterPhone"><i class="bi bi-phone"></i> {{ schedule.requesterPhone }}</p>
+      <button class="complete-button" type="button" *ngIf="schedule.status === 'ACCEPTED'" (click)="complete(schedule)">
+        <i class="bi bi-check2-circle"></i>
+        Marcar como concluída
+      </button>
+    </article>
+
+    <p class="state-card" *ngIf="!isLoading && !schedules.length">Nenhuma coleta aceita ainda.</p>
+  </main>
+
+  <app-footer />
+</div>

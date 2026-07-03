@@ -1,7 +1,11 @@
 .profile-page {
   background: #e0f7e9;
   min-height: 100vh;
-  padding: 140px 16px 110px;
+  padding: 118px 16px 110px;
+}
+
+.profile-page.collector-profile {
+  background: #eaf8fb;
 }
 
 .profile-content {
@@ -10,7 +14,10 @@
 }
 
 .back-link {
+  background: none;
+  border: 0;
   color: #0f6b3b;
+  cursor: pointer;
   display: inline-flex;
   font-weight: 700;
   gap: 6px;
@@ -27,6 +34,22 @@
   font-size: 1.55rem;
   font-weight: 800;
   margin: 0 0 6px;
+}
+
+.collector-profile .profile-header h1,
+.collector-profile .form-label,
+.collector-profile legend,
+.collector-profile .section-title h2 {
+  color: #174a5a;
+}
+
+.collector-profile .back-link {
+  color: #2c8da7;
+}
+
+.collector-profile .profile-card {
+  border-color: #caedf4;
+  box-shadow: 0 8px 20px rgba(23, 74, 90, 0.12);
 }
 
 .profile-header p {
@@ -61,6 +84,11 @@
   font-weight: 700;
   gap: 8px;
   padding: 8px 10px;
+}
+
+.collector-profile .profile-summary span {
+  background: #eefafe;
+  color: #174a5a;
 }
 
 .form-label {
@@ -112,6 +140,22 @@ legend {
   color: #155f34;
 }
 
+.collector-profile .check-option {
+  background: #f8fdff;
+  border-color: #caedf4;
+  color: #174a5a;
+}
+
+.collector-profile .check-option.selected {
+  background: #eaf8fb;
+  border-color: #55b6ce;
+  color: #174a5a;
+}
+
+.collector-profile .check-option input {
+  accent-color: #55b6ce;
+}
+
 .check-option input {
   accent-color: #198754;
   flex: 0 0 auto;
@@ -154,6 +198,11 @@ legend {
   justify-content: center;
   min-width: 30px;
   padding: 0 10px;
+}
+
+.collector-profile .address-count {
+  background: #eefafe;
+  color: #174a5a;
 }
 
 .address-list,

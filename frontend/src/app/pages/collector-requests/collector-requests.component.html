@@ -1,0 +1,35 @@
+<div class="collector-page">
+  <app-header />
+
+  <main class="collector-content">
+    <button type="button" class="back-link" (click)="goHome()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <section class="page-heading">
+      <h1>Solicitações</h1>
+      <p>Veja pedidos disponíveis e aceite as coletas que fazem sentido para sua rota.</p>
+    </section>
+
+    <p class="state-card" *ngIf="isLoading">Carregando solicitações...</p>
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <article class="request-card" *ngFor="let request of requests">
+      <div class="request-head">
+        <strong>{{ request.requesterName || 'Solicitante' }}</strong>
+        <span>Disponível</span>
+      </div>
+      <p><i class="bi bi-geo-alt"></i> {{ request.address }}</p>
+      <p><i class="bi bi-recycle"></i> {{ request.materials.join(', ') }}</p>
+      <p><i class="bi bi-clock"></i> {{ request.preferredPeriod }}</p>
+      <p *ngIf="request.notes"><i class="bi bi-chat-left-text"></i> {{ request.notes }}</p>
+      <button class="accept-button" type="button" (click)="accept(request)">
+        <i class="bi bi-check-circle-fill"></i>
+        Aceitar coleta
+      </button>
+    </article>
+
+    <p class="state-card" *ngIf="!isLoading && !requests.length">Nenhuma solicitação aberta no momento.</p>
+  </main>
+
+  <app-footer />
+</div>

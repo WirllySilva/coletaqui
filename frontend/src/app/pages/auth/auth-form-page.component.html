@@ -1,4 +1,4 @@
-<main class="auth-page">
+<main class="auth-page" [class.collector-auth]="profile === 'collector'">
   <section class="auth-panel">
     <button type="button" class="back-link" (click)="back()"><i class="bi bi-arrow-left"></i> Voltar</button>
     <h1>{{ title }}</h1>
@@ -43,23 +43,37 @@
 
       <ng-container *ngIf="step === 'profile'">
         <p class="profile-note">Se esse telefone ainda não tiver cadastro, complete os dados de {{ profileLabel }}.</p>
-        <label class="form-label" for="name">Nome</label>
-        <input id="name" class="form-control form-control-lg" type="text" placeholder="Seu nome" [(ngModel)]="name" name="name" />
+        <label class="form-label" for="name">Nome ou empresa</label>
+        <input id="name" class="form-control form-control-lg" type="text" placeholder="Seu nome ou nome da empresa" [(ngModel)]="name" name="name" />
 
         <ng-container *ngIf="profile === 'collector'">
           <label class="form-label" for="region">Região de atuação</label>
           <input id="region" class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Ex.: Centro, Araçoiaba" [(ngModel)]="region" name="region" />
 
-          <label class="form-label" for="materials">Materiais coletados</label>
-          <input id="materials" class="form-control form-control-lg" type="text" placeholder="Papel, plástico, metal..." [(ngModel)]="materials" name="materials" />
+          <fieldset>
+            <legend>Materiais coletados</legend>
+            <div class="check-grid">
+              <label class="check-option" *ngFor="let material of materialOptions" [class.selected]="isMaterialSelected(material)">
+                <input type="checkbox" [checked]="isMaterialSelected(material)" (change)="toggleMaterial(material)" />
+                <span>{{ material }}</span>
+              </label>
+            </div>
+          </fieldset>
 
-          <label class="form-label" for="availability">Disponibilidade</label>
-          <input id="availability" class="form-control form-control-lg" type="text" placeholder="Ex.: segunda a sexta, manhã" [(ngModel)]="availability" name="availability" />
+          <fieldset>
+            <legend>Disponibilidade</legend>
+            <div class="check-grid">
+              <label class="check-option" *ngFor="let option of availabilityOptions" [class.selected]="isAvailabilitySelected(option)">
+                <input type="checkbox" [checked]="isAvailabilitySelected(option)" (change)="toggleAvailability(option)" />
+                <span>{{ option }}</span>
+              </label>
+            </div>
+          </fieldset>
         </ng-container>
       </ng-container>
 
       <p class="error-message" *ngIf="error">{{ error }}</p>
-      <button class="btn btn-success btn-lg" type="button" (click)="continue()" [disabled]="isLoading">
+      <button class="btn btn-success btn-lg submit-button" type="button" (click)="continue()" [disabled]="isLoading">
         {{ isLoading ? 'Aguarde...' : step === 'phone' ? 'Enviar código' : step === 'otp' ? 'Validar código' : 'Concluir' }}
       </button>
     </form>

@@ -1,12 +1,12 @@
-<div class="profile-page">
+<div class="profile-page" [class.collector-profile]="isCollector">
   <app-header />
 
   <main class="profile-content">
-    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <button type="button" class="back-link" (click)="goBack()"><i class="bi bi-arrow-left"></i> Voltar</button>
 
     <section class="profile-header">
-      <h1>Meu perfil</h1>
-      <p>Atualize seus dados principais para usar melhor o Coletaqui.</p>
+      <h1>{{ isCollector ? 'Perfil do coletor' : 'Meu perfil' }}</h1>
+      <p>{{ isCollector ? 'Atualize seus dados de atuação e contato para receber solicitações.' : 'Atualize seus dados principais para usar melhor o Coletaqui.' }}</p>
     </section>
 
     <section class="profile-card" *ngIf="isLoading">
@@ -19,14 +19,14 @@
         <span><i class="bi bi-person-badge"></i> {{ profile.role === 'COLLECTOR' ? 'Coletor' : 'Usuário comum' }}</span>
       </div>
 
-      <label class="form-label" for="name">Nome</label>
-      <input id="name" class="form-control" type="text" [(ngModel)]="name" name="name" placeholder="Seu nome completo" />
+      <label class="form-label" for="name">{{ isCollector ? 'Nome ou empresa' : 'Nome' }}</label>
+      <input id="name" class="form-control" type="text" [(ngModel)]="name" name="name" [placeholder]="isCollector ? 'Seu nome ou nome da empresa' : 'Seu nome completo'" />
 
-      <label class="form-label" for="region">Bairro ou região</label>
+      <label class="form-label" for="region">{{ isCollector ? 'Região de atuação' : 'Bairro ou região' }}</label>
       <input id="region" class="form-control" type="text" autocomplete="off" [(ngModel)]="region" name="region" placeholder="Ex.: Centro, Araçoiaba" />
 
       <fieldset>
-        <legend>Materiais de interesse</legend>
+        <legend>{{ isCollector ? 'Materiais coletados' : 'Materiais de interesse' }}</legend>
         <div class="check-grid">
           <label class="check-option" *ngFor="let material of materialOptions" [class.selected]="isMaterialSelected(material)">
             <input type="checkbox" [checked]="isMaterialSelected(material)" (change)="toggleMaterial(material)" />
@@ -56,8 +56,8 @@
     <section class="profile-card address-card" *ngIf="!isLoading">
       <div class="section-title">
         <div>
-          <h2>Meus enderecos</h2>
-          <p>Cadastre os locais que poderao ser usados nos agendamentos.</p>
+          <h2>{{ isCollector ? 'Bases de atendimento' : 'Meus enderecos' }}</h2>
+          <p>{{ isCollector ? 'Cadastre pontos de referência para sua área de atuação.' : 'Cadastre os locais que poderao ser usados nos agendamentos.' }}</p>
         </div>
         <span class="address-count">{{ addresses.length }}</span>
       </div>

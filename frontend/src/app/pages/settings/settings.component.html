@@ -1,19 +1,19 @@
-<div class="menu-page">
+<div class="menu-page" [class.collector-settings]="isCollector">
   <app-header />
 
   <main class="menu-content">
-    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+    <button type="button" class="back-link" (click)="goBack()"><i class="bi bi-arrow-left"></i> Voltar</button>
 
     <section class="page-heading">
       <h1>Configurações</h1>
-      <p>Ajustes gerais do aplicativo e preferências de uso.</p>
+      <p>{{ isCollector ? 'Ajustes do painel do coletor e preferências de atendimento.' : 'Ajustes gerais do aplicativo e preferências de uso.' }}</p>
     </section>
 
     <section class="settings-card">
       <label class="setting-row">
         <span>
           <strong>Notificações</strong>
-          <small>Receber avisos sobre agendamentos e novidades.</small>
+          <small>{{ isCollector ? 'Receber avisos sobre novas solicitações e agenda.' : 'Receber avisos sobre agendamentos e novidades.' }}</small>
         </span>
         <input type="checkbox" [(ngModel)]="notifications" />
       </label>
@@ -21,7 +21,7 @@
       <label class="setting-row">
         <span>
           <strong>Localização</strong>
-          <small>Usar localização para sugerir pontos próximos.</small>
+          <small>{{ isCollector ? 'Usar localização para organizar rotas e solicitações próximas.' : 'Usar localização para sugerir pontos próximos.' }}</small>
         </span>
         <input type="checkbox" [(ngModel)]="location" />
       </label>

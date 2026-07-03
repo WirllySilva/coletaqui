@@ -1,7 +1,11 @@
 .menu-page {
   background: #e0f7e9;
   min-height: 100vh;
-  padding: 140px 16px 110px;
+  padding: 118px 16px 110px;
+}
+
+.menu-page.collector-help {
+  background: #eaf8fb;
 }
 
 .menu-content {
@@ -10,7 +14,10 @@
 }
 
 .back-link {
+  background: none;
+  border: 0;
   color: #0f6b3b;
+  cursor: pointer;
   display: inline-flex;
   font-weight: 700;
   gap: 6px;
@@ -18,11 +25,21 @@
   text-decoration: none;
 }
 
+.collector-help .back-link {
+  color: #2c8da7;
+}
+
 .page-heading h1 {
   color: #124d2b;
   font-size: 1.55rem;
   font-weight: 800;
   margin: 0 0 6px;
+}
+
+.collector-help .page-heading h1,
+.collector-help .contact-card h2,
+.collector-help .list-card h2 {
+  color: #174a5a;
 }
 
 .page-heading p {
@@ -40,6 +57,12 @@
   padding: 16px;
 }
 
+.collector-help .contact-card,
+.collector-help .list-card {
+  border-color: #caedf4;
+  box-shadow: 0 8px 20px rgba(23, 74, 90, 0.1);
+}
+
 .contact-card {
   align-items: center;
   display: flex;
@@ -49,6 +72,11 @@
 .contact-card > i {
   color: #198754;
   font-size: 2rem;
+}
+
+.collector-help .contact-card > i,
+.collector-help .list-card li i {
+  color: #55b6ce;
 }
 
 .contact-card h2,

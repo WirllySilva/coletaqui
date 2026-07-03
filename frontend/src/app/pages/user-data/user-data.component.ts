@@ -33,6 +33,10 @@ export class UserDataPageComponent implements OnInit {
   materialOptions = ['Papel', 'Plástico', 'Vidro', 'Metal', 'Óleo', 'Pilhas e baterias', 'Orgânico'];
   availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
 
+  get isCollector(): boolean {
+    return this.profile?.role === 'COLLECTOR';
+  }
+
   constructor(
     private readonly userService: UserService,
     private readonly router: Router,
@@ -63,6 +67,10 @@ export class UserDataPageComponent implements OnInit {
 
   toggleAvailability(value: string): void {
     this.selectedAvailability = this.toggleValue(this.selectedAvailability, value);
+  }
+
+  goBack(): void {
+    void this.router.navigateByUrl(this.isCollector ? '/collector-home' : '/home');
   }
 
   save(): void {

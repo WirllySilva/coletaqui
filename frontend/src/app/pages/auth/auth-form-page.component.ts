@@ -23,10 +23,15 @@ export class AuthFormPageComponent {
   region = '';
   materials = '';
   availability = '';
+  selectedMaterials: string[] = [];
+  selectedAvailability: string[] = [];
   error = '';
   isLoading = false;
   devOtp = '';
   private authToken = '';
+
+  materialOptions = ['Papel', 'Plástico', 'Vidro', 'Metal', 'Óleo', 'Pilhas e baterias', 'Orgânico'];
+  availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
 
   constructor(
     private readonly router: Router,
@@ -35,7 +40,7 @@ export class AuthFormPageComponent {
   ) {}
 
   get profileLabel(): string {
-    return this.profile === 'collector' ? 'catador/coletor' : 'usuário comum';
+    return this.profile === 'collector' ? 'coletor' : 'usuário comum';
   }
 
   get formattedPhone(): string {
@@ -52,10 +57,26 @@ export class AuthFormPageComponent {
     }
 
     if (this.profile === 'collector') {
-      return Boolean(this.name.trim() && this.region.trim() && this.materials.trim() && this.availability.trim());
+      return Boolean(this.name.trim() && this.region.trim() && this.selectedMaterials.length && this.selectedAvailability.length);
     }
 
     return Boolean(this.name.trim());
+  }
+
+  isMaterialSelected(value: string): boolean {
+    return this.selectedMaterials.includes(value);
+  }
+
+  isAvailabilitySelected(value: string): boolean {
+    return this.selectedAvailability.includes(value);
+  }
+
+  toggleMaterial(value: string): void {
+    this.selectedMaterials = this.toggleValue(this.selectedMaterials, value);
+  }
+
+  toggleAvailability(value: string): void {
+    this.selectedAvailability = this.toggleValue(this.selectedAvailability, value);
   }
 
   continue(): void {
@@ -155,8 +176,8 @@ export class AuthFormPageComponent {
     this.authService.completeProfile(this.authToken, {
       name: this.name.trim(),
       region: this.region.trim() || undefined,
-      materials: this.materials.trim() || undefined,
-      availability: this.availability.trim() || undefined,
+      materials: this.profile === 'collector' ? this.selectedMaterials.join(', ') : this.materials.trim() || undefined,
+      availability: this.profile === 'collector' ? this.selectedAvailability.join(', ') : this.availability.trim() || undefined,
     }).pipe(
       finalize(() => {
         this.isLoading = false;
@@ -173,7 +194,7 @@ export class AuthFormPageComponent {
 
   private navigateAfterLogin(response: AuthResponse): void {
     localStorage.setItem('coletaqui_user', JSON.stringify(response));
-    void this.router.navigateByUrl(this.profile === 'collector' ? '/collectors' : '/home');
+    void this.router.navigateByUrl(response.role === 'COLLECTOR' ? '/collector-home' : '/home');
   }
 
   private onlyNumbers(value: string): string {
@@ -202,5 +223,11 @@ export class AuthFormPageComponent {
     }
 
     return fallback;
+  }
+
+  private toggleValue(values: string[], value: string): string[] {
+    return values.includes(value)
+      ? values.filter(item => item !== value)
+      : [...values, value];
   }
 }

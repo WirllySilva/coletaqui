@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 interface StoredUser {
   name?: string | null;
   phone?: string | null;
+  role?: 'COMMON_USER' | 'COLLECTOR' | 'ADMIN';
 }
 
 @Component({
@@ -16,11 +17,14 @@ interface StoredUser {
 export class HeaderComponent implements OnInit {
   menuOpen = false;
   userName = 'usuário';
+  isCollector = false;
 
   constructor(private readonly router: Router) {}
 
   ngOnInit(): void {
-    this.userName = this.getStoredUserName();
+    const storedUser = this.getStoredUser();
+    this.userName = storedUser?.name?.trim() || storedUser?.phone?.trim() || 'usuário';
+    this.isCollector = storedUser?.role === 'COLLECTOR';
   }
 
   logout(): void {
@@ -45,18 +49,17 @@ export class HeaderComponent implements OnInit {
     void navigator.clipboard?.writeText(shareData.url);
   }
 
-  private getStoredUserName(): string {
+  private getStoredUser(): StoredUser | null {
     const storedUser = localStorage.getItem('coletaqui_user');
 
     if (!storedUser) {
-      return 'usuário';
+      return null;
     }
 
     try {
-      const user = JSON.parse(storedUser) as StoredUser;
-      return user.name?.trim() || user.phone?.trim() || 'usuário';
+      return JSON.parse(storedUser) as StoredUser;
     } catch {
-      return 'usuário';
+      return null;
     }
   }
 }

@@ -30,10 +30,115 @@
   color: #fff;
 }
 
+.collector-auth {
+  background: #eaf8fb;
+}
+
+.collector-auth .auth-panel {
+  border-color: #caedf4;
+}
+
+.collector-auth .auth-panel h1,
+.collector-auth .form-label,
+.collector-auth legend {
+  color: #174a5a;
+}
+
+.collector-auth .back-link {
+  color: #2c8da7;
+}
+
+.collector-auth .auth-steps span {
+  background: #eefafe;
+  color: #53717b;
+}
+
+.collector-auth .auth-steps span.active {
+  background: #55b6ce;
+  color: #fff;
+}
+
+.collector-auth .submit-button {
+  background: #55b6ce;
+  border-color: #55b6ce;
+}
+
+.collector-auth .submit-button:hover,
+.collector-auth .submit-button:focus-visible {
+  background: #2c8da7;
+  border-color: #2c8da7;
+}
+
 .form-label {
   color: #224b2f;
   font-weight: 700;
   margin: 0;
+}
+
+fieldset {
+  border: 0;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  color: #224b2f;
+  float: none;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.check-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.check-option {
+  align-items: center;
+  background: #f7fbf8;
+  border: 1px solid #d7eadf;
+  border-radius: 8px;
+  color: #2f4939;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.88rem;
+  font-weight: 700;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.collector-auth .check-option {
+  background: #f8fdff;
+  border-color: #caedf4;
+  color: #174a5a;
+}
+
+.check-option.selected {
+  background: #e9f8ef;
+  border-color: #198754;
+  color: #155f34;
+}
+
+.collector-auth .check-option.selected {
+  background: #eaf8fb;
+  border-color: #55b6ce;
+  color: #174a5a;
+}
+
+.check-option input {
+  accent-color: #198754;
+  flex: 0 0 auto;
+  height: 16px;
+  width: 16px;
+}
+
+.collector-auth .check-option input {
+  accent-color: #55b6ce;
 }
 
 .helper-text,
@@ -67,4 +172,16 @@
   font-size: 0.94rem;
   margin: 0;
   padding: 10px 12px;
+}
+
+.collector-auth .dev-code {
+  background: #eefafe;
+  border-color: #caedf4;
+  color: #174a5a;
+}
+
+@media (max-width: 340px) {
+  .check-grid {
+    grid-template-columns: 1fr;
+  }
 }

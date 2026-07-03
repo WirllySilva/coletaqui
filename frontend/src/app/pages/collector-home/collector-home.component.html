@@ -1,0 +1,71 @@
+<div class="collector-dashboard">
+  <app-header />
+
+  <main class="collector-content">
+    <section class="hero-panel" aria-label="Resumo do coletor">
+      <div>
+        <span class="role-pill"><i class="bi bi-truck"></i> Área do coletor</span>
+        <h1>Organize suas coletas</h1>
+        <p>Acompanhe solicitações, aceite novos pedidos e mantenha sua agenda em dia.</p>
+      </div>
+      <div class="hero-icon" aria-hidden="true">
+        <i class="bi bi-clipboard2-check-fill"></i>
+      </div>
+    </section>
+
+    <section class="metric-grid" aria-label="Indicadores rápidos">
+      <article class="metric-card" *ngFor="let metric of metrics">
+        <i class="bi" [ngClass]="metric.icon" aria-hidden="true"></i>
+        <strong>{{ metric.value }}</strong>
+        <span>{{ metric.label }}</span>
+      </article>
+    </section>
+
+    <section class="next-card">
+      <div class="section-heading">
+        <h2>Próxima coleta</h2>
+        <span class="status-badge" *ngIf="nextCollection">Agendada</span>
+      </div>
+      <div class="next-body" *ngIf="nextCollection; else noNextCollection">
+        <div class="time-box">
+          <i class="bi bi-clock-fill"></i>
+          <strong>{{ nextCollection.preferredPeriod }}</strong>
+        </div>
+        <div>
+          <p><i class="bi bi-geo-alt-fill"></i> {{ nextCollection.address }}</p>
+          <p><i class="bi bi-recycle"></i> {{ nextCollection.materials.join(', ') }}</p>
+          <p><i class="bi bi-person-fill"></i> {{ nextCollection.requesterName || 'Solicitante' }}</p>
+        </div>
+      </div>
+      <ng-template #noNextCollection>
+        <p class="empty-text">{{ isLoading ? 'Carregando agenda...' : 'Nenhuma coleta aceita ainda.' }}</p>
+      </ng-template>
+      <a class="primary-action" routerLink="/collector-schedule">
+        <i class="bi bi-calendar-week-fill"></i>
+        Abrir agenda
+      </a>
+    </section>
+
+    <section class="requests-section">
+      <div class="section-heading">
+        <h2>Solicitações recentes</h2>
+        <a routerLink="/collector-requests">Ver todas</a>
+      </div>
+
+      <article class="request-card" *ngFor="let request of openRequests.slice(0, 3)">
+        <div class="request-main">
+          <span class="request-status">Disponível</span>
+          <h3>{{ request.requesterName || 'Solicitante' }}</h3>
+          <p><i class="bi bi-geo-alt"></i> {{ request.address }}</p>
+          <p><i class="bi bi-box-seam"></i> {{ request.materials.join(', ') }}</p>
+          <p><i class="bi bi-calendar-event"></i> {{ request.preferredPeriod }}</p>
+        </div>
+        <a class="accept-button" routerLink="/collector-requests">Ver detalhes</a>
+      </article>
+
+      <p class="empty-text" *ngIf="!openRequests.length && !isLoading">Nenhuma solicitação aberta no momento.</p>
+    </section>
+  </main>
+
+  <app-footer />
+</div>
