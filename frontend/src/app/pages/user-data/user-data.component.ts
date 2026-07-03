@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
-import { UserAddress, UserProfile, UserService } from '../../services/user.service';
+import { CollectorServiceType, UserAddress, UserProfile, UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-data-page',
@@ -17,6 +17,7 @@ export class UserDataPageComponent implements OnInit {
   profile: UserProfile | null = null;
   name = '';
   region = '';
+  collectorServiceType: CollectorServiceType = 'HOME_COLLECTION';
   selectedMaterials: string[] = [];
   selectedAvailability: string[] = [];
   addresses: UserAddress[] = [];
@@ -32,6 +33,12 @@ export class UserDataPageComponent implements OnInit {
 
   materialOptions = ['Papel', 'Plástico', 'Vidro', 'Metal', 'Óleo', 'Pilhas e baterias', 'Orgânico'];
   availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
+
+  serviceTypeOptions: Array<{ value: CollectorServiceType; label: string; description: string }> = [
+    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereco do usuario.' },
+    { value: 'DROP_OFF_POINT', label: 'Ponto de recebimento', description: 'Recebo materiais no meu estabelecimento.' },
+    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereco e tambem recebo no local.' },
+  ];
 
   get isCollector(): boolean {
     return this.profile?.role === 'COLLECTOR';
@@ -88,6 +95,7 @@ export class UserDataPageComponent implements OnInit {
       region: this.region.trim() || null,
       materials: this.selectedMaterials.join(', ') || null,
       availability: this.selectedAvailability.join(', ') || null,
+      collectorServiceType: this.isCollector ? this.collectorServiceType : null,
     }).pipe(
       finalize(() => {
         this.isSaving = false;
@@ -109,7 +117,10 @@ export class UserDataPageComponent implements OnInit {
   }
 
   saveAddress(): void {
-    if (!this.addressForm.label.trim() || !this.addressForm.street.trim() || !this.addressForm.neighborhood.trim() || !this.addressForm.city.trim() || !this.addressForm.state.trim()) {
+    this.addressForm.city = 'Araçoiaba';
+    this.addressForm.state = 'PE';
+
+    if (!this.addressForm.label.trim() || !this.addressForm.street.trim() || !this.addressForm.neighborhood.trim()) {
       this.addressError = 'Preencha identificacao, rua, bairro, cidade e UF.';
       return;
     }
@@ -218,6 +229,7 @@ export class UserDataPageComponent implements OnInit {
   private fillForm(profile: UserProfile): void {
     this.name = profile.name ?? '';
     this.region = profile.region ?? '';
+    this.collectorServiceType = profile.collectorServiceType ?? 'HOME_COLLECTION';
     this.selectedMaterials = this.splitOptions(profile.materials);
     this.selectedAvailability = this.splitOptions(profile.availability);
   }
@@ -239,8 +251,8 @@ export class UserDataPageComponent implements OnInit {
       number: '',
       complement: '',
       neighborhood: '',
-      city: '',
-      state: '',
+      city: 'Araçoiaba',
+      state: 'PE',
       zipCode: '',
       defaultAddress,
     };

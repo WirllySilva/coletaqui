@@ -28,6 +28,7 @@ export interface CompleteProfilePayload {
   region?: string;
   materials?: string;
   availability?: string;
+  collectorServiceType?: string;
 }
 
 @Injectable({

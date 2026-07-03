@@ -7,6 +7,7 @@ public record CompleteProfileRequest(
 	String name,
 	String region,
 	String materials,
-	String availability
+	String availability,
+	String collectorServiceType
 ) {
 }

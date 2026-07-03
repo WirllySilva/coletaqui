@@ -1,1 +1,79 @@
-<app-info-page title="Catadores" description="Encontre catadores e pontos de apoio prximos para encaminhar reciclveis." image="assets/collector-icon.png" [items]="items" />
+<div class="collectors-page">
+  <app-header />
+
+  <main class="collectors-content">
+    <a class="back-link" routerLink="/home"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-title">
+      <span><i class="bi bi-geo-alt-fill"></i> Araçoiaba/PE</span>
+      <h1>Coletores</h1>
+      <p>Veja coletores e estabelecimentos cadastrados para coleta seletiva na cidade.</p>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando coletores...</p>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && error">
+      <p>{{ error }}</p>
+    </section>
+
+    <section class="state-card" *ngIf="!isLoading && !error && !collectors.length">
+      <p>Nenhum coletor cadastrado ainda.</p>
+    </section>
+
+    <section class="collector-list" *ngIf="!isLoading && !error && collectors.length">
+      <article class="collector-card" *ngFor="let collector of collectors">
+        <div class="collector-main">
+          <div class="collector-avatar">
+            <i class="bi bi-truck"></i>
+          </div>
+          <div>
+            <h2>{{ collector.name || 'Coletor sem nome' }}</h2>
+            <span class="service-badge">{{ serviceTypeLabel(collector.collectorServiceType) }}</span>
+          </div>
+        </div>
+
+        <p class="region" *ngIf="collector.region"><i class="bi bi-pin-map"></i> {{ collector.region }}</p>
+
+        <div class="info-block">
+          <strong>Materiais aceitos</strong>
+          <div class="chips" *ngIf="materialList(collector).length; else noMaterials">
+            <span *ngFor="let material of materialList(collector)">{{ material }}</span>
+          </div>
+          <ng-template #noMaterials>
+            <p>Materiais ainda nao informados.</p>
+          </ng-template>
+        </div>
+
+        <div class="info-block">
+          <strong>Disponibilidade</strong>
+          <div class="chips muted" *ngIf="availabilityList(collector).length; else noAvailability">
+            <span *ngFor="let option of availabilityList(collector)">{{ option }}</span>
+          </div>
+          <ng-template #noAvailability>
+            <p>Disponibilidade ainda nao informada.</p>
+          </ng-template>
+        </div>
+
+        <div class="address-box" *ngIf="collector.address; else homeCollectionOnly">
+          <i class="bi bi-shop"></i>
+          <span>{{ collector.address }}</span>
+        </div>
+
+        <ng-template #homeCollectionOnly>
+          <div class="address-box subtle">
+            <i class="bi bi-house-check"></i>
+            <span>Atendimento por coleta domiciliar.</span>
+          </div>
+        </ng-template>
+
+        <a class="contact-button" [href]="whatsappLink(collector)" target="_blank" rel="noopener">
+          <i class="bi bi-whatsapp"></i> Chamar no WhatsApp
+        </a>
+      </article>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

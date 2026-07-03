@@ -15,6 +15,7 @@ public record UserProfileResponse(
 	String region,
 	String materials,
 	String availability,
+	String collectorServiceType,
 	OffsetDateTime createdAt,
 	OffsetDateTime updatedAt
 ) {

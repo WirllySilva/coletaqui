@@ -13,8 +13,22 @@ export interface UserProfile {
   region?: string | null;
   materials?: string | null;
   availability?: string | null;
+  collectorServiceType?: CollectorServiceType | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export type CollectorServiceType = 'HOME_COLLECTION' | 'DROP_OFF_POINT' | 'HOME_COLLECTION_AND_DROP_OFF';
+
+export interface Collector {
+  id: string;
+  name: string | null;
+  phone: string;
+  region?: string | null;
+  materials?: string | null;
+  availability?: string | null;
+  collectorServiceType: CollectorServiceType;
+  address?: string | null;
 }
 
 export interface UserAddress {
@@ -39,6 +53,7 @@ export interface UpdateUserProfilePayload {
   region?: string | null;
   materials?: string | null;
   availability?: string | null;
+  collectorServiceType?: CollectorServiceType | null;
 }
 
 export interface UpsertUserAddressPayload {
@@ -69,6 +84,10 @@ export class UserService {
 
   updateMyProfile(payload: UpdateUserProfilePayload): Observable<UserProfile> {
     return this.http.put<UserProfile>(`${this.apiUrl}/me`, payload, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  listCollectors(): Observable<Collector[]> {
+    return this.http.get<Collector[]>(`${this.apiUrl}/collectors`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   getMyAddresses(): Observable<UserAddress[]> {

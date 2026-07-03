@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { AuthResponse, AuthService } from '../../services/auth.service';
+import { CollectorServiceType } from '../../services/user.service';
 
 @Component({
   selector: 'app-auth-form-page',
@@ -23,6 +24,7 @@ export class AuthFormPageComponent {
   region = '';
   materials = '';
   availability = '';
+  collectorServiceType: CollectorServiceType = 'HOME_COLLECTION';
   selectedMaterials: string[] = [];
   selectedAvailability: string[] = [];
   error = '';
@@ -32,6 +34,12 @@ export class AuthFormPageComponent {
 
   materialOptions = ['Papel', 'Plástico', 'Vidro', 'Metal', 'Óleo', 'Pilhas e baterias', 'Orgânico'];
   availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
+
+  serviceTypeOptions: Array<{ value: CollectorServiceType; label: string; description: string }> = [
+    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereco do usuario.' },
+    { value: 'DROP_OFF_POINT', label: 'Ponto de recebimento', description: 'Recebo materiais no meu estabelecimento.' },
+    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereco e tambem recebo no local.' },
+  ];
 
   constructor(
     private readonly router: Router,
@@ -57,7 +65,7 @@ export class AuthFormPageComponent {
     }
 
     if (this.profile === 'collector') {
-      return Boolean(this.name.trim() && this.region.trim() && this.selectedMaterials.length && this.selectedAvailability.length);
+      return Boolean(this.name.trim() && this.region.trim() && this.collectorServiceType && this.selectedMaterials.length && this.selectedAvailability.length);
     }
 
     return Boolean(this.name.trim());
@@ -178,6 +186,7 @@ export class AuthFormPageComponent {
       region: this.region.trim() || undefined,
       materials: this.profile === 'collector' ? this.selectedMaterials.join(', ') : this.materials.trim() || undefined,
       availability: this.profile === 'collector' ? this.selectedAvailability.join(', ') : this.availability.trim() || undefined,
+      collectorServiceType: this.profile === 'collector' ? this.collectorServiceType : undefined,
     }).pipe(
       finalize(() => {
         this.isLoading = false;

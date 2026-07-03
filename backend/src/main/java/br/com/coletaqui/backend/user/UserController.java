@@ -1,11 +1,13 @@
 package br.com.coletaqui.backend.user;
 
+import br.com.coletaqui.backend.user.dto.CollectorResponse;
 import br.com.coletaqui.backend.user.dto.UpdateUserProfileRequest;
 import br.com.coletaqui.backend.user.dto.UserProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,12 @@ public class UserController {
 	@Operation(summary = "Consulta meu perfil")
 	public ResponseEntity<UserProfileResponse> getMyProfile(Authentication authentication) {
 		return ResponseEntity.ok(userService.getProfile(userId(authentication)));
+	}
+
+	@GetMapping("/collectors")
+	@Operation(summary = "Lista coletores de Aracoiaba/PE")
+	public ResponseEntity<List<CollectorResponse>> listCollectors() {
+		return ResponseEntity.ok(userService.listCollectors());
 	}
 
 	@PutMapping("/me")

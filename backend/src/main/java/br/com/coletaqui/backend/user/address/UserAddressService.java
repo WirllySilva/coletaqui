@@ -81,12 +81,28 @@ public class UserAddressService {
 		address.setNumber(blankToNull(request.number()));
 		address.setComplement(blankToNull(request.complement()));
 		address.setNeighborhood(required(request.neighborhood()));
-		address.setCity(required(request.city()));
-		address.setState(required(request.state()).toUpperCase());
+		validateSupportedCity(request.city(), request.state());
+		address.setCity("Araçoiaba");
+		address.setState("PE");
 		address.setZipCode(blankToNull(request.zipCode()));
 		address.setLatitude(request.latitude());
 		address.setLongitude(request.longitude());
 		address.setDefaultAddress(request.defaultAddress());
+	}
+
+	private void validateSupportedCity(String city, String state) {
+		var normalizedCity = normalize(city);
+		var normalizedState = required(state).toUpperCase();
+
+		if (!"ARACOIABA".equals(normalizedCity) || !"PE".equals(normalizedState)) {
+			throw new IllegalArgumentException("O Coletaqui atende apenas enderecos de Aracoiaba/PE.");
+		}
+	}
+
+	private String normalize(String value) {
+		return java.text.Normalizer.normalize(required(value), java.text.Normalizer.Form.NFD)
+			.replaceAll("\\p{M}", "")
+			.toUpperCase();
 	}
 
 	private void clearDefaultAddress(UUID userId) {

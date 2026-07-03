@@ -106,10 +106,29 @@
 
 .welcome-page h1 {
   color: #105f38;
+  display: grid;
+  font-family: "Fredoka", system-ui, sans-serif;
   font-size: 2.75rem;
-  font-weight: 800;
-  line-height: 1;
+  font-weight: 700;
+  gap: 4px;
+  line-height: 0.94;
   margin: 0;
+}
+
+.welcome-page h1 span {
+  display: block;
+}
+
+.welcome-page h1 strong {
+  color: #f4c430;
+  display: block;
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 2px 0 #fff,
+    0 8px 18px rgba(133, 98, 0, 0.16);
+  text-transform: uppercase;
 }
 
 .tagline {

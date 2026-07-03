@@ -5,6 +5,7 @@ import br.com.coletaqui.backend.auth.dto.CompleteProfileRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequestResponse;
 import br.com.coletaqui.backend.auth.dto.OtpVerifyRequest;
+import br.com.coletaqui.backend.user.CollectorServiceType;
 import br.com.coletaqui.backend.user.User;
 import br.com.coletaqui.backend.user.UserRepository;
 import br.com.coletaqui.backend.user.UserRole;
@@ -100,12 +101,13 @@ public class AuthService {
 		user.setName(request.name().trim());
 
 		if (user.getRole() == UserRole.COLLECTOR) {
-			if (isBlank(request.region()) || isBlank(request.materials()) || isBlank(request.availability())) {
+			if (isBlank(request.region()) || isBlank(request.materials()) || isBlank(request.availability()) || isBlank(request.collectorServiceType())) {
 				throw new IllegalArgumentException("Catador/coletor deve informar região, materiais coletados e disponibilidade.");
 			}
 			user.setRegion(request.region().trim());
 			user.setMaterials(request.materials().trim());
 			user.setAvailability(request.availability().trim());
+			user.setCollectorServiceType(parseCollectorServiceType(request.collectorServiceType()));
 			user.setStatus(UserStatus.PENDING_APPROVAL);
 		} else {
 			user.setStatus(UserStatus.ACTIVE);
@@ -151,6 +153,14 @@ public class AuthService {
 			throw new IllegalArgumentException("Perfil é obrigatório.");
 		}
 		return role;
+	}
+
+	private CollectorServiceType parseCollectorServiceType(String value) {
+		try {
+			return CollectorServiceType.valueOf(value.trim().toUpperCase());
+		} catch (RuntimeException exception) {
+			throw new IllegalArgumentException("Tipo de atendimento do coletor invalido.");
+		}
 	}
 
 	private AuthResponse toAuthResponse(User user) {

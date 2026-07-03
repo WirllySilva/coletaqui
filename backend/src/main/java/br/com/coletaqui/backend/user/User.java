@@ -45,6 +45,10 @@ public class User {
 	@Column(length = 120)
 	private String availability;
 
+	@Enumerated(EnumType.STRING)
+	@Column(length = 40)
+	private CollectorServiceType collectorServiceType;
+
 	@Column(nullable = false)
 	private OffsetDateTime createdAt;
 
@@ -129,6 +133,14 @@ public class User {
 
 	public void setAvailability(String availability) {
 		this.availability = availability;
+	}
+
+	public CollectorServiceType getCollectorServiceType() {
+		return collectorServiceType;
+	}
+
+	public void setCollectorServiceType(CollectorServiceType collectorServiceType) {
+		this.collectorServiceType = collectorServiceType;
 	}
 
 	public OffsetDateTime getCreatedAt() {

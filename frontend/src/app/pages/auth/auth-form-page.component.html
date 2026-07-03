@@ -51,6 +51,19 @@
           <input id="region" class="form-control form-control-lg" type="text" autocomplete="off" placeholder="Ex.: Centro, Araçoiaba" [(ngModel)]="region" name="region" />
 
           <fieldset>
+            <legend>Tipo de atendimento</legend>
+            <div class="service-type-grid">
+              <label class="service-type-option" *ngFor="let option of serviceTypeOptions" [class.selected]="collectorServiceType === option.value">
+                <input type="radio" name="collectorServiceType" [value]="option.value" [(ngModel)]="collectorServiceType" />
+                <span>
+                  <strong>{{ option.label }}</strong>
+                  <small>{{ option.description }}</small>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
             <legend>Materiais coletados</legend>
             <div class="check-grid">
               <label class="check-option" *ngFor="let material of materialOptions" [class.selected]="isMaterialSelected(material)">

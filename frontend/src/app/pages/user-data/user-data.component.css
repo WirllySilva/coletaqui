@@ -119,6 +119,49 @@ legend {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.service-type-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.service-type-option {
+  align-items: flex-start;
+  background: #f8fdff;
+  border: 1px solid #caedf4;
+  border-radius: 8px;
+  color: #174a5a;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+
+.service-type-option.selected {
+  background: #eaf8fb;
+  border-color: #55b6ce;
+}
+
+.service-type-option input {
+  accent-color: #55b6ce;
+  flex: 0 0 auto;
+  margin-top: 3px;
+}
+
+.service-type-option span {
+  display: grid;
+  gap: 2px;
+}
+
+.service-type-option strong {
+  font-size: 0.92rem;
+}
+
+.service-type-option small {
+  color: #53717b;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
 .check-option {
   align-items: center;
   background: #f7fbf8;
