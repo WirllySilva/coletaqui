@@ -22,7 +22,7 @@ A arquitetura é composta por:
 - Backend: Java com Spring Boot, API REST.
 - Banco de dados: PostgreSQL.
 - ORM: Spring Data JPA/Hibernate.
-- Autenticação: OTP por telefone + JWT.
+- Autenticação: OTP por telefone + JWT para usuário comum/coletor, e e-mail + senha para administrador.
 - Containerização: Docker e Docker Compose.
 
 A comunicação entre frontend e backend será feita por HTTP/HTTPS utilizando JSON.
@@ -505,13 +505,16 @@ O perfil de catador pode exigir aprovação administrativa antes de ficar visív
 
 ### 6.4 Fluxo para Administrador
 
-Para administrador, recomenda-se não usar OTP simples como único fator.
+Para administrador, o sistema usa login separado por e-mail e senha.
 
-Opções recomendadas:
+Regras atuais:
 
-- e-mail + senha forte;
-- autenticação interna;
-- autenticação com segundo fator no futuro.
+- O admin acessa a tela `/admin/login`.
+- A autenticação administrativa usa `POST /auth/admin/login`.
+- A senha é armazenada como hash BCrypt em `users.password_hash`.
+- O usuário administrativo permanece na tabela `users` com `role = ADMIN`.
+- Depois do login, o admin é redirecionado para `/admin/dashboard`.
+- Segundo fator pode ser adicionado no futuro.
 
 ### 6.5 Regras do OTP
 
@@ -684,6 +687,23 @@ POST /auth/complete-profile
 
 Requer JWT.
 
+Login administrativo:
+
+```http
+POST /auth/admin/login
+```
+
+Request:
+
+```json
+{
+  "email": "admin@coletaqui.local",
+  "password": "admin123"
+}
+```
+
+Resposta: mesmo formato de `AuthResponse`, com `role = ADMIN`.
+
 ---
 
 ## 9. Configuração de Ambientes
@@ -750,6 +770,10 @@ DATABASE_PASSWORD=coletaqui
 JWT_SECRET=alterar-em-producao
 OTP_EXPIRATION_MINUTES=5
 JPA_DDL_AUTO=update
+APP_ADMIN_EMAIL=admin@coletaqui.local
+APP_ADMIN_PASSWORD=admin123
+APP_ADMIN_NAME=Administrador Coletaqui
+APP_ADMIN_PHONE=00000000000
 ```
 
 ### 9.4 Produção
@@ -821,7 +845,94 @@ Evoluções futuras:
 - Banco de dados será PostgreSQL.
 - ORM será Spring Data JPA/Hibernate.
 - Documentação da API será feita com Swagger/OpenAPI via springdoc-openapi.
-- Autenticação principal será telefone + OTP + JWT.
+- Autenticação de usuário comum e coletor será telefone + OTP + JWT.
+- Autenticação administrativa será e-mail + senha + JWT.
 - Fluxo recomendado de login/cadastro será unificado para reduzir fricção.
 - Administrador deve ter autenticação mais forte que OTP simples.
 - Conteúdo educativo pode iniciar estático no frontend e migrar para backend no futuro.
+
+---
+
+## 14. Atualizacao Arquitetural - Agendamentos e Indicadores
+
+O modulo de agendamento atual expoe endpoints REST protegidos por JWT para usuario comum e coletor:
+
+```http
+POST /schedules
+GET /schedules/me
+GET /schedules/open
+GET /schedules/collector
+GET /schedules/{scheduleId}
+POST /schedules/{scheduleId}/accept
+POST /schedules/{scheduleId}/complete
+POST /schedules/{scheduleId}/cancel
+GET /schedules/impact
+```
+
+Regras principais:
+
+- Usuario comum cria, consulta e cancela suas proprias solicitacoes.
+- Coletor consulta solicitacoes abertas, aceita coletas e conclui apenas coletas sob sua responsabilidade quando estiver com `status = ACTIVE`.
+- Coletor com `status = PENDING_APPROVAL` pode autenticar, mas deve permanecer em tela de cadastro em analise.
+- Coletor com `status = BLOCKED` nao deve acessar as funcionalidades operacionais.
+- O endpoint de detalhe valida permissao conforme perfil.
+- O dashboard inicial de impacto usa dados de `schedules`, `schedule_materials`, `material_types` e `users`.
+
+O frontend Angular possui telas para:
+
+- Criar solicitacao de coleta.
+- Consultar historico.
+- Abrir detalhe da coleta.
+- Cancelar solicitacao aberta.
+- Listar solicitacoes abertas para coletor.
+- Aceitar e concluir coletas.
+- Visualizar indicadores do coletor em `/impact`.
+- Manter `/ranking` como area de gamificacao para moradores.
+
+---
+
+## 15. Area Administrativa Desktop
+
+O painel administrativo foi projetado para uso em navegador desktop, separado da experiencia mobile-first de usuario comum e coletor.
+
+Rotas frontend:
+
+```text
+/admin/login
+/admin/dashboard
+/admin/collectors
+/admin/users
+/admin/schedules
+```
+
+Endpoints backend:
+
+```http
+GET /admin/summary
+GET /admin/impact
+GET /admin/users
+GET /admin/collectors/pending
+POST /admin/collectors/{collectorId}/approve
+POST /admin/users/{targetUserId}/block
+GET /admin/schedules
+```
+
+Permissoes:
+
+- Apenas usuarios com role `ADMIN` devem acessar `/admin/dashboard` e demais rotas administrativas.
+- Admin sem sessao deve ser redirecionado para `/admin/login`.
+- Usuario comum e coletor nao devem acessar o painel administrativo.
+- O painel administrativo usa layout desktop com menu lateral.
+- Admin visualiza indicadores gerais da plataforma.
+- Admin pode aprovar, bloquear e reativar coletores.
+- Admin pode consultar usuarios e coletas.
+- Admin pode filtrar coletas por status, material, bairro e coletor, alem de exportar CSV.
+- Admin pode gerenciar materiais aceitos.
+- Admin pode gerenciar pontos fixos de recebimento.
+- Dashboard admin exibe graficos de coletas por status, materiais mais coletados e bairros com maior demanda.
+
+Evolucao recomendada:
+
+- Segundo fator para administradores.
+- Exportacao CSV/PDF de relatorios.
+- Gestao completa de pontos de recebimento e materiais.

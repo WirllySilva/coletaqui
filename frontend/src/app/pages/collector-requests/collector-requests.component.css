@@ -53,6 +53,7 @@
 
 .request-head {
   align-items: center;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
@@ -75,17 +76,32 @@
   margin-right: 6px;
 }
 
-.accept-button {
+.request-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.accept-button,
+.detail-button {
   align-items: center;
-  background: #198754;
   border: 0;
   border-radius: 8px;
-  color: #fff;
   display: inline-flex;
   font-weight: 900;
   gap: 8px;
   justify-content: center;
   min-height: 42px;
+}
+
+.accept-button {
+  background: #198754;
+  color: #fff;
+}
+
+.detail-button {
+  background: #eefafe;
+  color: #2c8da7;
 }
 
 .success-message {

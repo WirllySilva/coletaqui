@@ -1,0 +1,95 @@
+<div class="detail-page" [class.collector-theme]="isCollector">
+  <app-header />
+
+  <main class="detail-content">
+    <button type="button" class="back-link" (click)="goBack()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <section class="page-heading">
+      <h1>Detalhe da coleta</h1>
+      <p>Acompanhe as informacoes da solicitacao e o andamento do atendimento.</p>
+    </section>
+
+    <section class="detail-card" *ngIf="isLoading">
+      <p>Carregando coleta...</p>
+    </section>
+
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <section class="detail-card" *ngIf="!isLoading && schedule">
+      <div class="status-row">
+        <span class="status-badge" [class.completed]="schedule.status === 'COMPLETED'" [class.canceled]="schedule.status === 'CANCELED'">
+          {{ statusLabel(schedule.status) }}
+        </span>
+        <small>{{ statusText(schedule) }}</small>
+      </div>
+
+      <div class="detail-block">
+        <strong><i class="bi bi-geo-alt"></i> Endereco</strong>
+        <p>{{ schedule.address }}</p>
+      </div>
+
+      <div class="detail-block">
+        <strong><i class="bi bi-recycle"></i> Materiais</strong>
+        <div class="chips">
+          <span *ngFor="let material of schedule.materials">{{ material }}</span>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-block">
+          <strong><i class="bi bi-clock"></i> Disponibilidade</strong>
+          <p>{{ schedule.preferredPeriod }}</p>
+        </div>
+        <div class="detail-block">
+          <strong><i class="bi bi-calendar-event"></i> Criada em</strong>
+          <p>{{ schedule.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+      </div>
+
+      <div class="detail-block" *ngIf="schedule.notes">
+        <strong><i class="bi bi-chat-left-text"></i> Observacoes</strong>
+        <p>{{ schedule.notes }}</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-box" *ngIf="schedule.requesterName">
+          <strong>Solicitante</strong>
+          <span>{{ schedule.requesterName }}</span>
+          <a *ngIf="isCollector && schedule.requesterPhone" [href]="whatsappLink(schedule.requesterPhone)" target="_blank" rel="noopener">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+
+        <div class="contact-box" *ngIf="schedule.collectorName">
+          <strong>Coletor</strong>
+          <span>{{ schedule.collectorName }}</span>
+          <a *ngIf="!isCollector && schedule.collectorPhone" [href]="whatsappLink(schedule.collectorPhone)" target="_blank" rel="noopener">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <span><i class="bi bi-plus-circle"></i> Solicitada: {{ schedule.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        <span *ngIf="schedule.acceptedAt"><i class="bi bi-check-circle"></i> Aceita: {{ schedule.acceptedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        <span *ngIf="schedule.completedAt"><i class="bi bi-check2-all"></i> Concluida: {{ schedule.completedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        <span *ngIf="schedule.canceledAt"><i class="bi bi-x-circle"></i> Cancelada: {{ schedule.canceledAt | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+
+      <div class="actions">
+        <button class="secondary-button" type="button" *ngIf="!isCollector && schedule.status === 'REQUESTED'" [disabled]="isSaving" (click)="cancel()">
+          <i class="bi bi-x-circle"></i> Cancelar solicitacao
+        </button>
+        <button class="primary-button" type="button" *ngIf="isCollector && schedule.status === 'REQUESTED'" [disabled]="isSaving" (click)="accept()">
+          <i class="bi bi-check-circle-fill"></i> Aceitar coleta
+        </button>
+        <button class="primary-button" type="button" *ngIf="isCollector && schedule.status === 'ACCEPTED'" [disabled]="isSaving" (click)="complete()">
+          <i class="bi bi-check2-circle"></i> Marcar como concluida
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

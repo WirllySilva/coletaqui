@@ -1,0 +1,78 @@
+<div class="impact-page">
+  <app-header />
+
+  <main class="impact-content">
+    <button type="button" class="back-link" (click)="goHome()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <section class="page-heading">
+      <span><i class="bi bi-bar-chart-fill"></i> Meu impacto</span>
+      <h1>Indicadores do coletor</h1>
+      <p>Acompanhe as coletas aceitas e concluidas por voce em Aracoiaba/PE.</p>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando indicadores...</p>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && error">
+      <p>{{ error }}</p>
+    </section>
+
+    <ng-container *ngIf="!isLoading && !error && dashboard">
+      <section class="summary-grid">
+        <article>
+          <strong>{{ dashboard.total }}</strong>
+          <span>Coletas na agenda</span>
+        </article>
+        <article>
+          <strong>{{ dashboard.completed }}</strong>
+          <span>Concluidas</span>
+        </article>
+        <article>
+          <strong>{{ percentage(dashboard.completed) }}%</strong>
+          <span>Conclusao</span>
+        </article>
+      </section>
+
+      <section class="status-card">
+        <h2>Status das minhas coletas</h2>
+        <div class="status-list">
+          <span><i class="requested"></i> Solicitadas <strong>{{ dashboard.requested }}</strong></span>
+          <span><i class="accepted"></i> Aceitas <strong>{{ dashboard.accepted }}</strong></span>
+          <span><i class="completed"></i> Concluidas <strong>{{ dashboard.completed }}</strong></span>
+          <span><i class="canceled"></i> Canceladas <strong>{{ dashboard.canceled }}</strong></span>
+        </div>
+      </section>
+
+      <section class="metric-card">
+        <h2>Materiais mais coletados por voce</h2>
+        <div class="metric-list" *ngIf="dashboard.materials.length; else noMaterials">
+          <div class="metric-row" *ngFor="let metric of dashboard.materials">
+            <span>{{ metric.label }}</span>
+            <div><i [style.width.%]="(metric.total / max(dashboard.materials)) * 100"></i></div>
+            <strong>{{ metric.total }}</strong>
+          </div>
+        </div>
+        <ng-template #noMaterials>
+          <p>Nenhuma coleta concluida ainda.</p>
+        </ng-template>
+      </section>
+
+      <section class="metric-card">
+        <h2>Bairros atendidos</h2>
+        <div class="metric-list" *ngIf="dashboard.neighborhoods.length; else noNeighborhoods">
+          <div class="metric-row" *ngFor="let metric of dashboard.neighborhoods">
+            <span>{{ metric.label }}</span>
+            <div><i [style.width.%]="(metric.total / max(dashboard.neighborhoods)) * 100"></i></div>
+            <strong>{{ metric.total }}</strong>
+          </div>
+        </div>
+        <ng-template #noNeighborhoods>
+          <p>Nenhuma coleta registrada por bairro ainda.</p>
+        </ng-template>
+      </section>
+    </ng-container>
+  </main>
+
+  <app-footer />
+</div>

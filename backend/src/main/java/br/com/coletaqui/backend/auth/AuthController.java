@@ -1,6 +1,7 @@
 package br.com.coletaqui.backend.auth;
 
 import br.com.coletaqui.backend.auth.dto.AuthResponse;
+import br.com.coletaqui.backend.auth.dto.AdminLoginRequest;
 import br.com.coletaqui.backend.auth.dto.CompleteProfileRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequestResponse;
@@ -62,6 +63,12 @@ public class AuthController {
 	@Operation(summary = "Valida OTP de catador/coletor")
 	public ResponseEntity<AuthResponse> verifyCollectorOtp(@Valid @RequestBody OtpVerifyRequest request) {
 		return ResponseEntity.ok(authService.verifyOtp(new OtpVerifyRequest(request.phone(), request.code(), UserRole.COLLECTOR)));
+	}
+
+	@PostMapping("/admin/login")
+	@Operation(summary = "Login administrativo", description = "Autentica administradores com e-mail e senha.")
+	public ResponseEntity<AuthResponse> adminLogin(@Valid @RequestBody AdminLoginRequest request) {
+		return ResponseEntity.ok(authService.adminLogin(request));
 	}
 
 	@PostMapping("/complete-profile")

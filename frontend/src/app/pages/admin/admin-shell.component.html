@@ -1,0 +1,24 @@
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="brand">
+      <strong>Coletaqui</strong>
+      <span>Araçoiaba Admin</span>
+    </div>
+
+    <nav>
+      <a *ngFor="let item of navItems" [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="bi" [ngClass]="item.icon"></i>
+        {{ item.label }}
+      </a>
+    </nav>
+
+    <button type="button" (click)="logout()">
+      <i class="bi bi-box-arrow-left"></i>
+      Sair
+    </button>
+  </aside>
+
+  <main class="admin-main">
+    <router-outlet />
+  </main>
+</div>

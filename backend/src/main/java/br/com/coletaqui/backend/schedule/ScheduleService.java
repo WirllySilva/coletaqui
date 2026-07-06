@@ -3,15 +3,21 @@ package br.com.coletaqui.backend.schedule;
 import br.com.coletaqui.backend.material.MaterialType;
 import br.com.coletaqui.backend.material.MaterialTypeRepository;
 import br.com.coletaqui.backend.schedule.dto.CreateScheduleRequest;
+import br.com.coletaqui.backend.schedule.dto.ImpactDashboardResponse;
+import br.com.coletaqui.backend.schedule.dto.ImpactMetricResponse;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import br.com.coletaqui.backend.user.User;
 import br.com.coletaqui.backend.user.UserRepository;
 import br.com.coletaqui.backend.user.UserRole;
+import br.com.coletaqui.backend.user.UserStatus;
 import br.com.coletaqui.backend.user.address.UserAddress;
 import br.com.coletaqui.backend.user.address.UserAddressRepository;
 import java.time.OffsetDateTime;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +74,15 @@ public class ScheduleService {
 	}
 
 	@Transactional(readOnly = true)
+	public ScheduleResponse get(UUID userId, UUID scheduleId) {
+		var user = user(userId);
+		var schedule = scheduleRepository.findById(scheduleId)
+			.orElseThrow(() -> new IllegalArgumentException("Solicitacao nao encontrada."));
+		ensureCanView(user, schedule);
+		return toResponse(schedule);
+	}
+
+	@Transactional(readOnly = true)
 	public List<ScheduleResponse> listOpen(UUID collectorId) {
 		ensureCollector(collectorId);
 		return scheduleRepository.findByStatusOrderByCreatedAtDesc(ScheduleStatus.REQUESTED).stream().map(this::toResponse).toList();
@@ -77,6 +92,12 @@ public class ScheduleService {
 	public List<ScheduleResponse> listCollectorSchedule(UUID collectorId) {
 		ensureCollector(collectorId);
 		return scheduleRepository.findByCollectorIdOrderByUpdatedAtDesc(collectorId).stream().map(this::toResponse).toList();
+	}
+
+	@Transactional(readOnly = true)
+	public List<ScheduleResponse> listAllForAdmin(UUID adminId) {
+		ensureAdmin(adminId);
+		return scheduleRepository.findAllByOrderByCreatedAtDesc().stream().map(this::toResponse).toList();
 	}
 
 	@Transactional
@@ -114,6 +135,53 @@ public class ScheduleService {
 		return toResponse(schedule);
 	}
 
+	@Transactional
+	public ScheduleResponse cancel(UUID userId, UUID scheduleId) {
+		var user = user(userId);
+		var schedule = scheduleRepository.findById(scheduleId)
+			.orElseThrow(() -> new IllegalArgumentException("Solicitacao nao encontrada."));
+
+		if (schedule.getUser() == null || !schedule.getUser().getId().equals(user.getId())) {
+			throw new IllegalArgumentException("Somente o solicitante pode cancelar esta coleta.");
+		}
+
+		if (schedule.getStatus() != ScheduleStatus.REQUESTED) {
+			throw new IllegalArgumentException("Somente solicitacoes ainda nao aceitas podem ser canceladas.");
+		}
+
+		schedule.setStatus(ScheduleStatus.CANCELED);
+		schedule.setCanceledAt(OffsetDateTime.now());
+		return toResponse(schedule);
+	}
+
+	@Transactional(readOnly = true)
+	public ImpactDashboardResponse impact(UUID userId) {
+		var user = user(userId);
+		if (user.getRole() == UserRole.COLLECTOR && user.getStatus() != UserStatus.ACTIVE) {
+			throw new IllegalArgumentException("Cadastro de coletor ainda nao esta ativo.");
+		}
+		var schedules = switch (user.getRole()) {
+			case ADMIN -> scheduleRepository.findAllByOrderByCreatedAtDesc();
+			case COLLECTOR -> scheduleRepository.findByCollectorIdOrderByUpdatedAtDesc(user.getId());
+			default -> throw new IllegalArgumentException("Indicadores disponiveis apenas para coletores e administradores.");
+		};
+		var requested = schedules.stream().filter(schedule -> schedule.getStatus() == ScheduleStatus.REQUESTED).count();
+		var accepted = schedules.stream().filter(schedule -> schedule.getStatus() == ScheduleStatus.ACCEPTED).count();
+		var completed = schedules.stream().filter(schedule -> schedule.getStatus() == ScheduleStatus.COMPLETED).count();
+		var canceled = schedules.stream().filter(schedule -> schedule.getStatus() == ScheduleStatus.CANCELED).count();
+
+		return new ImpactDashboardResponse(
+			requested,
+			accepted,
+			completed,
+			canceled,
+			schedules.size(),
+			topMetrics(materialCounts(schedules)),
+			topMetrics(neighborhoodCounts(schedules)),
+			topMetrics(collectorCounts(schedules))
+		);
+	}
+
 	private User user(UUID userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado."));
 	}
@@ -123,7 +191,34 @@ public class ScheduleService {
 		if (user.getRole() != UserRole.COLLECTOR) {
 			throw new IllegalArgumentException("Acesso permitido apenas para coletores.");
 		}
+		if (user.getStatus() != UserStatus.ACTIVE) {
+			throw new IllegalArgumentException("Cadastro de coletor ainda nao esta ativo.");
+		}
 		return user;
+	}
+
+	private User ensureAdmin(UUID userId) {
+		var user = user(userId);
+		if (user.getRole() != UserRole.ADMIN) {
+			throw new IllegalArgumentException("Acesso permitido apenas para administradores.");
+		}
+		return user;
+	}
+
+	private void ensureCanView(User user, Schedule schedule) {
+		if (user.getRole() == UserRole.COLLECTOR) {
+			if (schedule.getStatus() == ScheduleStatus.REQUESTED) {
+				return;
+			}
+			if (schedule.getCollector() != null && schedule.getCollector().getId().equals(user.getId())) {
+				return;
+			}
+			throw new IllegalArgumentException("Solicitacao nao pertence a este coletor.");
+		}
+
+		if (schedule.getUser() == null || !schedule.getUser().getId().equals(user.getId())) {
+			throw new IllegalArgumentException("Solicitacao nao pertence a este usuario.");
+		}
 	}
 
 	private ScheduleResponse toResponse(Schedule schedule) {
@@ -141,8 +236,59 @@ public class ScheduleService {
 			schedule.getStatus(),
 			schedule.getCreatedAt(),
 			schedule.getAcceptedAt(),
-			schedule.getCompletedAt()
+			schedule.getCompletedAt(),
+			schedule.getCanceledAt()
 		);
+	}
+
+	private Map<String, Long> materialCounts(List<Schedule> schedules) {
+		var counts = new LinkedHashMap<String, Long>();
+		schedules.stream()
+			.filter(schedule -> schedule.getStatus() == ScheduleStatus.COMPLETED)
+			.flatMap(schedule -> schedule.getMaterials().stream())
+			.map(MaterialType::getName)
+			.forEach(name -> counts.merge(name, 1L, Long::sum));
+		return counts;
+	}
+
+	private Map<String, Long> neighborhoodCounts(List<Schedule> schedules) {
+		var counts = new LinkedHashMap<String, Long>();
+		schedules.stream()
+			.filter(schedule -> schedule.getStatus() != ScheduleStatus.CANCELED)
+			.map(schedule -> neighborhood(schedule.getAddressSnapshot()))
+			.filter(value -> value != null && !value.isBlank())
+			.forEach(name -> counts.merge(name, 1L, Long::sum));
+		return counts;
+	}
+
+	private Map<String, Long> collectorCounts(List<Schedule> schedules) {
+		var counts = new LinkedHashMap<String, Long>();
+		schedules.stream()
+			.filter(schedule -> schedule.getStatus() == ScheduleStatus.COMPLETED)
+			.map(Schedule::getCollector)
+			.filter(collector -> collector != null && collector.getName() != null)
+			.map(User::getName)
+			.forEach(name -> counts.merge(name, 1L, Long::sum));
+		return counts;
+	}
+
+	private List<ImpactMetricResponse> topMetrics(Map<String, Long> counts) {
+		return counts.entrySet().stream()
+			.sorted(Map.Entry.<String, Long>comparingByValue(Comparator.reverseOrder()).thenComparing(Map.Entry.comparingByKey()))
+			.limit(5)
+			.map(entry -> new ImpactMetricResponse(entry.getKey(), entry.getValue()))
+			.toList();
+	}
+
+	private String neighborhood(String addressSnapshot) {
+		if (addressSnapshot == null || addressSnapshot.isBlank()) {
+			return null;
+		}
+		var parts = addressSnapshot.split(",");
+		if (parts.length < 2) {
+			return null;
+		}
+		return parts[parts.length - 2].trim();
 	}
 
 	private String addressSnapshot(UserAddress address) {

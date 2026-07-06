@@ -52,9 +52,10 @@ Containerização:
 - Docker Compose
 - Nginx para servir o frontend Angular em produção/container
 
-Autenticação planejada:
+Autenticação:
 
-- Login/cadastro por telefone com OTP
+- Login/cadastro de usuário comum e coletor por telefone com OTP via WhatsApp
+- Login administrativo separado por e-mail e senha
 - Emissão de JWT para rotas protegidas
 
 ---
@@ -115,6 +116,14 @@ Backend:    http://localhost:8080
 Swagger:    http://localhost:8080/swagger-ui/index.html
 OpenAPI:    http://localhost:8080/v3/api-docs
 PostgreSQL: localhost:5432
+```
+
+Acesso administrativo local:
+
+```text
+Painel admin: http://localhost:4200/admin/login
+E-mail:       admin@coletaqui.local
+Senha:        admin123
 ```
 
 Serviços do Compose:
@@ -198,6 +207,10 @@ DATABASE_PASSWORD=coletaqui
 JWT_SECRET=alterar-em-producao
 OTP_EXPIRATION_MINUTES=5
 JPA_DDL_AUTO=update
+APP_ADMIN_EMAIL=admin@coletaqui.local
+APP_ADMIN_PASSWORD=admin123
+APP_ADMIN_NAME=Administrador Coletaqui
+APP_ADMIN_PHONE=00000000000
 ```
 
 Em desenvolvimento, o frontend deve consumir a API em:
@@ -221,13 +234,9 @@ Disponíveis no frontend:
 - Telas de ranking, perfil, catadores e conteúdo educativo.
 - Configuração PWA.
 
-Planejadas para integração com backend:
+Planejadas para próximas integrações:
 
-- Autenticação por OTP.
-- Emissão e validação de JWT.
 - Cadastro e consulta de pontos de coleta.
-- Agendamento de coleta.
-- Relatórios e dashboards de impacto.
 - Documentação e teste das rotas via Swagger/OpenAPI.
 
 ---
@@ -260,3 +269,19 @@ Este projeto está sob a licença [Apache 2.0](./LICENSE).
 Feito por **Wirlly Silva**.
 
 [LinkedIn](https://linkedin.com/in/wirlly-pereira/) | [GitHub](https://github.com/WirllySilva)
+
+---
+
+## Atualizacao Funcional
+
+Tambem ja foram integrados:
+
+- Listagem de coletores locais de Aracoiaba/PE.
+- Cadastro do tipo de atendimento do coletor: coleta domiciliar, ponto de recebimento ou coleta + recebimento.
+- Agendamento de coleta com historico e detalhe da solicitacao.
+- Cancelamento de solicitacoes ainda abertas.
+- Area do coletor com solicitacoes abertas, agenda, aceite e conclusao de coletas.
+- Dashboard inicial de impacto do coletor com status das coletas, materiais e bairros atendidos.
+- Area de ranking reservada para gamificacao dos moradores.
+- Painel administrativo desktop em `/admin/login`, com dashboard geral em `/admin/dashboard`, coletores pendentes, usuarios e coletas.
+- Login administrativo por e-mail e senha usando usuário `ADMIN` na tabela `users`.

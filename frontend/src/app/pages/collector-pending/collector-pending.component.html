@@ -1,0 +1,20 @@
+<main class="pending-page">
+  <section class="pending-panel">
+    <span class="role-pill"><i class="bi bi-hourglass-split"></i> Área do coletor</span>
+    <div class="icon-wrap">
+      <i class="bi" [ngClass]="user?.status === 'BLOCKED' ? 'bi-shield-fill-x' : 'bi-shield-check'"></i>
+    </div>
+    <h1>{{ title }}</h1>
+    <p>{{ description }}</p>
+
+    <div class="info-list">
+      <span><i class="bi bi-person-badge"></i> {{ user?.name || 'Coletor' }}</span>
+      <span><i class="bi bi-clock-history"></i> Status: {{ user?.status === 'BLOCKED' ? 'bloqueado' : 'pendente de aprovação' }}</span>
+    </div>
+
+    <button type="button" (click)="logout()">
+      <i class="bi bi-box-arrow-left"></i>
+      Sair
+    </button>
+  </section>
+</main>

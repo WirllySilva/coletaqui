@@ -8,5 +8,9 @@ import { InfoPageComponent } from '../info-page.component';
   styleUrl: './ranking.component.css',
 })
 export class RankingPageComponent {
-  items = ['Pontuao por descarte.', 'Histrico mensal.', 'Classificao da comunidade.'];
+  items = [
+    'Pontuacao por participacao em coletas seletivas.',
+    'Selos para moradores que mantem frequencia.',
+    'Ranking comunitario para incentivar a cidade.',
+  ];
 }

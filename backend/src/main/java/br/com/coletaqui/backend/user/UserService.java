@@ -32,7 +32,7 @@ public class UserService {
 	public List<CollectorResponse> listCollectors() {
 		return userRepository.findByRoleAndProfileCompleteTrue(UserRole.COLLECTOR)
 			.stream()
-			.filter(user -> user.getStatus() != UserStatus.BLOCKED && user.getStatus() != UserStatus.INACTIVE)
+			.filter(user -> user.getStatus() == UserStatus.ACTIVE)
 			.sorted(Comparator.comparing(user -> user.getName() == null ? "" : user.getName()))
 			.map(this::toCollectorResponse)
 			.toList();

@@ -48,6 +48,10 @@ export class CollectorRequestsComponent implements OnInit {
     void this.router.navigateByUrl('/collector-home');
   }
 
+  openDetail(schedule: Schedule): void {
+    void this.router.navigate(['/schedules', schedule.id]);
+  }
+
   private loadRequests(): void {
     this.scheduleService.listOpenSchedules().subscribe({
       next: requests => {

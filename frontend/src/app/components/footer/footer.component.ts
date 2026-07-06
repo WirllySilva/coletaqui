@@ -38,6 +38,7 @@ export class FooterComponent implements OnInit {
       { label: 'Início', route: '/collector-home', icon: 'bi-house-fill' },
       { label: 'Solicitações', route: '/collector-requests', icon: 'bi-clipboard-check-fill' },
       { label: 'Agenda', route: '/collector-schedule', icon: 'bi-calendar-week-fill' },
+      { label: 'Impacto', route: '/impact', icon: 'bi-bar-chart-fill' },
     ];
   }
 

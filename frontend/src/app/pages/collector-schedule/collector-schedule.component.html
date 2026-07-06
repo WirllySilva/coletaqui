@@ -14,7 +14,7 @@
     <p class="error-message" *ngIf="error">{{ error }}</p>
 
     <article class="request-card" *ngFor="let schedule of schedules">
-      <div class="request-head">
+      <div class="request-head" (click)="openDetail(schedule)">
         <strong>{{ schedule.requesterName || 'Solicitante' }}</strong>
         <span [class.completed]="schedule.status === 'COMPLETED'">{{ statusLabel(schedule.status) }}</span>
       </div>
@@ -22,10 +22,16 @@
       <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
       <p><i class="bi bi-clock"></i> {{ schedule.preferredPeriod }}</p>
       <p *ngIf="schedule.requesterPhone"><i class="bi bi-phone"></i> {{ schedule.requesterPhone }}</p>
-      <button class="complete-button" type="button" *ngIf="schedule.status === 'ACCEPTED'" (click)="complete(schedule)">
+      <div class="request-actions">
+        <button class="detail-button" type="button" (click)="openDetail(schedule)">
+          <i class="bi bi-eye"></i>
+          Ver detalhe
+        </button>
+        <button class="complete-button" type="button" *ngIf="schedule.status === 'ACCEPTED'" (click)="complete(schedule)">
         <i class="bi bi-check2-circle"></i>
         Marcar como concluída
-      </button>
+        </button>
+      </div>
     </article>
 
     <p class="state-card" *ngIf="!isLoading && !schedules.length">Nenhuma coleta aceita ainda.</p>

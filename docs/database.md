@@ -109,6 +109,8 @@ erDiagram
         uuid id PK
         varchar phone UK
         varchar name
+        varchar email UK
+        varchar password_hash
         varchar role
         varchar status
         boolean profile_complete
@@ -231,6 +233,8 @@ Representa usuários do sistema, incluindo usuário comum, catador/coletor e adm
 |`id`               |`uuid`        |Sim         | Chave primária                                      |
 |`phone`            |`varchar(20)` |Sim         | Identificador principal do usuário                  |
 |`name`             |`varchar(120)`|Não         | Obrigatório após completar cadastro                 |
+|`email`            |`varchar(160)`|Não         | Usado no login administrativo                       |
+|`password_hash`    |`varchar(255)`|Não         | Hash BCrypt da senha administrativa                 |
 |`role`             |`varchar(30)` |Sim         | `COMMON_USER`, `COLLECTOR`, `ADMIN`                 |
 |`status`           |`varchar(30)` |Sim         | `ACTIVE`, `PENDING_APPROVAL`, `INACTIVE`, `BLOCKED` |
 |`profile_complete` |`boolean`     |Sim         | Indica se o cadastro foi finalizado                 |
@@ -243,9 +247,10 @@ Representa usuários do sistema, incluindo usuário comum, catador/coletor e adm
 Regras:
 
 - `phone` deve ser único.
+- `email` deve ser único quando informado.
 - Um telefone não deve gerar múltiplas contas independentes.
 - Catador/coletor pode iniciar com `status = PENDING_APPROVAL`.
-- Administrador deve ter autenticação mais forte do que OTP simples.
+- Administrador usa e-mail + senha com `password_hash` em BCrypt.
 
 Cardinalidades:
 
@@ -544,6 +549,7 @@ Cardinalidades:
 |Tabela                      |Constraint                                          |Finalidade                                     |
 |----------------------------|----------------------------------------------------|-----------------------------------------------|
 |`users`                     |`unique(phone)`                                     | Impedir múltiplas contas para o mesmo telefone|
+|`users`                     |`unique(email)`                                     | Impedir duplicidade de e-mail administrativo   |
 |`users`                     |`check(role in (...))`                              | Restringir perfis válidos                     |
 |`users`                     |`check(status in (...))`                            | Restringir status válidos                     |
 |`user_addresses`            |`foreign key(user_id) references users(id)`         | Vincular endereco ao usuario                  |
@@ -560,6 +566,7 @@ Cardinalidades:
 |Tabela              |Índice                                   |Finalidade                          |
 |--------------------|-----------------------------------------|------------------------------------|
 |`users`             |`idx_users_phone`                        |Busca por telefone no login/cadastro|
+|`users`             |`idx_users_email`                        |Busca por e-mail no login admin     |
 |`users`             |`idx_users_role_status`                  |Filtros administrativos             |
 |`user_addresses`    |`idx_user_addresses_user_id`             |Listar enderecos do usuario         |
 |`user_addresses`    |`idx_user_addresses_default_address`     |Encontrar endereco padrao           |
@@ -583,6 +590,7 @@ Cardinalidades:
 - JWT não deve ser armazenado no banco, salvo se houver estratégia futura de refresh token ou blacklist.
 - Dados sensíveis não devem aparecer em logs.
 - Dados de administrador devem ter autenticação mais forte que OTP simples.
+- Senhas administrativas devem ser armazenadas apenas como hash BCrypt.
 - Em produção, secrets devem vir de variáveis de ambiente.
 - O banco de produção não deve usar credenciais padrão do Docker Compose.
 
@@ -635,3 +643,40 @@ Registros iniciais sugeridos:
 - Histórico detalhado de alteração de status dos agendamentos.
 - Separação de endereço em entidade própria caso o sistema passe a gerenciar múltiplos endereços por usuário.
 - Normalização de dados específicos de catador/coletor em uma tabela `collector_profiles`, caso o perfil cresça em complexidade.
+
+---
+
+# 12. Atualizacao do Modelo - Agendamentos
+
+O modelo atual de agendamento usa:
+
+- `schedules`: solicitacoes de coleta.
+- `schedule_materials`: tabela associativa entre coletas e materiais.
+- `material_types`: catalogo de materiais.
+- `user_addresses`: endereco normalizado do usuario, usado na criacao da coleta.
+
+Campos relevantes de `schedules` na implementacao atual:
+
+|Campo              |Descricao                                      |
+|-------------------|-----------------------------------------------|
+|`id`               |Identificador da solicitacao                   |
+|`user_id`          |Usuario comum que solicitou a coleta           |
+|`collector_id`     |Coletor que aceitou a solicitacao              |
+|`address_id`       |Endereco do usuario usado na solicitacao       |
+|`address_snapshot` |Copia textual do endereco no momento da coleta |
+|`preferred_period` |Periodo preferencial informado pelo usuario    |
+|`notes`            |Observacoes da solicitacao                     |
+|`status`           |`REQUESTED`, `ACCEPTED`, `COMPLETED`, `CANCELED`|
+|`accepted_at`      |Data/hora do aceite pelo coletor               |
+|`completed_at`     |Data/hora da conclusao                         |
+|`canceled_at`      |Data/hora do cancelamento                      |
+|`created_at`       |Data/hora de criacao                           |
+|`updated_at`       |Data/hora de atualizacao                       |
+
+Regras atuais:
+
+- Uma solicitacao pode ter muitos materiais.
+- Usuario comum pode cancelar apenas solicitacoes `REQUESTED`.
+- Coletor pode aceitar apenas solicitacoes `REQUESTED`.
+- Coletor pode concluir apenas solicitacoes `ACCEPTED` sob sua responsabilidade.
+- O dashboard inicial de impacto usa dados de status, materiais, bairros extraidos do endereco e coletores responsaveis.

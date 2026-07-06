@@ -1,6 +1,7 @@
 package br.com.coletaqui.backend.schedule;
 
 import br.com.coletaqui.backend.schedule.dto.CreateScheduleRequest;
+import br.com.coletaqui.backend.schedule.dto.ImpactDashboardResponse;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -53,6 +54,18 @@ public class ScheduleController {
 		return ResponseEntity.ok(scheduleService.listCollectorSchedule(userId(authentication)));
 	}
 
+	@GetMapping("/impact")
+	@Operation(summary = "Consulta indicadores de impacto")
+	public ResponseEntity<ImpactDashboardResponse> impact(Authentication authentication) {
+		return ResponseEntity.ok(scheduleService.impact(userId(authentication)));
+	}
+
+	@GetMapping("/{scheduleId}")
+	@Operation(summary = "Consulta detalhe de uma solicitacao")
+	public ResponseEntity<ScheduleResponse> get(Authentication authentication, @PathVariable UUID scheduleId) {
+		return ResponseEntity.ok(scheduleService.get(userId(authentication), scheduleId));
+	}
+
 	@PostMapping("/{scheduleId}/accept")
 	@Operation(summary = "Aceita uma solicitacao de coleta")
 	public ResponseEntity<ScheduleResponse> accept(Authentication authentication, @PathVariable UUID scheduleId) {
@@ -63,6 +76,12 @@ public class ScheduleController {
 	@Operation(summary = "Conclui uma coleta aceita")
 	public ResponseEntity<ScheduleResponse> complete(Authentication authentication, @PathVariable UUID scheduleId) {
 		return ResponseEntity.ok(scheduleService.complete(userId(authentication), scheduleId));
+	}
+
+	@PostMapping("/{scheduleId}/cancel")
+	@Operation(summary = "Cancela uma solicitacao ainda aberta")
+	public ResponseEntity<ScheduleResponse> cancel(Authentication authentication, @PathVariable UUID scheduleId) {
+		return ResponseEntity.ok(scheduleService.cancel(userId(authentication), scheduleId));
 	}
 
 	private UUID userId(Authentication authentication) {

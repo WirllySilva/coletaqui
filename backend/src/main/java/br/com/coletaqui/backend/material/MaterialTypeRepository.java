@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MaterialTypeRepository extends JpaRepository<MaterialType, UUID> {
+	List<MaterialType> findAllByOrderByNameAsc();
+
 	List<MaterialType> findByActiveTrueOrderByNameAsc();
 
 	List<MaterialType> findByIdIn(Collection<UUID> ids);

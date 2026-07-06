@@ -1,0 +1,97 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Pontos fixos</span>
+    <h1>Pontos de recebimento</h1>
+    <p>Cadastre locais onde moradores podem entregar materiais sem agendamento domiciliar.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="form-panel">
+    <h2>{{ editing ? 'Editar ponto' : 'Novo ponto' }}</h2>
+    <form (ngSubmit)="submit()">
+      <label>
+        Nome
+        <input name="name" [(ngModel)]="form.name" placeholder="Ex.: Associação do Centro" required />
+      </label>
+      <label>
+        Endereço
+        <input name="address" [(ngModel)]="form.address" placeholder="Rua, número e referência" required />
+      </label>
+      <div class="form-grid">
+        <label>
+          Cidade
+          <input name="city" [(ngModel)]="form.city" />
+        </label>
+        <label>
+          UF
+          <input name="state" maxlength="2" [(ngModel)]="form.state" />
+        </label>
+      </div>
+      <fieldset class="option-fieldset">
+        <legend>Materiais aceitos</legend>
+        <div class="option-grid" *ngIf="materials.length; else noMaterials">
+          <label *ngFor="let material of materials">
+            <input
+              type="checkbox"
+              [checked]="isMaterialSelected(material.name)"
+              (change)="toggleMaterial(material.name)"
+            />
+            {{ material.name }}
+          </label>
+        </div>
+        <ng-template #noMaterials>
+          <p class="empty">Nenhum material ativo cadastrado.</p>
+        </ng-template>
+      </fieldset>
+      <label>
+        Horário
+        <input name="openingHours" [(ngModel)]="form.openingHours" placeholder="Segunda a sexta, 8h às 17h" />
+      </label>
+      <label>
+        Observação
+        <input name="description" [(ngModel)]="form.description" placeholder="Informações adicionais" />
+      </label>
+      <div class="check-row">
+        <label><input name="active" type="checkbox" [(ngModel)]="form.active" /> Ativo</label>
+      </div>
+      <div class="action-row">
+        <button type="submit">{{ editing ? 'Salvar' : 'Criar ponto' }}</button>
+        <button class="ghost-button" type="button" *ngIf="editing" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Ponto</th>
+          <th>Endereço</th>
+          <th>Materiais</th>
+          <th>Horário</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let point of points">
+          <td>{{ point.name }}</td>
+          <td>{{ point.address }}, {{ point.city }}/{{ point.state }}</td>
+          <td>{{ point.materials || '-' }}</td>
+          <td>{{ point.openingHours || '-' }}</td>
+          <td><span class="status" [class.blocked]="!point.active">{{ point.active ? 'Ativo' : 'Inativo' }}</span></td>
+          <td>
+            <div class="action-row">
+              <button type="button" (click)="edit(point)">Editar</button>
+              <button class="danger-button" type="button" *ngIf="point.active" (click)="toggle(point)">Desativar</button>
+              <button type="button" *ngIf="!point.active" (click)="toggle(point)">Ativar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!points.length">Nenhum ponto cadastrado.</p>
+  </section>
+</section>

@@ -1,0 +1,60 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Operacao</span>
+    <h1>Coletas</h1>
+    <p>Acompanhe todas as solicitacoes registradas na plataforma.</p>
+  </div>
+
+  <div class="toolbar filter-toolbar">
+    <select [(ngModel)]="statusFilter">
+      <option value="">Todos os status</option>
+      <option value="REQUESTED">Solicitadas</option>
+      <option value="ACCEPTED">Aceitas</option>
+      <option value="COMPLETED">Concluidas</option>
+      <option value="CANCELED">Canceladas</option>
+    </select>
+    <select [(ngModel)]="materialFilter">
+      <option value="">Todos os materiais</option>
+      <option *ngFor="let material of materials" [value]="material">{{ material }}</option>
+    </select>
+    <select [(ngModel)]="neighborhoodFilter">
+      <option value="">Todos os bairros</option>
+      <option *ngFor="let neighborhood of neighborhoods" [value]="neighborhood">{{ neighborhood }}</option>
+    </select>
+    <select [(ngModel)]="collectorFilter">
+      <option value="">Todos os coletores</option>
+      <option *ngFor="let collector of collectors" [value]="collector">{{ collector }}</option>
+    </select>
+    <button type="button" (click)="exportCsv()">
+      <i class="bi bi-download"></i>
+      Exportar CSV
+    </button>
+  </div>
+
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Solicitante</th>
+          <th>Coletor</th>
+          <th>Materiais</th>
+          <th>Periodo</th>
+          <th>Endereco</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schedule of filteredSchedules">
+          <td><span class="status">{{ schedule.status }}</span></td>
+          <td>{{ schedule.requesterName || '-' }}</td>
+          <td>{{ schedule.collectorName || '-' }}</td>
+          <td>{{ schedule.materials.join(', ') }}</td>
+          <td>{{ schedule.preferredPeriod }}</td>
+          <td>{{ schedule.address }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>

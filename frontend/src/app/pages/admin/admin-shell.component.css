@@ -1,0 +1,77 @@
+.admin-layout {
+  background: #f4f7f5;
+  color: #26362d;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  background: #0f6b3b;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px 20px;
+}
+
+.brand {
+  display: grid;
+  gap: 4px;
+}
+
+.brand strong {
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.brand span {
+  color: #f4c430;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+nav {
+  display: grid;
+  gap: 8px;
+}
+
+nav a,
+.admin-sidebar button {
+  align-items: center;
+  border-radius: 8px;
+  color: #eaf8ef;
+  display: flex;
+  font-weight: 800;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+nav a.active,
+nav a:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.admin-sidebar button {
+  background: rgba(0, 0, 0, 0.16);
+  border: 0;
+  margin-top: auto;
+}
+
+.admin-main {
+  min-width: 0;
+  padding: 28px;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+  }
+}

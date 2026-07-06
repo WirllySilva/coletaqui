@@ -1,0 +1,81 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Gestao</span>
+    <h1>Coletores</h1>
+    <p>Aprove novos cadastros, acompanhe status e bloqueie coletores quando necessario.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="collector-status-grid">
+    <button type="button" [class.active]="statusFilter === ''" (click)="statusFilter = ''">
+      <strong>{{ collectors.length }}</strong>
+      <span>Todos</span>
+    </button>
+    <button type="button" [class.active]="statusFilter === 'PENDING_APPROVAL'" (click)="statusFilter = 'PENDING_APPROVAL'">
+      <strong>{{ count('PENDING_APPROVAL') }}</strong>
+      <span>Pendentes</span>
+    </button>
+    <button type="button" [class.active]="statusFilter === 'ACTIVE'" (click)="statusFilter = 'ACTIVE'">
+      <strong>{{ count('ACTIVE') }}</strong>
+      <span>Ativos</span>
+    </button>
+    <button type="button" [class.active]="statusFilter === 'BLOCKED'" (click)="statusFilter = 'BLOCKED'">
+      <strong>{{ count('BLOCKED') }}</strong>
+      <span>Bloqueados</span>
+    </button>
+  </section>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome/empresa</th>
+          <th>Telefone</th>
+          <th>Regiao</th>
+          <th>Materiais</th>
+          <th>Disponibilidade</th>
+          <th>Status</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let collector of filteredCollectors">
+          <td>{{ collector.name || '-' }}</td>
+          <td>{{ collector.phone }}</td>
+          <td>{{ collector.region || '-' }}</td>
+          <td>{{ collector.materials || '-' }}</td>
+          <td>{{ collector.availability || '-' }}</td>
+          <td><span class="status" [class.blocked]="collector.status === 'BLOCKED'" [class.pending]="collector.status === 'PENDING_APPROVAL'">{{ statusLabel(collector.status) }}</span></td>
+          <td>
+            <div class="action-row">
+              <button type="button" *ngIf="collector.status === 'PENDING_APPROVAL'" (click)="approve(collector)">Aprovar</button>
+              <button class="danger-button" type="button" *ngIf="collector.status === 'ACTIVE'" (click)="block(collector)">Bloquear</button>
+              <button type="button" *ngIf="collector.status === 'BLOCKED' || collector.status === 'INACTIVE'" (click)="reactivate(collector)">Reativar</button>
+              <button class="ghost-button" type="button" (click)="selectCollector(collector)">Detalhes</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!filteredCollectors.length">Nenhum coletor encontrado para este filtro.</p>
+  </section>
+
+  <section class="detail-panel" *ngIf="selectedCollector">
+    <div>
+      <span>Detalhe do coletor</span>
+      <h2>{{ selectedCollector.name || 'Coletor sem nome' }}</h2>
+    </div>
+    <dl>
+      <div><dt>Telefone</dt><dd>{{ selectedCollector.phone }}</dd></div>
+      <div><dt>Status</dt><dd>{{ statusLabel(selectedCollector.status) }}</dd></div>
+      <div><dt>Regiao</dt><dd>{{ selectedCollector.region || '-' }}</dd></div>
+      <div><dt>Materiais</dt><dd>{{ selectedCollector.materials || '-' }}</dd></div>
+      <div><dt>Disponibilidade</dt><dd>{{ selectedCollector.availability || '-' }}</dd></div>
+      <div><dt>Atendimento</dt><dd>{{ selectedCollector.collectorServiceType || '-' }}</dd></div>
+      <div><dt>Criado em</dt><dd>{{ selectedCollector.createdAt | date:'short' }}</dd></div>
+      <div><dt>Atualizado em</dt><dd>{{ selectedCollector.updatedAt | date:'short' }}</dd></div>
+    </dl>
+  </section>
+</section>

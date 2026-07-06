@@ -31,6 +31,11 @@ export interface CompleteProfilePayload {
   collectorServiceType?: string;
 }
 
+export interface AdminLoginPayload {
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -51,6 +56,10 @@ export class AuthService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http.post<AuthResponse>(`${this.apiUrl}/complete-profile`, payload, { headers }).pipe(timeout(15000));
+  }
+
+  adminLogin(payload: AdminLoginPayload): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/admin/login`, payload).pipe(timeout(15000));
   }
 
   private profileUrl(profile: AuthProfile): string {

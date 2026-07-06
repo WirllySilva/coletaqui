@@ -55,13 +55,21 @@
       <h2>Minhas solicitações</h2>
 
       <article class="request-card" *ngFor="let schedule of schedules">
-        <div class="request-head">
+        <div class="request-head" (click)="openDetail(schedule)">
           <strong>{{ statusLabel(schedule.status) }}</strong>
           <span>{{ schedule.preferredPeriod }}</span>
         </div>
         <p><i class="bi bi-geo-alt"></i> {{ schedule.address }}</p>
         <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
         <p *ngIf="schedule.collectorName"><i class="bi bi-truck"></i> Coletor: {{ schedule.collectorName }}</p>
+        <div class="request-actions">
+          <button class="detail-button" type="button" (click)="openDetail(schedule)">
+            <i class="bi bi-eye"></i> Ver detalhe
+          </button>
+          <button class="cancel-button" type="button" *ngIf="schedule.status === 'REQUESTED'" (click)="cancel(schedule)">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
       </article>
 
       <p class="muted" *ngIf="!schedules.length && !isLoading">Nenhuma solicitação criada ainda.</p>

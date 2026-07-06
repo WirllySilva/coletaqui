@@ -1,0 +1,61 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Visao geral</span>
+    <h1>Dashboard administrativo</h1>
+    <p>Indicadores gerais da plataforma Coletaqui Araçoiaba.</p>
+  </div>
+
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="metric-grid" *ngIf="summary">
+    <article><strong>{{ summary.users }}</strong><span>Usuarios</span></article>
+    <article><strong>{{ summary.collectors }}</strong><span>Coletores</span></article>
+    <article><strong>{{ summary.pendingCollectors }}</strong><span>Pendentes</span></article>
+    <article><strong>{{ summary.schedules }}</strong><span>Coletas</span></article>
+    <article><strong>{{ summary.openSchedules }}</strong><span>Abertas</span></article>
+    <article><strong>{{ summary.completedSchedules }}</strong><span>Concluidas</span></article>
+  </section>
+
+  <section class="content-grid" *ngIf="impact">
+    <article class="panel status-chart-panel">
+      <h2>Coletas por status</h2>
+      <div class="donut-layout">
+        <div class="donut-chart" [style.background]="statusChartBackground">
+          <span>{{ impact.total }}</span>
+          <small>Total</small>
+        </div>
+        <div class="chart-legend">
+          <div *ngFor="let segment of statusSegments">
+            <i [style.background]="segment.color"></i>
+            <span>{{ segment.label }}</span>
+            <strong>{{ segment.value }} ({{ percent(segment.value) }}%)</strong>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="panel">
+      <h2>Materiais mais coletados</h2>
+      <div class="bar-list" *ngIf="impact.materials.length; else emptyMaterials">
+        <div class="bar-row" *ngFor="let metric of impact.materials">
+          <span>{{ metric.label }}</span>
+          <div><i [style.width.%]="(metric.total / max(impact.materials)) * 100"></i></div>
+          <strong>{{ metric.total }}</strong>
+        </div>
+      </div>
+      <ng-template #emptyMaterials><p>Nenhuma coleta concluida ainda.</p></ng-template>
+    </article>
+
+    <article class="panel">
+      <h2>Bairros com maior demanda</h2>
+      <div class="bar-list" *ngIf="impact.neighborhoods.length; else emptyNeighborhoods">
+        <div class="bar-row" *ngFor="let metric of impact.neighborhoods">
+          <span>{{ metric.label }}</span>
+          <div><i [style.width.%]="(metric.total / max(impact.neighborhoods)) * 100"></i></div>
+          <strong>{{ metric.total }}</strong>
+        </div>
+      </div>
+      <ng-template #emptyNeighborhoods><p>Nenhuma solicitacao registrada ainda.</p></ng-template>
+    </article>
+  </section>
+</section>

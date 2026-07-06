@@ -7,6 +7,7 @@ public record MaterialTypeResponse(
 	String name,
 	String slug,
 	String description,
-	boolean hazardous
+	boolean hazardous,
+	boolean active
 ) {
 }

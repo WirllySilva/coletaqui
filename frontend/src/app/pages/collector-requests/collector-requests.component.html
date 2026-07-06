@@ -14,7 +14,7 @@
     <p class="error-message" *ngIf="error">{{ error }}</p>
 
     <article class="request-card" *ngFor="let request of requests">
-      <div class="request-head">
+      <div class="request-head" (click)="openDetail(request)">
         <strong>{{ request.requesterName || 'Solicitante' }}</strong>
         <span>Disponível</span>
       </div>
@@ -22,10 +22,16 @@
       <p><i class="bi bi-recycle"></i> {{ request.materials.join(', ') }}</p>
       <p><i class="bi bi-clock"></i> {{ request.preferredPeriod }}</p>
       <p *ngIf="request.notes"><i class="bi bi-chat-left-text"></i> {{ request.notes }}</p>
-      <button class="accept-button" type="button" (click)="accept(request)">
-        <i class="bi bi-check-circle-fill"></i>
-        Aceitar coleta
-      </button>
+      <div class="request-actions">
+        <button class="detail-button" type="button" (click)="openDetail(request)">
+          <i class="bi bi-eye"></i>
+          Ver detalhe
+        </button>
+        <button class="accept-button" type="button" (click)="accept(request)">
+          <i class="bi bi-check-circle-fill"></i>
+          Aceitar coleta
+        </button>
+      </div>
     </article>
 
     <p class="state-card" *ngIf="!isLoading && !requests.length">Nenhuma solicitação aberta no momento.</p>

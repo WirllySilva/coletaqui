@@ -25,6 +25,23 @@ export interface Schedule {
   createdAt: string;
   acceptedAt?: string | null;
   completedAt?: string | null;
+  canceledAt?: string | null;
+}
+
+export interface ImpactMetric {
+  label: string;
+  total: number;
+}
+
+export interface ImpactDashboard {
+  requested: number;
+  accepted: number;
+  completed: number;
+  canceled: number;
+  total: number;
+  materials: ImpactMetric[];
+  neighborhoods: ImpactMetric[];
+  collectors: ImpactMetric[];
 }
 
 export interface CreateSchedulePayload {
@@ -55,6 +72,10 @@ export class ScheduleService {
     return this.http.get<Schedule[]>(`${this.schedulesUrl}/me`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
+  getSchedule(scheduleId: string): Observable<Schedule> {
+    return this.http.get<Schedule>(`${this.schedulesUrl}/${scheduleId}`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
   listOpenSchedules(): Observable<Schedule[]> {
     return this.http.get<Schedule[]>(`${this.schedulesUrl}/open`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
@@ -69,6 +90,14 @@ export class ScheduleService {
 
   completeSchedule(scheduleId: string): Observable<Schedule> {
     return this.http.post<Schedule>(`${this.schedulesUrl}/${scheduleId}/complete`, {}, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  cancelSchedule(scheduleId: string): Observable<Schedule> {
+    return this.http.post<Schedule>(`${this.schedulesUrl}/${scheduleId}/cancel`, {}, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  getImpactDashboard(): Observable<ImpactDashboard> {
+    return this.http.get<ImpactDashboard>(`${this.schedulesUrl}/impact`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   private authHeaders(): HttpHeaders {

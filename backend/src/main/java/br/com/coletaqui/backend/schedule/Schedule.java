@@ -66,6 +66,8 @@ public class Schedule {
 
 	private OffsetDateTime completedAt;
 
+	private OffsetDateTime canceledAt;
+
 	@Column(nullable = false)
 	private OffsetDateTime createdAt;
 
@@ -166,6 +168,14 @@ public class Schedule {
 
 	public void setCompletedAt(OffsetDateTime completedAt) {
 		this.completedAt = completedAt;
+	}
+
+	public OffsetDateTime getCanceledAt() {
+		return canceledAt;
+	}
+
+	public void setCanceledAt(OffsetDateTime canceledAt) {
+		this.canceledAt = canceledAt;
 	}
 
 	public OffsetDateTime getCreatedAt() {

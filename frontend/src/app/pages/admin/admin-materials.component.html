@@ -1,0 +1,61 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Catalogo</span>
+    <h1>Materiais</h1>
+    <p>Gerencie os tipos de materiais aceitos nos agendamentos e pontos de recebimento.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="form-panel">
+    <h2>{{ editing ? 'Editar material' : 'Novo material' }}</h2>
+    <form (ngSubmit)="submit()">
+      <label>
+        Nome
+        <input name="name" [(ngModel)]="form.name" placeholder="Ex.: Papel" required />
+      </label>
+      <label>
+        Descricao
+        <input name="description" [(ngModel)]="form.description" placeholder="Ex.: Jornais, revistas e caixas limpas" />
+      </label>
+      <div class="check-row">
+        <label><input name="hazardous" type="checkbox" [(ngModel)]="form.hazardous" /> Descarte especial</label>
+        <label><input name="active" type="checkbox" [(ngModel)]="form.active" /> Ativo</label>
+      </div>
+      <div class="action-row">
+        <button type="submit">{{ editing ? 'Salvar' : 'Criar material' }}</button>
+        <button class="ghost-button" type="button" *ngIf="editing" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Descricao</th>
+          <th>Tipo</th>
+          <th>Status</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let material of materials">
+          <td>{{ material.name }}</td>
+          <td>{{ material.description || '-' }}</td>
+          <td>{{ material.hazardous ? 'Especial' : 'Comum' }}</td>
+          <td><span class="status" [class.blocked]="!material.active">{{ material.active ? 'Ativo' : 'Inativo' }}</span></td>
+          <td>
+            <div class="action-row">
+              <button type="button" (click)="edit(material)">Editar</button>
+              <button class="danger-button" type="button" *ngIf="material.active" (click)="toggle(material)">Desativar</button>
+              <button type="button" *ngIf="!material.active" (click)="toggle(material)">Ativar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>

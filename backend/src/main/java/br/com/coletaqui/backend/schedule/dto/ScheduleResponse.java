@@ -18,6 +18,7 @@ public record ScheduleResponse(
 	ScheduleStatus status,
 	OffsetDateTime createdAt,
 	OffsetDateTime acceptedAt,
-	OffsetDateTime completedAt
+	OffsetDateTime completedAt,
+	OffsetDateTime canceledAt
 ) {
 }

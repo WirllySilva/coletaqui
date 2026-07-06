@@ -1,0 +1,46 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Conta</span>
+    <h1>Minha conta</h1>
+    <p>Consulte seus dados administrativos e altere sua senha de acesso.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="content-grid">
+    <article class="detail-panel account-detail-panel" *ngIf="admin">
+      <div>
+        <span>Administrador</span>
+        <h2>{{ admin.name || 'Administrador' }}</h2>
+      </div>
+      <dl>
+        <div><dt>Telefone</dt><dd>{{ admin.phone }}</dd></div>
+        <div><dt>Perfil</dt><dd>Administrador</dd></div>
+        <div><dt>Status</dt><dd>{{ admin.status }}</dd></div>
+        <div><dt>Criado em</dt><dd>{{ admin.createdAt | date:'short' }}</dd></div>
+      </dl>
+    </article>
+
+    <article class="form-panel">
+      <h2>Alterar senha</h2>
+      <form (ngSubmit)="changePassword()">
+        <label>
+          Senha atual
+          <input name="currentPassword" type="password" autocomplete="current-password" [(ngModel)]="currentPassword" />
+        </label>
+        <label>
+          Nova senha
+          <input name="newPassword" type="password" autocomplete="new-password" [(ngModel)]="newPassword" />
+        </label>
+        <label>
+          Confirmar nova senha
+          <input name="confirmPassword" type="password" autocomplete="new-password" [(ngModel)]="confirmPassword" />
+        </label>
+        <div class="action-row">
+          <button type="submit" [disabled]="isSaving">{{ isSaving ? 'Salvando...' : 'Alterar senha' }}</button>
+        </div>
+      </form>
+    </article>
+  </section>
+</section>

@@ -39,13 +39,15 @@ Usuário que:
 
 Usuário administrativo que:
 
+- Acessa o painel desktop por `/admin/login`.
+- Realiza login por e-mail e senha.
 - Gerencia usuários.
 - Gerencia pontos de coleta.
 - Acompanha relatórios e dashboards.
 - Configura parâmetros do sistema.
 - Pode aprovar ou revisar cadastros de catadores/coletadores.
 
-Observação: para administrador, recomenda-se autenticação mais forte do que OTP simples, como e-mail + senha forte e segundo fator no futuro.
+Observação: para administrador, o sistema usa e-mail + senha. Segundo fator pode ser adicionado no futuro.
 
 ---
 
@@ -62,6 +64,7 @@ O MVP deverá contemplar:
 7. Redirecionamento conforme perfil do usuário.
 8. Conteúdo educativo sobre separação de materiais recicláveis.
 9. Base para consulta de pontos de coleta, agendamentos, relatórios e dashboards.
+10. Painel administrativo desktop com login por e-mail e senha.
 
 ---
 
@@ -214,6 +217,34 @@ Critérios de aceite:
 
 - O sistema deve registrar dados úteis para análise de coletas.
 - O sistema deve permitir visualizar indicadores de uso, impacto e status de agendamentos.
+- O painel administrativo deve exibir graficos de coletas por status, materiais mais coletados e bairros com maior demanda.
+- O administrador deve poder exportar coletas filtradas em CSV.
+
+---
+
+## RF-12 — Gestão Administrativa de Materiais e Pontos
+
+O sistema deve permitir que o administrador gerencie materiais aceitos e pontos fixos de recebimento.
+
+Critérios de aceite:
+
+- Administrador pode criar, editar, ativar e desativar materiais.
+- Administrador pode criar, editar, ativar e desativar pontos de recebimento.
+- Pontos de recebimento devem registrar nome, endereço, materiais aceitos, horário e status.
+
+---
+
+## RF-11 — Login Administrativo
+
+O sistema deve permitir que administradores acessem o painel desktop por e-mail e senha.
+
+Critérios de aceite:
+
+- A rota `/admin/login` deve exibir o formulário administrativo.
+- Credenciais válidas devem retornar JWT com `role = ADMIN`.
+- Credenciais inválidas devem exibir erro sem revelar se o e-mail existe.
+- Após autenticação válida, o administrador deve ser redirecionado para `/admin/dashboard`.
+- Usuários comuns e coletores não devem acessar as rotas administrativas.
 
 ---
 
@@ -258,12 +289,20 @@ Após login ou cadastro:
 - Usuário comum deve ser redirecionado para a área principal do aplicativo.
 - Catador/coletor deve ser redirecionado para sua área de atuação.
 - Administrador deve ser redirecionado para área administrativa, quando disponível.
+- Administrador autenticado deve ser redirecionado para `/admin/dashboard`.
 
 ---
 
 ## RN-06 — Aprovação de Catador/Coletor
 
 O cadastro de catador/coletor pode exigir aprovação administrativa antes de ficar visível publicamente ou receber solicitações.
+
+Regras:
+
+- Coletor com `status = PENDING_APPROVAL` pode autenticar, mas não pode acessar solicitações, agenda, aceite, conclusão ou dashboard de impacto.
+- Coletor com `status = ACTIVE` pode atuar normalmente.
+- Coletor com `status = BLOCKED` não deve acessar o sistema operacional de coleta.
+- Administrador pode aprovar, bloquear e reativar coletores.
 
 ---
 
@@ -289,6 +328,7 @@ Critérios:
 - OTP deve ter limite de tentativas.
 - Deve haver intervalo mínimo para reenvio de OTP.
 - Dados sensíveis não devem ser retornados em respostas da API.
+- Senhas administrativas devem ser armazenadas como hash BCrypt.
 
 ---
 
@@ -334,7 +374,49 @@ Uma funcionalidade é considerada concluída quando:
 # 8. Fora do Escopo Inicial
 
 - Integração com SMS real.
-- Painel administrativo completo.
 - Sistema avançado de ranking.
 - Monitoramento avançado de performance.
 - Gateway de pagamento ou remuneração de catadores/coletadores.
+
+---
+
+# 9. Atualizacao Funcional - Agendamentos e Impacto
+
+## Agendamentos
+
+O fluxo atual de agendamentos contempla:
+
+- Criacao de solicitacao pelo usuario comum.
+- Historico de solicitacoes do usuario comum.
+- Detalhe da coleta com endereco, materiais, observacoes, disponibilidade, solicitante, coletor e linha do tempo.
+- Cancelamento pelo usuario comum enquanto a solicitacao ainda estiver `REQUESTED`.
+- Listagem de solicitacoes abertas para coletores.
+- Aceite de solicitacao por coletor.
+- Agenda do coletor com coletas aceitas e concluidas.
+- Conclusao de coleta pelo coletor responsavel.
+
+Status utilizados:
+
+- `REQUESTED`: solicitacao aberta, aguardando coletor.
+- `ACCEPTED`: solicitacao aceita por um coletor.
+- `COMPLETED`: coleta concluida.
+- `CANCELED`: solicitacao cancelada antes do aceite.
+
+## Dashboard de Impacto
+
+O dashboard inicial de impacto contempla:
+
+- Total de solicitacoes.
+- Total de coletas concluidas.
+- Taxa de conclusao.
+- Distribuicao por status.
+- Materiais mais coletados.
+- Bairros com maior demanda.
+- Coletores mais ativos.
+
+Regra de visibilidade:
+
+- Usuario comum nao deve visualizar graficos operacionais.
+- Coletor visualiza indicadores relacionados apenas as coletas sob sua responsabilidade.
+- Administrador, em evolucao futura, visualiza indicadores gerais da plataforma.
+- Ranking permanece reservado para gamificacao e engajamento dos moradores.

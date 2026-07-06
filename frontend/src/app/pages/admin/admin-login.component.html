@@ -1,0 +1,52 @@
+<main class="admin-login">
+  <section class="login-panel">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span class="brand-ring"></span>
+        <span class="brand-core">
+          <i class="bi bi-leaf-fill"></i>
+        </span>
+        <span class="brand-badge">
+          <i class="bi bi-recycle"></i>
+        </span>
+      </div>
+      <h1 class="brand-name">
+        <span>Coletaqui</span>
+        <strong>Araçoiaba</strong>
+      </h1>
+    </div>
+
+    <div class="title">
+      <p>Painel administrativo</p>
+      <h1>Acesse sua conta</h1>
+    </div>
+
+    <form (ngSubmit)="submit()">
+      <label for="admin-email">E-mail</label>
+      <input
+        id="admin-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        [(ngModel)]="email"
+        placeholder="admin@coletaqui.local"
+      />
+
+      <label for="admin-password">Senha</label>
+      <input
+        id="admin-password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        [(ngModel)]="password"
+        placeholder="Sua senha"
+      />
+
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Entrando...' : 'Entrar no painel' }}
+      </button>
+    </form>
+  </section>
+</main>

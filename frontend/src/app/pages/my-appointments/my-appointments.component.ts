@@ -90,6 +90,27 @@ export class MyAppointmentsPageComponent implements OnInit {
     void this.router.navigateByUrl('/home');
   }
 
+  openDetail(schedule: Schedule): void {
+    void this.router.navigate(['/schedules', schedule.id]);
+  }
+
+  cancel(schedule: Schedule): void {
+    this.message = '';
+    this.error = '';
+
+    this.scheduleService.cancelSchedule(schedule.id).subscribe({
+      next: updated => {
+        this.schedules = this.schedules.map(item => item.id === updated.id ? updated : item);
+        this.message = 'Solicitacao cancelada.';
+        this.changeDetector.detectChanges();
+      },
+      error: () => {
+        this.error = 'Nao foi possivel cancelar a solicitacao.';
+        this.changeDetector.detectChanges();
+      },
+    });
+  }
+
   statusLabel(status: Schedule['status']): string {
     const labels: Record<Schedule['status'], string> = {
       REQUESTED: 'Solicitada',

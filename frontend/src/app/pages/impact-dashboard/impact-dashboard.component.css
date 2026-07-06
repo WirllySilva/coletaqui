@@ -1,0 +1,175 @@
+.impact-page {
+  background: #eaf8fb;
+  min-height: 100vh;
+  padding: 118px 16px 112px;
+}
+
+.impact-content {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 460px;
+}
+
+.back-link {
+  background: none;
+  border: 0;
+  color: #2c8da7;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  justify-self: flex-start;
+}
+
+.page-heading span {
+  color: #2c8da7;
+  font-weight: 900;
+}
+
+.page-heading h1 {
+  color: #174a5a;
+  font-size: 1.55rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.page-heading p,
+.state-card p,
+.metric-card p {
+  color: #405f69;
+  margin: 0;
+}
+
+.state-card,
+.status-card,
+.metric-card,
+.summary-grid article {
+  background: #fff;
+  border: 1px solid #caedf4;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(23, 74, 90, 0.1);
+}
+
+.state-card,
+.status-card,
+.metric-card {
+  padding: 16px;
+}
+
+.state-card.error {
+  border-color: #f2c0c0;
+  color: #9b1c1c;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.summary-grid article {
+  display: grid;
+  gap: 4px;
+  min-height: 82px;
+  padding: 12px;
+  place-items: center;
+  text-align: center;
+}
+
+.summary-grid strong {
+  color: #2c8da7;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.summary-grid span {
+  color: #405f69;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.status-card,
+.metric-card {
+  display: grid;
+  gap: 12px;
+}
+
+.status-card h2,
+.metric-card h2 {
+  color: #174a5a;
+  font-size: 1.08rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.status-list {
+  display: grid;
+  gap: 8px;
+}
+
+.status-list span {
+  align-items: center;
+  color: #405f69;
+  display: flex;
+  font-weight: 800;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.status-list i {
+  border-radius: 50%;
+  display: inline-flex;
+  flex: 0 0 10px;
+  height: 10px;
+  width: 10px;
+}
+
+.requested {
+  background: #55b6ce;
+}
+
+.accepted {
+  background: #f4c430;
+}
+
+.completed {
+  background: #198754;
+}
+
+.canceled {
+  background: #c94b4b;
+}
+
+.metric-list {
+  display: grid;
+  gap: 10px;
+}
+
+.metric-row {
+  align-items: center;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 96px 1fr 28px;
+}
+
+.metric-row span,
+.metric-row strong {
+  color: #405f69;
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.metric-row div {
+  background: #eefafe;
+  border-radius: 999px;
+  height: 9px;
+  overflow: hidden;
+}
+
+.metric-row i {
+  background: #2c8da7;
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+}

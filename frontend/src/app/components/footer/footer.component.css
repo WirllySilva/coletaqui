@@ -17,16 +17,16 @@
   box-shadow: 0 8px 20px rgba(12, 63, 36, 0.16);
   display: flex;
   left: 50%;
-  max-width: 320px;
+  max-width: 360px;
   padding: 8px 10px;
   position: fixed;
   transform: translateX(-50%);
-  width: min(88%, 320px);
+  width: min(92%, 360px);
 }
 
 .footer-container {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   width: 100%;
 }
 
@@ -48,7 +48,8 @@
 
 .footer-link:hover,
 .footer-link:focus-visible,
-.footer-link:active {
+.footer-link:active,
+.footer-link.active {
   background: #e9f8ef;
   color: #198754;
   outline: none;

@@ -1,6 +1,7 @@
 package br.com.coletaqui.backend.auth;
 
 import br.com.coletaqui.backend.auth.dto.AuthResponse;
+import br.com.coletaqui.backend.auth.dto.AdminLoginRequest;
 import br.com.coletaqui.backend.auth.dto.CompleteProfileRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequest;
 import br.com.coletaqui.backend.auth.dto.OtpRequestResponse;
@@ -17,6 +18,7 @@ import java.util.HexFormat;
 import java.util.Random;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class AuthService {
 	private final UserRepository userRepository;
 	private final OtpSender otpSender;
 	private final JwtService jwtService;
+	private final PasswordEncoder passwordEncoder;
 	private final Random random = new Random();
 	private final long otpExpirationMinutes;
 	private final int maxAttempts;
@@ -37,6 +40,7 @@ public class AuthService {
 		UserRepository userRepository,
 		OtpSender otpSender,
 		JwtService jwtService,
+		PasswordEncoder passwordEncoder,
 		@Value("${app.otp.expiration-minutes}") long otpExpirationMinutes,
 		@Value("${app.otp.max-attempts}") int maxAttempts,
 		@Value("${app.otp.expose-dev-code}") boolean exposeDevCode,
@@ -46,10 +50,29 @@ public class AuthService {
 		this.userRepository = userRepository;
 		this.otpSender = otpSender;
 		this.jwtService = jwtService;
+		this.passwordEncoder = passwordEncoder;
 		this.otpExpirationMinutes = otpExpirationMinutes;
 		this.maxAttempts = maxAttempts;
 		this.exposeDevCode = exposeDevCode;
 		this.channel = channel;
+	}
+
+	@Transactional(readOnly = true)
+	public AuthResponse adminLogin(AdminLoginRequest request) {
+		var email = normalizeEmail(request.email());
+		var user = userRepository
+			.findByEmailIgnoreCase(email)
+			.orElseThrow(() -> new IllegalArgumentException("Credenciais invalidas."));
+
+		if (user.getRole() != UserRole.ADMIN || user.getStatus() != UserStatus.ACTIVE || isBlank(user.getPasswordHash())) {
+			throw new IllegalArgumentException("Credenciais invalidas.");
+		}
+
+		if (!passwordEncoder.matches(request.password(), user.getPasswordHash())) {
+			throw new IllegalArgumentException("Credenciais invalidas.");
+		}
+
+		return toAuthResponse(user);
 	}
 
 	@Transactional
@@ -90,6 +113,9 @@ public class AuthService {
 		if (user.getRole() != requestedRole && !user.isProfileComplete()) {
 			user.setRole(requestedRole);
 			user.setStatus(statusForRole(requestedRole));
+		}
+		if (user.getStatus() == UserStatus.BLOCKED || user.getStatus() == UserStatus.INACTIVE) {
+			throw new IllegalArgumentException("Usuario sem permissao para acessar o sistema.");
 		}
 
 		return toAuthResponse(user);
@@ -181,6 +207,13 @@ public class AuthService {
 			throw new IllegalArgumentException("Telefone inválido.");
 		}
 		return digits;
+	}
+
+	private String normalizeEmail(String email) {
+		if (email == null || email.isBlank()) {
+			throw new IllegalArgumentException("E-mail e obrigatorio.");
+		}
+		return email.trim().toLowerCase();
 	}
 
 	private String hash(String value) {

@@ -1,0 +1,41 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Gestao</span>
+    <h1>Usuarios</h1>
+    <p>Consulte usuarios comuns, coletores e administradores cadastrados.</p>
+  </div>
+
+  <div class="toolbar">
+    <select [(ngModel)]="roleFilter">
+      <option value="">Todos os perfis</option>
+      <option value="COMMON_USER">Usuarios comuns</option>
+      <option value="COLLECTOR">Coletores</option>
+      <option value="ADMIN">Administradores</option>
+    </select>
+  </div>
+
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Perfil</th>
+          <th>Status</th>
+          <th>Criado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td>{{ user.name || '-' }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.role }}</td>
+          <td><span class="status">{{ user.status }}</span></td>
+          <td>{{ user.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</section>

@@ -48,6 +48,10 @@ export class CollectorScheduleComponent implements OnInit {
     void this.router.navigateByUrl('/collector-home');
   }
 
+  openDetail(schedule: Schedule): void {
+    void this.router.navigate(['/schedules', schedule.id]);
+  }
+
   statusLabel(status: Schedule['status']): string {
     const labels: Record<Schedule['status'], string> = {
       REQUESTED: 'Solicitada',

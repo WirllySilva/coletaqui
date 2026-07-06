@@ -3,14 +3,20 @@ import { CanActivateFn, Router } from '@angular/router';
 
 interface StoredUser {
   role?: 'COMMON_USER' | 'COLLECTOR' | 'ADMIN';
+  status?: 'ACTIVE' | 'PENDING_APPROVAL' | 'INACTIVE' | 'BLOCKED';
 }
 
 export const commonHomeGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const role = currentRole();
+  const user = currentUser();
+  const role = user?.role ?? null;
 
   if (role === 'COLLECTOR') {
-    return router.parseUrl('/collector-home');
+    return user?.status === 'ACTIVE' ? router.parseUrl('/collector-home') : router.parseUrl('/collector-pending');
+  }
+
+  if (role === 'ADMIN') {
+    return router.parseUrl('/admin/dashboard');
   }
 
   return true;
@@ -18,16 +24,21 @@ export const commonHomeGuard: CanActivateFn = () => {
 
 export const collectorHomeGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const role = currentRole();
+  const user = currentUser();
+  const role = user?.role ?? null;
 
   if (role && role !== 'COLLECTOR') {
-    return router.parseUrl('/home');
+    return router.parseUrl(role === 'ADMIN' ? '/admin/dashboard' : '/home');
+  }
+
+  if (role === 'COLLECTOR' && user?.status !== 'ACTIVE') {
+    return router.parseUrl('/collector-pending');
   }
 
   return true;
 };
 
-function currentRole(): StoredUser['role'] | null {
+function currentUser(): StoredUser | null {
   const storedUser = localStorage.getItem('coletaqui_user');
 
   if (!storedUser) {
@@ -35,7 +46,7 @@ function currentRole(): StoredUser['role'] | null {
   }
 
   try {
-    return (JSON.parse(storedUser) as StoredUser).role ?? null;
+    return JSON.parse(storedUser) as StoredUser;
   } catch {
     return null;
   }

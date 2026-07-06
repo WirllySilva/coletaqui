@@ -203,7 +203,12 @@ export class AuthFormPageComponent {
 
   private navigateAfterLogin(response: AuthResponse): void {
     localStorage.setItem('coletaqui_user', JSON.stringify(response));
-    void this.router.navigateByUrl(response.role === 'COLLECTOR' ? '/collector-home' : '/home');
+    const route = response.role === 'ADMIN'
+      ? '/admin/dashboard'
+      : response.role === 'COLLECTOR'
+        ? (response.status === 'ACTIVE' ? '/collector-home' : '/collector-pending')
+        : '/home';
+    void this.router.navigateByUrl(route);
   }
 
   private onlyNumbers(value: string): string {

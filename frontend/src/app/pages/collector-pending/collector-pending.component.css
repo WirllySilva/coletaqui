@@ -1,0 +1,92 @@
+.pending-page {
+  align-items: center;
+  background: linear-gradient(180deg, #e8f7fb 0%, #f6fbf8 58%, #dff4e7 100%);
+  color: #153d50;
+  display: grid;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.pending-panel {
+  background: #fff;
+  border: 1px solid #d8ebef;
+  border-radius: 8px;
+  box-shadow: 0 18px 40px rgba(31, 126, 151, 0.16);
+  display: grid;
+  gap: 16px;
+  justify-self: center;
+  max-width: 420px;
+  padding: 26px;
+  text-align: center;
+  width: 100%;
+}
+
+.role-pill {
+  align-items: center;
+  background: #e5f6fb;
+  border-radius: 999px;
+  color: #247f99;
+  display: inline-flex;
+  font-size: 0.8rem;
+  font-weight: 900;
+  gap: 8px;
+  justify-self: center;
+  padding: 7px 12px;
+}
+
+.icon-wrap {
+  align-items: center;
+  background: #247f99;
+  border-radius: 50%;
+  color: #fff;
+  display: grid;
+  font-size: 2rem;
+  height: 76px;
+  justify-self: center;
+  width: 76px;
+}
+
+h1 {
+  color: #153d50;
+  font-size: 1.7rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+p {
+  color: #486171;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.info-list {
+  background: #f2f9fb;
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  text-align: left;
+}
+
+.info-list span {
+  align-items: center;
+  color: #315463;
+  display: flex;
+  font-size: 0.9rem;
+  font-weight: 800;
+  gap: 8px;
+}
+
+button {
+  align-items: center;
+  background: #247f99;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 8px;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 16px;
+}

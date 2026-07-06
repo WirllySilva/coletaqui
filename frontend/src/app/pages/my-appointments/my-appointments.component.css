@@ -126,6 +126,7 @@ fieldset {
 
 .request-head {
   align-items: center;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
@@ -148,6 +149,38 @@ fieldset {
 .request-card i {
   color: #198754;
   margin-right: 6px;
+}
+
+.request-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.detail-button,
+.cancel-button {
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 6px;
+  justify-content: center;
+  min-height: 38px;
+}
+
+.detail-button {
+  background: #e9f8ef;
+  color: #155f34;
+}
+
+.cancel-button {
+  background: #fff0f0;
+  color: #9b1c1c;
+}
+
+.cancel-button i {
+  color: #9b1c1c;
 }
 
 @media (max-width: 340px) {
