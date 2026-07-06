@@ -1,0 +1,50 @@
+<div class="points-page">
+  <app-header />
+
+  <main class="points-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <span><i class="bi bi-geo-alt-fill"></i> Pontos de coleta</span>
+      <h1>Locais para entregar recicláveis em Araçoiaba</h1>
+      <p>Consulte pontos fixos cadastrados para deixar materiais sem precisar solicitar coleta domiciliar.</p>
+    </section>
+
+    <section class="map-panel" aria-label="Mapa dos pontos de coleta">
+      <span class="map-chip">Mapa ilustrativo</span>
+      <span class="point-marker marker-main"><i class="bi bi-recycle"></i></span>
+      <span class="point-marker marker-paper"></span>
+      <span class="point-marker marker-glass"></span>
+      <span class="point-marker marker-oil"></span>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando pontos...</p>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && error">
+      <p>{{ error }}</p>
+    </section>
+
+    <section class="points-list" *ngIf="!isLoading && !error && points.length">
+      <article class="point-card" *ngFor="let point of points">
+        <div>
+          <h2>{{ point.name }}</h2>
+          <p class="address"><i class="bi bi-pin-map-fill"></i> {{ point.address }}, {{ point.city }}/{{ point.state }}</p>
+          <p *ngIf="point.openingHours"><i class="bi bi-clock-fill"></i> {{ point.openingHours }}</p>
+          <p *ngIf="point.description">{{ point.description }}</p>
+        </div>
+
+        <div class="material-list" *ngIf="materials(point).length">
+          <span *ngFor="let material of materials(point)">{{ material }}</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="state-card" *ngIf="!isLoading && !error && !points.length">
+      <p>Nenhum ponto ativo cadastrado no momento.</p>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

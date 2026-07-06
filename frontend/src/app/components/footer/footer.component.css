@@ -69,3 +69,10 @@
     font-size: 0.62rem;
   }
 }
+
+@media (min-width: 768px) {
+  .custom-footer {
+    max-width: 460px;
+    width: 460px;
+  }
+}

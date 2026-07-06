@@ -18,6 +18,7 @@ import { CollectorPendingComponent } from './pages/collector-pending/collector-p
 import { CollectorRegisterPageComponent } from './pages/collector-register/collector-register.component';
 import { CollectorRequestsComponent } from './pages/collector-requests/collector-requests.component';
 import { CollectorScheduleComponent } from './pages/collector-schedule/collector-schedule.component';
+import { CollectionPointsComponent } from './pages/collection-points/collection-points.component';
 import { CollectorsPageComponent } from './pages/collectors/collectors.component';
 import { CommonUserLoginPageComponent } from './pages/common-user-login/common-user-login.component';
 import { CommonUserRegisterPageComponent } from './pages/common-user-register/common-user-register.component';
@@ -73,6 +74,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'howtoseparate', component: HowToSeparatePageComponent },
+  { path: 'collection-points', component: CollectionPointsComponent, canActivate: [commonHomeGuard] },
   { path: 'collectors', component: CollectorsPageComponent },
   { path: 'collector', redirectTo: 'collector-home', pathMatch: 'full' },
   { path: 'plantatree', component: PlantATreePageComponent },

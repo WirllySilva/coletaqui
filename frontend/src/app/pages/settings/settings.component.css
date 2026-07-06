@@ -89,3 +89,25 @@
 .collector-settings .setting-row input {
   accent-color: #55b6ce;
 }
+
+@media (min-width: 768px) {
+  .menu-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .menu-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .settings-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .menu-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

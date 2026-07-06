@@ -1,14 +1,14 @@
 .recycling-tips {
-  margin-top: 2rem;
-  padding: 1rem;
+  margin-top: 1.4rem;
+  padding: 0;
 }
 
 .recycling-tips-title {
-  color: #1f2933;
-  font-size: 1.3rem;
-  font-weight: 700;
+  color: #124d2b;
+  font-size: 1.08rem;
+  font-weight: 900;
   margin-bottom: 0.9rem;
-  text-align: center;
+  text-align: left;
 }
 
 .carousel-shell {
@@ -23,14 +23,16 @@
 .card {
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 210px;
   justify-content: space-between;
   overflow: hidden;
 }
 
 .card-tips {
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #fff 0%, #f3fff7 100%);
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(8, 83, 45, 0.1);
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -50,13 +52,22 @@
 }
 
 .card-tips .card-title {
-  font-size: 1.2rem;
-  font-weight: 700;
+  color: #124d2b;
+  font-size: 1.12rem;
+  font-weight: 900;
 }
 
 .card-tips .card-text {
-  color: #555;
+  color: #405247;
   font-size: 0.9rem;
+}
+
+.card-tips .btn {
+  align-self: flex-start;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 900;
+  padding: 8px 14px;
 }
 
 .carousel-arrow {
@@ -117,5 +128,15 @@
   .carousel-arrow {
     height: 28px;
     width: 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .recycling-tips-title {
+    font-size: 1.18rem;
+  }
+
+  .card {
+    height: 220px;
   }
 }

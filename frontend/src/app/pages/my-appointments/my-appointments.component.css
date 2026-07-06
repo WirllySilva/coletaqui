@@ -188,3 +188,29 @@ fieldset {
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 768px) {
+  .menu-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .menu-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .history-section {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .history-section h2,
+  .history-section > .muted {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .menu-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

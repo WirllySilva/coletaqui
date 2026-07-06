@@ -41,3 +41,21 @@ button img {
   display: block;
   position: absolute;
 }
+
+@media (min-width: 768px) {
+  .custom-header {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 12px 28px rgba(12, 63, 36, 0.14);
+    left: 50%;
+    max-width: var(--tablet-shell-max);
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .custom-header {
+    max-width: var(--desktop-shell-max);
+  }
+}

@@ -338,3 +338,33 @@ legend {
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 768px) {
+  .profile-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .profile-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-type-grid,
+  .address-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .profile-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

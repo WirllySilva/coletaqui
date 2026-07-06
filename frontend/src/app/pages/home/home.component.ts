@@ -27,4 +27,9 @@ export class HomeComponent {
     { id: 3, title: 'Tipos de plásticos', summary: 'Evite misturar diferentes tipos de plásticos.', link: '/plastic' },
     { id: 4, title: 'Doação de objetos reutilizáveis', summary: 'Doe objetos em vez de descartá-los.', link: '/infobanner' },
   ];
+  highlights = [
+    { value: 'Araçoiaba', label: 'Atuação local', icon: 'bi-geo-alt-fill' },
+    { value: '4+', label: 'Tipos de materiais', icon: 'bi-box-seam-fill' },
+    { value: 'Agenda', label: 'Coleta domiciliar', icon: 'bi-calendar-check-fill' },
+  ];
 }

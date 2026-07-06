@@ -1,0 +1,200 @@
+.points-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.points-content {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  justify-self: flex-start;
+  text-decoration: none;
+}
+
+.page-heading span {
+  color: #0f6b3b;
+  font-weight: 900;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 6px 0;
+}
+
+.page-heading p,
+.state-card p,
+.point-card p {
+  color: #405247;
+  margin: 0;
+}
+
+.map-panel {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.55) 1px, transparent 1px),
+    linear-gradient(135deg, #bcefd0 0%, #e9fff1 52%, #fff 100%);
+  background-size: 38px 38px, 38px 38px, auto;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-chip {
+  background: #fff;
+  border-radius: 999px;
+  color: #0f6b3b;
+  font-size: 0.78rem;
+  font-weight: 900;
+  left: 14px;
+  padding: 7px 10px;
+  position: absolute;
+  top: 14px;
+}
+
+.point-marker {
+  align-items: center;
+  background: #198754;
+  border: 3px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  box-shadow: 0 8px 16px rgba(12, 63, 36, 0.16);
+  display: inline-flex;
+  justify-content: center;
+  position: absolute;
+  transform: rotate(-45deg);
+}
+
+.point-marker i {
+  color: #fff;
+  font-size: 1.35rem;
+  transform: rotate(45deg);
+}
+
+.marker-main {
+  height: 62px;
+  left: 48%;
+  top: 68px;
+  width: 62px;
+}
+
+.marker-paper,
+.marker-glass,
+.marker-oil {
+  height: 26px;
+  opacity: 0.9;
+  width: 26px;
+}
+
+.marker-paper {
+  background: #55b6ce;
+  left: 18%;
+  top: 112px;
+}
+
+.marker-glass {
+  background: #f4c430;
+  right: 20%;
+  top: 44px;
+}
+
+.marker-oil {
+  background: #0f6b3b;
+  right: 28%;
+  top: 150px;
+}
+
+.state-card,
+.point-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+  padding: 14px;
+}
+
+.state-card.error {
+  border-color: #f2c0c0;
+  color: #9b1c1c;
+}
+
+.points-list {
+  display: grid;
+  gap: 10px;
+}
+
+.point-card {
+  display: grid;
+  gap: 12px;
+}
+
+.point-card h2 {
+  color: #124d2b;
+  font-size: 1.05rem;
+  font-weight: 900;
+  margin: 0 0 7px;
+}
+
+.point-card p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 5px;
+}
+
+.point-card i {
+  color: #198754;
+  margin-right: 5px;
+}
+
+.material-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.material-list span {
+  background: #e9f8ef;
+  border-radius: 999px;
+  color: #155f34;
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 5px 9px;
+}
+
+@media (min-width: 768px) {
+  .points-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .points-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .map-panel {
+    height: 280px;
+  }
+
+  .points-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .points-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

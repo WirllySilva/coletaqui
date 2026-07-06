@@ -48,6 +48,20 @@ export interface UserAddress {
   updatedAt: string;
 }
 
+export interface CollectionPoint {
+  id: string;
+  name: string;
+  description?: string | null;
+  address: string;
+  city: string;
+  state: string;
+  materials?: string | null;
+  openingHours?: string | null;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface UpdateUserProfilePayload {
   name: string;
   region?: string | null;
@@ -88,6 +102,10 @@ export class UserService {
 
   listCollectors(): Observable<Collector[]> {
     return this.http.get<Collector[]>(`${this.apiUrl}/collectors`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  listCollectionPoints(): Observable<CollectionPoint[]> {
+    return this.http.get<CollectionPoint[]>('/api/collection-points', { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   getMyAddresses(): Observable<UserAddress[]> {

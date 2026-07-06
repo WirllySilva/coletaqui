@@ -110,3 +110,43 @@
 .list-card li i {
   color: #198754;
 }
+
+@media (min-width: 768px) {
+  .menu-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .menu-content {
+    display: grid;
+    gap: 12px;
+    max-width: var(--tablet-shell-max);
+  }
+
+  .back-link,
+  .page-heading {
+    justify-self: flex-start;
+  }
+
+  .contact-card,
+  .list-card {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 960px) {
+  .menu-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .back-link,
+  .page-heading {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .menu-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

@@ -193,3 +193,24 @@
   min-height: 44px;
   text-decoration: none;
 }
+
+@media (min-width: 768px) {
+  .collectors-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .collectors-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .collector-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .collectors-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

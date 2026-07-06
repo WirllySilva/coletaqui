@@ -10,6 +10,9 @@ body {
 }
 
 body {
+  --mobile-shell-max: 460px;
+  --tablet-shell-max: 760px;
+  --desktop-shell-max: 980px;
   --info-blue: #1eaaf5;
   --info-red: #e63946;
   --info-green: #097756;
@@ -74,7 +77,10 @@ a {
 }
 
 .page-content {
+  margin: 0 auto;
+  max-width: var(--tablet-shell-max);
   padding-top: 0;
+  width: 100%;
 }
 
 .info-hero {
@@ -123,5 +129,17 @@ a {
   .info-hero {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) {
+  .auth-page,
+  .content-shell {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .auth-panel {
+    max-width: 520px;
   }
 }

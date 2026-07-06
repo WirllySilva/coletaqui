@@ -251,3 +251,28 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (min-width: 768px) {
+  .detail-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .detail-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .detail-card {
+    padding: 20px;
+  }
+
+  .actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .detail-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

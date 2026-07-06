@@ -1,8 +1,26 @@
 <div class="dashboard">
   <app-header />
   <main class="container mt-3">
+    <section class="home-intro">
+      <div>
+        <span>Coletaqui Araçoiaba</span>
+        <h1>Recicle melhor, encontre pontos e agende coletas.</h1>
+      </div>
+      <a routerLink="/my-appointments" class="schedule-shortcut">
+        <i class="bi bi-calendar-plus-fill"></i>
+        Agendar
+      </a>
+    </section>
+
     <app-map-preview />
-    <p class="text-center mt-2">Encontre no mapa pontos para deixar seu material reciclável.</p>
+
+    <section class="highlight-grid" aria-label="Resumo do Coletaqui">
+      <article *ngFor="let item of highlights">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <strong>{{ item.value }}</strong>
+        <span>{{ item.label }}</span>
+      </article>
+    </section>
 
     <nav class="action-grid" aria-label="Ações principais">
       <a [routerLink]="item.route" class="action-card" *ngFor="let item of actions">

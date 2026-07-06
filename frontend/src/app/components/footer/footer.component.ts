@@ -28,7 +28,7 @@ export class FooterComponent implements OnInit {
   private commonUserItems(): FooterItem[] {
     return [
       { label: 'Início', route: '/home', icon: 'bi-house-fill' },
-      { label: 'Pontos', route: '/collectors', icon: 'bi-geo-alt-fill' },
+      { label: 'Pontos', route: '/collection-points', icon: 'bi-geo-alt-fill' },
       { label: 'Agendar', route: '/my-appointments', icon: 'bi-calendar-check-fill' },
     ];
   }

@@ -173,3 +173,42 @@
   display: block;
   height: 100%;
 }
+
+@media (min-width: 768px) {
+  .impact-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .impact-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .summary-grid {
+    gap: 12px;
+  }
+
+  .status-card,
+  .metric-card {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .impact-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .back-link,
+  .page-heading,
+  .state-card,
+  .summary-grid {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .impact-content {
+    max-width: var(--desktop-shell-max);
+  }
+}
