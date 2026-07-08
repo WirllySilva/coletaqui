@@ -55,6 +55,16 @@ public class User {
 	@Column(length = 40)
 	private CollectorServiceType collectorServiceType;
 
+	private OffsetDateTime termsAcceptedAt;
+
+	@Column(length = 30)
+	private String termsVersion;
+
+	private OffsetDateTime privacyAcceptedAt;
+
+	@Column(length = 30)
+	private String privacyVersion;
+
 	@Column(nullable = false)
 	private OffsetDateTime createdAt;
 
@@ -163,6 +173,38 @@ public class User {
 
 	public void setCollectorServiceType(CollectorServiceType collectorServiceType) {
 		this.collectorServiceType = collectorServiceType;
+	}
+
+	public OffsetDateTime getTermsAcceptedAt() {
+		return termsAcceptedAt;
+	}
+
+	public void setTermsAcceptedAt(OffsetDateTime termsAcceptedAt) {
+		this.termsAcceptedAt = termsAcceptedAt;
+	}
+
+	public String getTermsVersion() {
+		return termsVersion;
+	}
+
+	public void setTermsVersion(String termsVersion) {
+		this.termsVersion = termsVersion;
+	}
+
+	public OffsetDateTime getPrivacyAcceptedAt() {
+		return privacyAcceptedAt;
+	}
+
+	public void setPrivacyAcceptedAt(OffsetDateTime privacyAcceptedAt) {
+		this.privacyAcceptedAt = privacyAcceptedAt;
+	}
+
+	public String getPrivacyVersion() {
+		return privacyVersion;
+	}
+
+	public void setPrivacyVersion(String privacyVersion) {
+		this.privacyVersion = privacyVersion;
 	}
 
 	public OffsetDateTime getCreatedAt() {

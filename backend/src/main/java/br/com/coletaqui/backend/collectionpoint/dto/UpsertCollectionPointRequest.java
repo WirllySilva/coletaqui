@@ -29,6 +29,9 @@ public record UpsertCollectionPointRequest(
 	@Size(max = 120, message = "Horario deve ter ate 120 caracteres.")
 	String openingHours,
 
+	@Size(max = 20, message = "Telefone do responsavel deve ter ate 20 caracteres.")
+	String responsiblePhone,
+
 	@DecimalMin(value = "-7.835", message = "Latitude deve estar dentro da area de Aracoiaba.")
 	@DecimalMax(value = "-7.745", message = "Latitude deve estar dentro da area de Aracoiaba.")
 	Double latitude,

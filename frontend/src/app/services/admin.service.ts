@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { timeout } from 'rxjs/operators';
-import { ImpactDashboard, Schedule } from './schedule.service';
+import { ImpactDashboard, RankingEntry, Schedule } from './schedule.service';
 import { UserProfile } from './user.service';
 
 export interface AdminSummary {
@@ -10,10 +10,18 @@ export interface AdminSummary {
   commonUsers: number;
   collectors: number;
   pendingCollectors: number;
+  collectionPoints: number;
+  activeCollectionPoints: number;
   schedules: number;
   openSchedules: number;
   completedSchedules: number;
   canceledSchedules: number;
+  pointDeliveries: number;
+  confirmedPointDeliveries: number;
+  directDropOffDeliveries: number;
+  treePlantings: number;
+  validatedTreePlantings: number;
+  pendingTreePlantings: number;
 }
 
 export interface AdminMaterial {
@@ -41,6 +49,9 @@ export interface CollectionPoint {
   state: string;
   materials?: string | null;
   openingHours?: string | null;
+  responsibleCollectorId?: string | null;
+  responsibleName?: string | null;
+  responsiblePhone?: string | null;
   latitude?: number | null;
   longitude?: number | null;
   active: boolean;
@@ -56,6 +67,7 @@ export interface UpsertCollectionPointPayload {
   state?: string | null;
   materials?: string | null;
   openingHours?: string | null;
+  responsiblePhone?: string | null;
   latitude?: number | null;
   longitude?: number | null;
   active: boolean;
@@ -88,6 +100,10 @@ export class AdminService {
 
   impact(): Observable<ImpactDashboard> {
     return this.http.get<ImpactDashboard>(`${this.apiUrl}/impact`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  ranking(): Observable<RankingEntry[]> {
+    return this.http.get<RankingEntry[]>(`${this.apiUrl}/ranking`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   users(): Observable<UserProfile[]> {

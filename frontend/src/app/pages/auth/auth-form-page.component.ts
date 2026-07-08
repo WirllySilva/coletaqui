@@ -13,6 +13,8 @@ import { CollectorServiceType } from '../../services/user.service';
   styleUrl: './auth-form-page.component.css',
 })
 export class AuthFormPageComponent {
+  private readonly defaultAreaCode = '81';
+
   @Input() title = 'Entrar ou criar conta';
   @Input() subtitle = 'Informe seu telefone para receber um código de acesso.';
   @Input() profile: 'common' | 'collector' = 'common';
@@ -27,6 +29,8 @@ export class AuthFormPageComponent {
   collectorServiceType: CollectorServiceType = 'HOME_COLLECTION';
   selectedMaterials: string[] = [];
   selectedAvailability: string[] = [];
+  termsAccepted = false;
+  privacyAccepted = false;
   error = '';
   isLoading = false;
   devOtp = '';
@@ -36,9 +40,9 @@ export class AuthFormPageComponent {
   availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
 
   serviceTypeOptions: Array<{ value: CollectorServiceType; label: string; description: string }> = [
-    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereco do usuario.' },
+    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereço do usuário.' },
     { value: 'DROP_OFF_POINT', label: 'Ponto de recebimento', description: 'Recebo materiais no meu estabelecimento.' },
-    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereco e tambem recebo no local.' },
+    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereço e também recebo no local.' },
   ];
 
   constructor(
@@ -52,23 +56,32 @@ export class AuthFormPageComponent {
   }
 
   get formattedPhone(): string {
-    return this.phone || 'telefone informado';
+    return this.formatPhone(this.normalizedPhone() ?? this.onlyNumbers(this.phone)) || 'telefone informado';
   }
 
   get canContinue(): boolean {
     if (this.step === 'phone') {
-      return this.onlyNumbers(this.phone).length >= 10;
+      return this.normalizedPhone() !== null;
     }
 
     if (this.step === 'otp') {
       return this.onlyNumbers(this.otp).length === 6;
     }
 
+    const acceptedLegal = this.termsAccepted && this.privacyAccepted;
+
     if (this.profile === 'collector') {
-      return Boolean(this.name.trim() && this.region.trim() && this.collectorServiceType && this.selectedMaterials.length && this.selectedAvailability.length);
+      return Boolean(
+        this.name.trim()
+        && this.region.trim()
+        && this.collectorServiceType
+        && this.selectedMaterials.length
+        && this.selectedAvailability.length
+        && acceptedLegal,
+      );
     }
 
-    return Boolean(this.name.trim());
+    return Boolean(this.name.trim() && acceptedLegal);
   }
 
   isMaterialSelected(value: string): boolean {
@@ -85,6 +98,10 @@ export class AuthFormPageComponent {
 
   toggleAvailability(value: string): void {
     this.selectedAvailability = this.toggleValue(this.selectedAvailability, value);
+  }
+
+  onPhoneChange(value: string): void {
+    this.phone = this.formatPhoneInput(value);
   }
 
   continue(): void {
@@ -129,10 +146,16 @@ export class AuthFormPageComponent {
   }
 
   private requestOtp(): void {
+    const phone = this.normalizedPhone();
+    if (!phone) {
+      this.error = this.validationMessage();
+      return;
+    }
+
     this.isLoading = true;
     this.devOtp = '';
 
-    this.authService.requestOtp(this.profile, this.onlyNumbers(this.phone)).pipe(
+    this.authService.requestOtp(this.profile, phone).pipe(
       finalize(() => {
         this.isLoading = false;
         this.changeDetector.detectChanges();
@@ -151,9 +174,15 @@ export class AuthFormPageComponent {
   }
 
   private verifyOtp(): void {
+    const phone = this.normalizedPhone();
+    if (!phone) {
+      this.error = this.validationMessage();
+      return;
+    }
+
     this.isLoading = true;
 
-    this.authService.verifyOtp(this.profile, this.onlyNumbers(this.phone), this.onlyNumbers(this.otp)).pipe(
+    this.authService.verifyOtp(this.profile, phone, this.onlyNumbers(this.otp)).pipe(
       finalize(() => {
         this.isLoading = false;
         this.changeDetector.detectChanges();
@@ -187,6 +216,8 @@ export class AuthFormPageComponent {
       materials: this.profile === 'collector' ? this.selectedMaterials.join(', ') : this.materials.trim() || undefined,
       availability: this.profile === 'collector' ? this.selectedAvailability.join(', ') : this.availability.trim() || undefined,
       collectorServiceType: this.profile === 'collector' ? this.collectorServiceType : undefined,
+      termsAccepted: this.termsAccepted,
+      privacyAccepted: this.privacyAccepted,
     }).pipe(
       finalize(() => {
         this.isLoading = false;
@@ -215,6 +246,51 @@ export class AuthFormPageComponent {
     return value.replace(/\D/g, '');
   }
 
+  private normalizedPhone(): string | null {
+    let digits = this.onlyNumbers(this.phone);
+
+    if (digits.length === 13 && digits.startsWith('55')) {
+      digits = digits.slice(2);
+    }
+
+    if (digits.length === 9 && digits.startsWith('9')) {
+      return `${this.defaultAreaCode}${digits}`;
+    }
+
+    if (digits.length === 11 && /^[1-9]\d9\d{8}$/.test(digits)) {
+      return digits;
+    }
+
+    return null;
+  }
+
+  private formatPhoneInput(value: string): string {
+    let digits = this.onlyNumbers(value);
+
+    if (digits.length > 11 && digits.startsWith('55')) {
+      digits = digits.slice(2);
+    }
+
+    return this.formatPhone(digits.slice(0, 11));
+  }
+
+  private formatPhone(value: string): string {
+    const digits = this.onlyNumbers(value);
+
+    if (digits.length <= 9) {
+      return digits.replace(/^(\d{0,5})(\d{0,4}).*/, (_, first, second) => [first, second].filter(Boolean).join('-'));
+    }
+
+    if (digits.length <= 10) {
+      return digits.replace(/^(\d{0,2})(\d{0,4})(\d{0,4}).*/, (_, ddd, first, second) => {
+        const phone = [first, second].filter(Boolean).join('-');
+        return ddd ? `(${ddd}) ${phone}`.trim() : phone;
+      });
+    }
+
+    return digits.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, (_, ddd, first, second) => `(${ddd}) ${first}${second ? `-${second}` : ''}`);
+  }
+
   private validationMessage(): string {
     if (this.step === 'phone') {
       return 'Informe um telefone válido com DDD.';
@@ -222,6 +298,10 @@ export class AuthFormPageComponent {
 
     if (this.step === 'otp') {
       return 'Informe o código OTP com 6 dígitos.';
+    }
+
+    if (!this.termsAccepted || !this.privacyAccepted) {
+      return 'Aceite os Termos de Uso e a Política de Privacidade para concluir o cadastro.';
     }
 
     if (this.profile === 'collector') {
@@ -234,6 +314,11 @@ export class AuthFormPageComponent {
   private authErrorMessage(error: unknown, fallback: string): string {
     if (typeof error === 'object' && error !== null && 'status' in error && error.status === 502) {
       return 'A API ainda não está pronta. Aguarde alguns segundos e tente novamente.';
+    }
+
+    if (typeof error === 'object' && error !== null && 'error' in error) {
+      const apiError = error.error as { message?: string };
+      return apiError.message || fallback;
     }
 
     return fallback;

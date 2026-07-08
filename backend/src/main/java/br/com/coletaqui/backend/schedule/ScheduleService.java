@@ -1,10 +1,14 @@
 package br.com.coletaqui.backend.schedule;
 
+import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryRepository;
+import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryStatus;
 import br.com.coletaqui.backend.material.MaterialType;
 import br.com.coletaqui.backend.material.MaterialTypeRepository;
+import br.com.coletaqui.backend.dropoff.DropOffDeliveryRepository;
 import br.com.coletaqui.backend.schedule.dto.CreateScheduleRequest;
 import br.com.coletaqui.backend.schedule.dto.ImpactDashboardResponse;
 import br.com.coletaqui.backend.schedule.dto.ImpactMetricResponse;
+import br.com.coletaqui.backend.schedule.dto.RankingEntryResponse;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import br.com.coletaqui.backend.user.User;
 import br.com.coletaqui.backend.user.UserRepository;
@@ -15,9 +19,11 @@ import br.com.coletaqui.backend.user.address.UserAddressRepository;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Comparator;
+import java.text.Normalizer;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -29,17 +35,23 @@ public class ScheduleService {
 	private final UserRepository userRepository;
 	private final UserAddressRepository userAddressRepository;
 	private final MaterialTypeRepository materialTypeRepository;
+	private final DropOffDeliveryRepository dropOffDeliveryRepository;
+	private final CollectionPointDeliveryRepository collectionPointDeliveryRepository;
 
 	public ScheduleService(
 		ScheduleRepository scheduleRepository,
 		UserRepository userRepository,
 		UserAddressRepository userAddressRepository,
-		MaterialTypeRepository materialTypeRepository
+		MaterialTypeRepository materialTypeRepository,
+		DropOffDeliveryRepository dropOffDeliveryRepository,
+		CollectionPointDeliveryRepository collectionPointDeliveryRepository
 	) {
 		this.scheduleRepository = scheduleRepository;
 		this.userRepository = userRepository;
 		this.userAddressRepository = userAddressRepository;
 		this.materialTypeRepository = materialTypeRepository;
+		this.dropOffDeliveryRepository = dropOffDeliveryRepository;
+		this.collectionPointDeliveryRepository = collectionPointDeliveryRepository;
 	}
 
 	@Transactional
@@ -188,6 +200,84 @@ public class ScheduleService {
 		);
 	}
 
+	@Transactional(readOnly = true)
+	public List<RankingEntryResponse> ranking(UUID userId) {
+		var currentUser = user(userId);
+		if (currentUser.getRole() != UserRole.COMMON_USER) {
+			throw new IllegalArgumentException("Ranking disponivel apenas para usuarios comuns.");
+		}
+		return rankingEntries(userId);
+	}
+
+	@Transactional(readOnly = true)
+	public List<RankingEntryResponse> rankingForAdmin(UUID adminId) {
+		ensureAdmin(adminId);
+		return rankingEntries(null);
+	}
+
+	private List<RankingEntryResponse> rankingEntries(UUID currentUserId) {
+		var scores = new LinkedHashMap<UUID, RankingScore>();
+		scheduleRepository.findByStatusOrderByCreatedAtDesc(ScheduleStatus.COMPLETED).forEach(schedule -> {
+			var requester = schedule.getUser();
+			if (requester == null || requester.getRole() != UserRole.COMMON_USER) {
+				return;
+			}
+
+			var score = scores.computeIfAbsent(requester.getId(), id -> new RankingScore(requester));
+			score.completedCollections++;
+			score.points += scoreFor(schedule);
+		});
+
+		dropOffDeliveryRepository.findAllByOrderByConfirmedAtDesc().forEach(delivery -> {
+			var requester = delivery.getUser();
+			if (requester == null || requester.getRole() != UserRole.COMMON_USER) {
+				return;
+			}
+			var score = scores.computeIfAbsent(requester.getId(), id -> new RankingScore(requester));
+			score.completedCollections++;
+			score.points += 8 + delivery.getMaterials().stream().mapToLong(this::materialScore).sum();
+		});
+
+		collectionPointDeliveryRepository.findAllByOrderByCreatedAtDesc().stream()
+			.filter(delivery -> delivery.getStatus() == CollectionPointDeliveryStatus.CONFIRMED)
+			.forEach(delivery -> {
+				var requester = delivery.getUser();
+				if (requester == null || requester.getRole() != UserRole.COMMON_USER) {
+					return;
+				}
+				var score = scores.computeIfAbsent(requester.getId(), id -> new RankingScore(requester));
+				score.completedCollections++;
+				score.points += 8 + delivery.getMaterials().stream().mapToLong(this::materialScore).sum();
+			});
+
+		var ordered = scores.values().stream()
+			.sorted((left, right) -> {
+				var byPoints = Long.compare(right.points, left.points);
+				if (byPoints != 0) {
+					return byPoints;
+				}
+				var byCollections = Long.compare(right.completedCollections, left.completedCollections);
+				if (byCollections != 0) {
+					return byCollections;
+				}
+				return displayName(left.user).compareToIgnoreCase(displayName(right.user));
+			})
+			.limit(20)
+			.toList();
+
+		var position = new int[] {1};
+		return ordered.stream()
+			.map(score -> new RankingEntryResponse(
+				position[0]++,
+				score.user.getId(),
+				displayName(score.user),
+				score.points,
+				score.completedCollections,
+				currentUserId != null && score.user.getId().equals(currentUserId)
+			))
+			.toList();
+	}
+
 	private User user(UUID userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado."));
 	}
@@ -256,6 +346,51 @@ public class ScheduleService {
 			.map(MaterialType::getName)
 			.forEach(name -> counts.merge(name, 1L, Long::sum));
 		return counts;
+	}
+
+	private long scoreFor(Schedule schedule) {
+		var materialPoints = schedule.getMaterials().stream().mapToLong(this::materialScore).sum();
+		return 10 + materialPoints;
+	}
+
+	private long materialScore(MaterialType material) {
+		var slug = normalize(material.getName());
+		if (slug.contains("oleo") || slug.contains("pilha") || slug.contains("bateria")) {
+			return 8;
+		}
+		if (slug.contains("vidro")) {
+			return 4;
+		}
+		if (slug.contains("plastico") || slug.contains("metal")) {
+			return 3;
+		}
+		if (slug.contains("papel") || slug.contains("organico")) {
+			return 2;
+		}
+		return material.isHazardous() ? 8 : 2;
+	}
+
+	private String displayName(User user) {
+		if (user.getName() == null || user.getName().isBlank()) {
+			return "Morador Coletaqui";
+		}
+		return user.getName();
+	}
+
+	private String normalize(String value) {
+		return Normalizer.normalize(value == null ? "" : value.trim().toLowerCase(Locale.ROOT), Normalizer.Form.NFD)
+			.replaceAll("\\p{M}", "");
+	}
+
+	private static final class RankingScore {
+		private final User user;
+		private long points;
+		private long completedCollections;
+
+		private RankingScore(User user) {
+			this.user = user;
+		}
+
 	}
 
 	private Map<String, Long> neighborhoodCounts(List<Schedule> schedules) {

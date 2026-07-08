@@ -8,6 +8,8 @@ public record CompleteProfileRequest(
 	String region,
 	String materials,
 	String availability,
-	String collectorServiceType
+	String collectorServiceType,
+	Boolean termsAccepted,
+	Boolean privacyAccepted
 ) {
 }

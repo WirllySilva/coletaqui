@@ -57,6 +57,9 @@ export interface CollectionPoint {
   state: string;
   materials?: string | null;
   openingHours?: string | null;
+  responsibleCollectorId?: string | null;
+  responsibleName?: string | null;
+  responsiblePhone?: string | null;
   latitude?: number | null;
   longitude?: number | null;
   active: boolean;

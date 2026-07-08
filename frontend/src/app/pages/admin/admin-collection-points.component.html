@@ -13,12 +13,17 @@
     <form (ngSubmit)="submit()">
       <label>
         Nome
-        <input name="name" [(ngModel)]="form.name" placeholder="Ex.: Associação do Centro" required />
+        <input name="name" [(ngModel)]="form.name" placeholder="Ex.: Mercadinho do Centro" required />
       </label>
 
       <label>
         Endereço
         <input name="address" [(ngModel)]="form.address" placeholder="Rua, número e referência" required />
+      </label>
+
+      <label>
+        Telefone do responsável
+        <input name="responsiblePhone" type="tel" inputmode="numeric" [(ngModel)]="form.responsiblePhone" placeholder="99999-9999 ou (81) 99999-9999" />
       </label>
 
       <div class="form-grid">
@@ -114,6 +119,7 @@
           <th>Ponto</th>
           <th>Endereço</th>
           <th>Materiais</th>
+          <th>Responsável</th>
           <th>Horário</th>
           <th>Coordenadas</th>
           <th>Status</th>
@@ -125,6 +131,7 @@
           <td>{{ point.name }}</td>
           <td>{{ point.address }}, {{ point.city }}/{{ point.state }}</td>
           <td>{{ point.materials || '-' }}</td>
+          <td>{{ point.responsibleName || point.responsiblePhone || 'Sem responsável' }}</td>
           <td>{{ point.openingHours || '-' }}</td>
           <td>{{ point.latitude && point.longitude ? point.latitude + ', ' + point.longitude : '-' }}</td>
           <td><span class="status" [class.blocked]="!point.active">{{ point.active ? 'Ativo' : 'Inativo' }}</span></td>

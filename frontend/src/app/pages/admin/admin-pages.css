@@ -379,6 +379,34 @@ table {
   width: 100%;
 }
 
+.tree-admin-table {
+  min-width: 980px;
+}
+
+.admin-tree-photo {
+  aspect-ratio: 1;
+  border: 1px solid #dce7df;
+  border-radius: 8px;
+  height: 74px;
+  object-fit: cover;
+  width: 74px;
+}
+
+.empty-photo {
+  align-items: center;
+  background: #f5f8f6;
+  border: 1px dashed #cddbd2;
+  border-radius: 8px;
+  color: #60756a;
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 800;
+  height: 74px;
+  justify-content: center;
+  text-align: center;
+  width: 74px;
+}
+
 th,
 td {
   border-bottom: 1px solid #edf3ef;
@@ -423,6 +451,38 @@ td {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.reject-form {
+  display: grid;
+  gap: 8px;
+  min-width: 240px;
+}
+
+.reject-form label {
+  color: #173d28;
+  display: grid;
+  font-size: 0.8rem;
+  font-weight: 900;
+  gap: 6px;
+}
+
+.reject-form textarea {
+  border: 1px solid #dce7df;
+  border-radius: 8px;
+  color: #405247;
+  font: inherit;
+  min-height: 82px;
+  padding: 10px;
+  resize: vertical;
+  width: 100%;
+}
+
+.rejection-note {
+  color: #9b1c1c;
+  display: block;
+  font-weight: 800;
+  margin-top: 4px;
 }
 
 .detail-panel {

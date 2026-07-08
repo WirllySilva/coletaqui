@@ -26,6 +26,23 @@
         <input type="checkbox" [(ngModel)]="location" />
       </label>
     </section>
+    <section class="settings-card">
+      <a class="setting-link" routerLink="/terms">
+        <i class="bi bi-file-text"></i>
+        <span>
+          <strong>Termos de Uso</strong>
+          <small>Consulte as regras de uso do Coletaqui.</small>
+        </span>
+      </a>
+
+      <a class="setting-link" routerLink="/privacy">
+        <i class="bi bi-shield-check"></i>
+        <span>
+          <strong>Política de Privacidade</strong>
+          <small>Veja como seus dados são tratados.</small>
+        </span>
+      </a>
+    </section>
   </main>
 
   <app-footer />

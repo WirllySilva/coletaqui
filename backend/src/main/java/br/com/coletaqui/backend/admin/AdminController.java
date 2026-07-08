@@ -9,8 +9,12 @@ import br.com.coletaqui.backend.material.MaterialTypeService;
 import br.com.coletaqui.backend.material.dto.MaterialTypeResponse;
 import br.com.coletaqui.backend.material.dto.UpsertMaterialTypeRequest;
 import br.com.coletaqui.backend.schedule.dto.ImpactDashboardResponse;
+import br.com.coletaqui.backend.schedule.dto.RankingEntryResponse;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import br.com.coletaqui.backend.schedule.ScheduleService;
+import br.com.coletaqui.backend.tree.TreePlantingService;
+import br.com.coletaqui.backend.tree.dto.RejectTreePlantingRequest;
+import br.com.coletaqui.backend.tree.dto.TreePlantingResponse;
 import br.com.coletaqui.backend.user.dto.UserProfileResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -37,17 +41,20 @@ public class AdminController {
 	private final ScheduleService scheduleService;
 	private final MaterialTypeService materialTypeService;
 	private final CollectionPointService collectionPointService;
+	private final TreePlantingService treePlantingService;
 
 	public AdminController(
 		AdminService adminService,
 		ScheduleService scheduleService,
 		MaterialTypeService materialTypeService,
-		CollectionPointService collectionPointService
+		CollectionPointService collectionPointService,
+		TreePlantingService treePlantingService
 	) {
 		this.adminService = adminService;
 		this.scheduleService = scheduleService;
 		this.materialTypeService = materialTypeService;
 		this.collectionPointService = collectionPointService;
+		this.treePlantingService = treePlantingService;
 	}
 
 	@GetMapping("/summary")
@@ -123,6 +130,12 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.schedules(userId(authentication)));
 	}
 
+	@GetMapping("/ranking")
+	@Operation(summary = "Ranking geral dos moradores")
+	public ResponseEntity<List<RankingEntryResponse>> ranking(Authentication authentication) {
+		return ResponseEntity.ok(scheduleService.rankingForAdmin(userId(authentication)));
+	}
+
 	@GetMapping("/materials")
 	@Operation(summary = "Lista todos os materiais")
 	public ResponseEntity<List<MaterialTypeResponse>> materials(Authentication authentication) {
@@ -185,6 +198,28 @@ public class AdminController {
 	public ResponseEntity<CollectionPointResponse> toggleCollectionPoint(Authentication authentication, @PathVariable UUID pointId) {
 		adminService.ensureAdminAccess(userId(authentication));
 		return ResponseEntity.ok(collectionPointService.toggle(pointId));
+	}
+
+	@GetMapping("/tree-plantings")
+	@Operation(summary = "Lista registros de arvores")
+	public ResponseEntity<List<TreePlantingResponse>> treePlantings(Authentication authentication) {
+		return ResponseEntity.ok(treePlantingService.allForAdmin(userId(authentication)));
+	}
+
+	@PostMapping("/tree-plantings/{plantingId}/validate")
+	@Operation(summary = "Valida registro de arvore")
+	public ResponseEntity<TreePlantingResponse> validateTreePlanting(Authentication authentication, @PathVariable UUID plantingId) {
+		return ResponseEntity.ok(treePlantingService.validate(userId(authentication), plantingId));
+	}
+
+	@PostMapping("/tree-plantings/{plantingId}/reject")
+	@Operation(summary = "Rejeita registro de arvore")
+	public ResponseEntity<TreePlantingResponse> rejectTreePlanting(
+		Authentication authentication,
+		@PathVariable UUID plantingId,
+		@Valid @RequestBody RejectTreePlantingRequest request
+	) {
+		return ResponseEntity.ok(treePlantingService.reject(userId(authentication), plantingId, request.reason()));
 	}
 
 	private UUID userId(Authentication authentication) {

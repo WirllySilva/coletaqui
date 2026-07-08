@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AuthService {
+	private static final String TERMS_VERSION = "2026-07-08";
+	private static final String PRIVACY_VERSION = "2026-07-08";
+
 	private final OtpCodeRepository otpCodeRepository;
 	private final UserRepository userRepository;
 	private final OtpSender otpSender;
@@ -34,6 +37,7 @@ public class AuthService {
 	private final int maxAttempts;
 	private final boolean exposeDevCode;
 	private final String channel;
+	private final String defaultAreaCode;
 
 	public AuthService(
 		OtpCodeRepository otpCodeRepository,
@@ -44,7 +48,8 @@ public class AuthService {
 		@Value("${app.otp.expiration-minutes}") long otpExpirationMinutes,
 		@Value("${app.otp.max-attempts}") int maxAttempts,
 		@Value("${app.otp.expose-dev-code}") boolean exposeDevCode,
-		@Value("${app.otp.channel}") String channel
+		@Value("${app.otp.channel}") String channel,
+		@Value("${app.phone.default-area-code:81}") String defaultAreaCode
 	) {
 		this.otpCodeRepository = otpCodeRepository;
 		this.userRepository = userRepository;
@@ -55,6 +60,7 @@ public class AuthService {
 		this.maxAttempts = maxAttempts;
 		this.exposeDevCode = exposeDevCode;
 		this.channel = channel;
+		this.defaultAreaCode = defaultAreaCode.replaceAll("\\D", "");
 	}
 
 	@Transactional(readOnly = true)
@@ -124,6 +130,9 @@ public class AuthService {
 	@Transactional
 	public AuthResponse completeProfile(UUID userId, CompleteProfileRequest request) {
 		var user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
+		if (!Boolean.TRUE.equals(request.termsAccepted()) || !Boolean.TRUE.equals(request.privacyAccepted())) {
+			throw new IllegalArgumentException("Aceite os Termos de Uso e a Politica de Privacidade para concluir o cadastro.");
+		}
 		user.setName(request.name().trim());
 
 		if (user.getRole() == UserRole.COLLECTOR) {
@@ -140,6 +149,10 @@ public class AuthService {
 		}
 
 		user.setProfileComplete(true);
+		user.setTermsAcceptedAt(OffsetDateTime.now());
+		user.setTermsVersion(TERMS_VERSION);
+		user.setPrivacyAcceptedAt(OffsetDateTime.now());
+		user.setPrivacyVersion(PRIVACY_VERSION);
 		return toAuthResponse(user);
 	}
 
@@ -197,13 +210,24 @@ public class AuthService {
 			user.getRole(),
 			user.getStatus(),
 			user.isProfileComplete(),
-			user.getName()
+			user.getName(),
+			user.getCollectorServiceType() == null ? null : user.getCollectorServiceType().name()
 		);
 	}
 
 	private String normalizePhone(String phone) {
+		if (phone == null || phone.isBlank()) {
+			throw new IllegalArgumentException("Telefone invalido.");
+		}
+
 		var digits = phone.replaceAll("\\D", "");
-		if (digits.length() < 10 || digits.length() > 13) {
+		if (digits.length() == 13 && digits.startsWith("55")) {
+			digits = digits.substring(2);
+		}
+		if (digits.length() == 9 && digits.startsWith("9")) {
+			digits = defaultAreaCode + digits;
+		}
+		if (!digits.matches("[1-9]\\d9\\d{8}")) {
 			throw new IllegalArgumentException("Telefone inválido.");
 		}
 		return digits;

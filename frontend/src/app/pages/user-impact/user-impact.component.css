@@ -1,0 +1,172 @@
+.impact-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.impact-content {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  align-items: center;
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.page-heading span {
+  color: #198754;
+  font-weight: 900;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 6px 0;
+}
+
+.page-heading p,
+.state-card p,
+.impact-card p {
+  color: #405247;
+  margin: 0;
+}
+
+.metric-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-grid article,
+.state-card,
+.impact-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+}
+
+.metric-grid article {
+  display: grid;
+  gap: 3px;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.metric-grid strong {
+  color: #198754;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.metric-grid span {
+  color: #405247;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.state-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.state-card.error {
+  border-color: #f2c0c0;
+}
+
+.state-card a {
+  color: #198754;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.impact-card {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 42px 1fr;
+  padding: 12px;
+}
+
+.impact-icon {
+  align-items: center;
+  background: #e9f8ef;
+  border-radius: 8px;
+  color: #198754;
+  display: inline-flex;
+  font-size: 1.2rem;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.impact-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.impact-head h2 {
+  color: #124d2b;
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0 0 7px;
+}
+
+.impact-head span {
+  background: #e9f8ef;
+  border-radius: 999px;
+  color: #155f34;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.impact-head span.cancelada {
+  background: #fff0f0;
+  color: #9b1c1c;
+}
+
+.impact-card p {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  margin-top: 5px;
+}
+
+.impact-card i {
+  color: #198754;
+  margin-right: 5px;
+}
+
+@media (min-width: 768px) {
+  .impact-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .impact-content {
+    max-width: var(--tablet-shell-max);
+  }
+}
+
+@media (min-width: 1200px) {
+  .impact-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

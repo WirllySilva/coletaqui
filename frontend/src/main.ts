@@ -4,6 +4,34 @@ import { App } from './app/app';
 
 const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 
+function blockBrowserZoom(): void {
+  let lastTouchEnd = 0;
+
+  document.addEventListener('gesturestart', event => event.preventDefault());
+  document.addEventListener('gesturechange', event => event.preventDefault());
+  document.addEventListener('gestureend', event => event.preventDefault());
+
+  document.addEventListener('touchmove', event => {
+    if (event.touches.length > 1) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', event => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+
+  document.addEventListener('wheel', event => {
+    if (event.ctrlKey) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+}
+
 async function clearLocalPwaCache(): Promise<void> {
   if (!isLocalhost || !('serviceWorker' in navigator)) {
     return;
@@ -17,6 +45,8 @@ async function clearLocalPwaCache(): Promise<void> {
     await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
   }
 }
+
+blockBrowserZoom();
 
 clearLocalPwaCache()
   .finally(() => bootstrapApplication(App, appConfig))

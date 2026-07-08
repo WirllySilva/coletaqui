@@ -37,7 +37,8 @@
 }
 
 .collector-settings .page-heading h1,
-.collector-settings .setting-row strong {
+.collector-settings .setting-row strong,
+.collector-settings .setting-link strong {
   color: #174a5a;
 }
 
@@ -68,13 +69,32 @@
   justify-content: space-between;
 }
 
-.setting-row strong {
+.setting-link {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.setting-link i {
+  color: #198754;
+  font-size: 1.25rem;
+}
+
+.collector-settings .setting-link i {
+  color: #55b6ce;
+}
+
+.setting-row strong,
+.setting-link strong {
   color: #124d2b;
   display: block;
   font-size: 0.98rem;
 }
 
-.setting-row small {
+.setting-row small,
+.setting-link small {
   color: #4c6455;
   display: block;
   line-height: 1.25;

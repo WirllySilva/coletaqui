@@ -79,6 +79,24 @@ export class AdminDashboardComponent implements OnInit {
     return `conic-gradient(${parts.join(', ')})`;
   }
 
+  get pointDeliveryTotal(): number {
+    if (!this.summary) {
+      return 0;
+    }
+    return this.summary.pointDeliveries + this.summary.directDropOffDeliveries;
+  }
+
+  get confirmedPointDeliveryTotal(): number {
+    if (!this.summary) {
+      return 0;
+    }
+    return this.summary.confirmedPointDeliveries + this.summary.directDropOffDeliveries;
+  }
+
+  get confirmedPointDeliveryPercent(): number {
+    return this.pointDeliveryTotal ? Math.round((this.confirmedPointDeliveryTotal / this.pointDeliveryTotal) * 100) : 0;
+  }
+
   percent(value: number): number {
     const total = this.impact?.total ?? 0;
     return total ? Math.round((value / total) * 100) : 0;

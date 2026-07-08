@@ -11,6 +11,7 @@ public record AuthResponse(
 	UserRole role,
 	UserStatus status,
 	boolean profileComplete,
-	String name
+	String name,
+	String collectorServiceType
 ) {
 }

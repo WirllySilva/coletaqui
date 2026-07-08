@@ -1,0 +1,69 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Arborização</span>
+    <h1>Árvores registradas</h1>
+    <p>Valide os plantios registrados pelos moradores para compor o impacto ambiental da comunidade.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+  <p class="empty" *ngIf="isLoading">Carregando árvores...</p>
+
+  <section class="table-panel" *ngIf="!isLoading && trees.length">
+    <table class="tree-admin-table">
+      <thead>
+        <tr>
+          <th>Evidência</th>
+          <th>Morador</th>
+          <th>Árvore</th>
+          <th>Plantio</th>
+          <th>Local</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tree of trees">
+          <td>
+            <img class="admin-tree-photo" *ngIf="tree.photoUrl" [src]="tree.photoUrl" alt="Foto do plantio" />
+            <span class="empty-photo" *ngIf="!tree.photoUrl">Sem foto</span>
+          </td>
+          <td>{{ tree.userName || 'Morador' }}</td>
+          <td>
+            <strong>{{ tree.treeName || tree.species }}</strong><br />
+            <small>{{ tree.species }}</small>
+          </td>
+          <td>{{ tree.plantedDate | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <strong>{{ tree.neighborhood }} - {{ tree.locationType }}</strong><br />
+            <small *ngIf="tree.locationDescription">{{ tree.locationDescription }}</small>
+            <small>GPS: {{ coordinates(tree) }}</small>
+            <small class="rejection-note" *ngIf="tree.rejectionReason">Motivo: {{ tree.rejectionReason }}</small>
+          </td>
+          <td><span class="status" [class.blocked]="tree.status === 'REJECTED'">{{ statusLabel(tree.status) }}</span></td>
+          <td>
+            <div class="action-row" *ngIf="rejectingId !== tree.id">
+              <button type="button" *ngIf="tree.status !== 'VALIDATED'" (click)="validate(tree)">Validar</button>
+              <button class="danger-button" type="button" *ngIf="tree.status !== 'REJECTED'" (click)="startReject(tree)">Rejeitar</button>
+            </div>
+
+            <div class="reject-form" *ngIf="rejectingId === tree.id">
+              <label>
+                Motivo da rejeição
+                <textarea rows="3" maxlength="500" [(ngModel)]="rejectionReasons[tree.id]" placeholder="Ex.: foto não mostra o plantio ou localização fora de Araçoiaba"></textarea>
+              </label>
+              <div class="action-row">
+                <button class="danger-button" type="button" (click)="confirmReject(tree)">Confirmar rejeição</button>
+                <button class="ghost-button" type="button" (click)="cancelReject()">Cancelar</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel" *ngIf="!isLoading && !trees.length">
+    <p>Nenhuma árvore registrada ainda.</p>
+  </section>
+</section>

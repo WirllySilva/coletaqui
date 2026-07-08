@@ -1,0 +1,78 @@
+<div class="dropoff-page">
+  <app-header />
+
+  <main class="dropoff-content">
+    <a class="back-link" routerLink="/collector-home"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <span><i class="bi bi-shop"></i> Ponto de coleta</span>
+      <h1>Confirmar entrega</h1>
+      <p>Registre materiais entregues no estabelecimento para pontuar o morador no ranking comunitario.</p>
+    </section>
+
+    <section class="history-section">
+      <h2>Entregas avisadas</h2>
+      <p class="empty" *ngIf="!plannedDeliveries.length">Nenhuma entrega avisada para seus pontos.</p>
+
+      <article class="delivery-card" *ngFor="let delivery of plannedDeliveries.slice(0, 6)">
+        <div>
+          <strong>{{ delivery.userName || delivery.userPhone || 'Morador' }}</strong>
+          <span>{{ delivery.status === 'CONFIRMED' ? 'Confirmada' : 'Aguardando' }}</span>
+        </div>
+        <p><i class="bi bi-shop"></i> {{ delivery.collectionPointName }}</p>
+        <p><i class="bi bi-calendar-event"></i> {{ delivery.plannedDate | date:'dd/MM/yyyy' }} - {{ delivery.preferredPeriod }}</p>
+        <p><i class="bi bi-recycle"></i> {{ delivery.materials.join(', ') }}</p>
+        <button type="button" *ngIf="delivery.status === 'PLANNED'" [disabled]="isSaving" (click)="confirmPlannedDelivery(delivery)">
+          <i class="bi bi-check-circle-fill"></i>
+          Confirmar entrega
+        </button>
+      </article>
+    </section>
+
+    <section class="form-card">
+      <label>
+        Telefone do morador
+        <input type="tel" inputmode="numeric" placeholder="99999-9999 ou (81) 99999-9999" [(ngModel)]="userPhone" name="userPhone" />
+      </label>
+
+      <fieldset>
+        <legend>Materiais recebidos</legend>
+        <div class="check-grid">
+          <label class="check-option" *ngFor="let material of materials" [class.selected]="isMaterialSelected(material.id)">
+            <input type="checkbox" [checked]="isMaterialSelected(material.id)" (change)="toggleMaterial(material.id)" />
+            <span>{{ material.name }}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <label>
+        Observacao
+        <textarea rows="3" placeholder="Ex.: 2 garrafas de oleo, pilhas pequenas" [(ngModel)]="notes" name="notes"></textarea>
+      </label>
+
+      <p class="success-message" *ngIf="message">{{ message }}</p>
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+
+      <button type="button" [disabled]="isSaving" (click)="confirmDelivery()">
+        <i class="bi bi-check-circle-fill"></i>
+        {{ isSaving ? 'Confirmando...' : 'Confirmar entrega' }}
+      </button>
+    </section>
+
+    <section class="history-section">
+      <h2>Entregas recentes</h2>
+      <p class="empty" *ngIf="isLoading">Carregando entregas...</p>
+      <p class="empty" *ngIf="!isLoading && !deliveries.length">Nenhuma entrega confirmada ainda.</p>
+
+      <article class="delivery-card" *ngFor="let delivery of deliveries.slice(0, 5)">
+        <div>
+          <strong>{{ delivery.userName || delivery.userPhone }}</strong>
+          <span>{{ delivery.confirmedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <p><i class="bi bi-recycle"></i> {{ delivery.materials.join(', ') }}</p>
+      </article>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

@@ -45,6 +45,15 @@ export interface ImpactDashboard {
   collectors: ImpactMetric[];
 }
 
+export interface RankingEntry {
+  position: number;
+  userId: string;
+  name: string;
+  points: number;
+  completedCollections: number;
+  currentUser: boolean;
+}
+
 export interface CreateSchedulePayload {
   addressId: string;
   materialTypeIds: string[];
@@ -100,6 +109,10 @@ export class ScheduleService {
 
   getImpactDashboard(): Observable<ImpactDashboard> {
     return this.http.get<ImpactDashboard>(`${this.schedulesUrl}/impact`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  getRanking(): Observable<RankingEntry[]> {
+    return this.http.get<RankingEntry[]>(`${this.schedulesUrl}/ranking`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   private authHeaders(): HttpHeaders {

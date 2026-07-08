@@ -2,10 +2,16 @@ package br.com.coletaqui.backend.admin;
 
 import br.com.coletaqui.backend.admin.dto.AdminSummaryResponse;
 import br.com.coletaqui.backend.admin.dto.ChangeAdminPasswordRequest;
+import br.com.coletaqui.backend.collectionpoint.CollectionPointRepository;
+import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryRepository;
+import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryStatus;
+import br.com.coletaqui.backend.dropoff.DropOffDeliveryRepository;
 import br.com.coletaqui.backend.schedule.ScheduleRepository;
 import br.com.coletaqui.backend.schedule.ScheduleStatus;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import br.com.coletaqui.backend.schedule.ScheduleService;
+import br.com.coletaqui.backend.tree.TreePlantingRepository;
+import br.com.coletaqui.backend.tree.TreePlantingStatus;
 import br.com.coletaqui.backend.user.UserRepository;
 import br.com.coletaqui.backend.user.UserRole;
 import br.com.coletaqui.backend.user.UserStatus;
@@ -21,17 +27,29 @@ public class AdminService {
 	private final UserRepository userRepository;
 	private final ScheduleRepository scheduleRepository;
 	private final ScheduleService scheduleService;
+	private final CollectionPointRepository collectionPointRepository;
+	private final CollectionPointDeliveryRepository collectionPointDeliveryRepository;
+	private final DropOffDeliveryRepository dropOffDeliveryRepository;
+	private final TreePlantingRepository treePlantingRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public AdminService(
 		UserRepository userRepository,
 		ScheduleRepository scheduleRepository,
 		ScheduleService scheduleService,
+		CollectionPointRepository collectionPointRepository,
+		CollectionPointDeliveryRepository collectionPointDeliveryRepository,
+		DropOffDeliveryRepository dropOffDeliveryRepository,
+		TreePlantingRepository treePlantingRepository,
 		PasswordEncoder passwordEncoder
 	) {
 		this.userRepository = userRepository;
 		this.scheduleRepository = scheduleRepository;
 		this.scheduleService = scheduleService;
+		this.collectionPointRepository = collectionPointRepository;
+		this.collectionPointDeliveryRepository = collectionPointDeliveryRepository;
+		this.dropOffDeliveryRepository = dropOffDeliveryRepository;
+		this.treePlantingRepository = treePlantingRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -57,10 +75,18 @@ public class AdminService {
 			userRepository.countByRole(UserRole.COMMON_USER),
 			userRepository.countByRole(UserRole.COLLECTOR),
 			userRepository.countByRoleAndStatus(UserRole.COLLECTOR, UserStatus.PENDING_APPROVAL),
+			collectionPointRepository.count(),
+			collectionPointRepository.countByActiveTrue(),
 			scheduleRepository.count(),
 			scheduleRepository.countByStatus(ScheduleStatus.REQUESTED),
 			scheduleRepository.countByStatus(ScheduleStatus.COMPLETED),
-			scheduleRepository.countByStatus(ScheduleStatus.CANCELED)
+			scheduleRepository.countByStatus(ScheduleStatus.CANCELED),
+			collectionPointDeliveryRepository.count(),
+			collectionPointDeliveryRepository.countByStatus(CollectionPointDeliveryStatus.CONFIRMED),
+			dropOffDeliveryRepository.count(),
+			treePlantingRepository.count(),
+			treePlantingRepository.countByStatus(TreePlantingStatus.VALIDATED),
+			treePlantingRepository.countByStatus(TreePlantingStatus.REGISTERED)
 		);
 	}
 

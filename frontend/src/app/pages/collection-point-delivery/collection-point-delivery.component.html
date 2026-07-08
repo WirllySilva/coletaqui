@@ -1,0 +1,82 @@
+<div class="delivery-page">
+  <app-header />
+
+  <main class="delivery-content">
+    <a routerLink="/collection-points" class="back-link"><i class="bi bi-arrow-left"></i> Voltar aos pontos</a>
+
+    <section class="page-heading">
+      <span><i class="bi bi-box-seam-fill"></i> Entrega no ponto</span>
+      <h1>Avisar entrega de recicláveis</h1>
+      <p>Registre que você pretende entregar materiais em um ponto fixo de Araçoiaba.</p>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando informações...</p>
+    </section>
+
+    <section class="success-card" *ngIf="success && point">
+      <i class="bi bi-check-circle-fill"></i>
+      <h2>Entrega registrada</h2>
+      <p>Seu aviso foi salvo para {{ success.collectionPointName }}. Ao chegar no local, informe seu telefone para o ponto confirmar a entrega.</p>
+      <div class="success-actions">
+        <a [href]="wazeLink()" target="_blank" rel="noopener"><i class="bi bi-map"></i> Abrir Waze</a>
+        <a routerLink="/collection-points"><i class="bi bi-geo-alt-fill"></i> Ver pontos</a>
+      </div>
+    </section>
+
+    <section class="form-card" *ngIf="!isLoading && !success && point">
+      <div class="point-summary">
+        <strong>{{ point.name }}</strong>
+        <span>{{ point.address }}, {{ point.city }}/{{ point.state }}</span>
+        <small *ngIf="point.openingHours">{{ point.openingHours }}</small>
+      </div>
+
+      <div class="single-material-card" *ngIf="acceptedMaterials.length === 1">
+        <span>Material aceito neste ponto</span>
+        <strong>{{ acceptedMaterials[0].name }}</strong>
+      </div>
+
+      <fieldset *ngIf="acceptedMaterials.length > 1">
+        <legend>Materiais para entregar</legend>
+        <div class="check-grid">
+          <label class="check-option" *ngFor="let material of acceptedMaterials" [class.selected]="isMaterialSelected(material.id)">
+            <input type="checkbox" [checked]="isMaterialSelected(material.id)" (change)="toggleMaterial(material.id)" />
+            <span>{{ material.name }}</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid">
+        <label>
+          Data
+          <input type="date" [(ngModel)]="plannedDate" name="plannedDate" />
+        </label>
+
+        <label>
+          Período
+          <select [(ngModel)]="preferredPeriod" name="preferredPeriod">
+            <option *ngFor="let period of periods" [value]="period">{{ period }}</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Observação
+        <textarea rows="3" placeholder="Ex.: 1 saco de papel, pilhas pequenas" [(ngModel)]="notes" name="notes"></textarea>
+      </label>
+
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+
+      <button type="button" [disabled]="isSaving" (click)="submit()">
+        <i class="bi bi-check-circle-fill"></i>
+        {{ isSaving ? 'Registrando...' : 'Registrar entrega' }}
+      </button>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && !success && error && !point">
+      <p>{{ error }}</p>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

@@ -2,6 +2,7 @@ package br.com.coletaqui.backend.schedule;
 
 import br.com.coletaqui.backend.schedule.dto.CreateScheduleRequest;
 import br.com.coletaqui.backend.schedule.dto.ImpactDashboardResponse;
+import br.com.coletaqui.backend.schedule.dto.RankingEntryResponse;
 import br.com.coletaqui.backend.schedule.dto.ScheduleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -58,6 +59,12 @@ public class ScheduleController {
 	@Operation(summary = "Consulta indicadores de impacto")
 	public ResponseEntity<ImpactDashboardResponse> impact(Authentication authentication) {
 		return ResponseEntity.ok(scheduleService.impact(userId(authentication)));
+	}
+
+	@GetMapping("/ranking")
+	@Operation(summary = "Consulta ranking comunitario")
+	public ResponseEntity<List<RankingEntryResponse>> ranking(Authentication authentication) {
+		return ResponseEntity.ok(scheduleService.ranking(userId(authentication)));
 	}
 
 	@GetMapping("/{scheduleId}")

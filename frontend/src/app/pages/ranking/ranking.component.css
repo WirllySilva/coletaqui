@@ -1,3 +1,187 @@
-:host {
-  display: block;
+.ranking-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.ranking-content {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  align-items: center;
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.ranking-hero {
+  display: grid;
+  gap: 6px;
+}
+
+.ranking-hero span {
+  color: #198754;
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.ranking-hero h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.ranking-hero p,
+.state-card p,
+.resident-info p {
+  color: #405247;
+  margin: 0;
+}
+
+.rules-card,
+.state-card,
+.ranking-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+}
+
+.rules-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.rules-card h2 {
+  color: #124d2b;
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.rules-card ul {
+  display: grid;
+  gap: 7px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rules-card li {
+  align-items: center;
+  color: #405247;
+  display: inline-flex;
+  font-size: 0.88rem;
+  font-weight: 800;
+  gap: 7px;
+}
+
+.rules-card i {
+  color: #198754;
+}
+
+.state-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.state-card.error {
+  border-color: #f2c0c0;
+  color: #9b1c1c;
+}
+
+.state-card a {
+  color: #198754;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.ranking-list {
+  display: grid;
+  gap: 10px;
+}
+
+.ranking-card {
+  align-items: center;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 48px 1fr auto;
+  padding: 12px;
+}
+
+.ranking-card.current-user {
+  border-color: #198754;
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
+}
+
+.position {
+  align-items: center;
+  background: #e9f8ef;
+  border-radius: 8px;
+  color: #155f34;
+  display: inline-flex;
+  font-weight: 900;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.position.podium {
+  background: #ffd85a;
+  color: #174a5a;
+}
+
+.resident-info h2 {
+  color: #124d2b;
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.resident-info span {
+  background: #e9f8ef;
+  border-radius: 999px;
+  color: #155f34;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 900;
+  margin: 4px 0;
+  padding: 3px 8px;
+}
+
+.resident-info p {
+  font-size: 0.84rem;
+}
+
+.ranking-card > strong {
+  color: #198754;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+@media (min-width: 768px) {
+  .ranking-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .ranking-content {
+    max-width: var(--tablet-shell-max);
+  }
+}
+
+@media (min-width: 1200px) {
+  .ranking-content {
+    max-width: var(--desktop-shell-max);
+  }
 }

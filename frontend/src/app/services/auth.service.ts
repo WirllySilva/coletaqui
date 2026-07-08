@@ -21,6 +21,7 @@ export interface AuthResponse {
   status: 'ACTIVE' | 'PENDING_APPROVAL' | 'INACTIVE' | 'BLOCKED';
   profileComplete: boolean;
   name?: string | null;
+  collectorServiceType?: string | null;
 }
 
 export interface CompleteProfilePayload {
@@ -29,6 +30,8 @@ export interface CompleteProfilePayload {
   materials?: string;
   availability?: string;
   collectorServiceType?: string;
+  termsAccepted: boolean;
+  privacyAccepted: boolean;
 }
 
 export interface AdminLoginPayload {

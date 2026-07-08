@@ -12,16 +12,19 @@
 
     <form class="d-grid gap-3 mt-4">
       <ng-container *ngIf="step === 'phone'">
-        <label class="form-label" for="phone">Telefone com DDD</label>
+        <label class="form-label" for="phone">Telefone com ou sem DDD</label>
         <input
           id="phone"
           class="form-control form-control-lg"
           type="tel"
           inputmode="numeric"
-          placeholder="(85) 99999-9999"
+          maxlength="16"
+          placeholder="99999-9999 ou (81) 99999-9999"
           [(ngModel)]="phone"
+          (ngModelChange)="onPhoneChange($event)"
           name="phone"
         />
+        <p class="helper-text phone-helper">Pode digitar sem DDD. Nesse caso, usaremos automaticamente o DDD 81.</p>
         <p class="helper-text">Usaremos esse número para enviar o código OTP pelo WhatsApp. Se sua conta já existir, o login será concluído após a validação.</p>
       </ng-container>
 
@@ -83,6 +86,24 @@
             </div>
           </fieldset>
         </ng-container>
+
+        <div class="legal-acceptance">
+          <label class="legal-option" [class.selected]="termsAccepted">
+            <input type="checkbox" [(ngModel)]="termsAccepted" name="termsAccepted" />
+            <span>
+              Li e aceito os
+              <a routerLink="/terms" target="_blank" rel="noopener">Termos de Uso</a>.
+            </span>
+          </label>
+
+          <label class="legal-option" [class.selected]="privacyAccepted">
+            <input type="checkbox" [(ngModel)]="privacyAccepted" name="privacyAccepted" />
+            <span>
+              Li e aceito a
+              <a routerLink="/privacy" target="_blank" rel="noopener">Política de Privacidade</a>.
+            </span>
+          </label>
+        </div>
       </ng-container>
 
       <p class="error-message" *ngIf="error">{{ error }}</p>

@@ -1,0 +1,212 @@
+.dropoff-page {
+  background: #eaf8fb;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.dropoff-content {
+  display: grid;
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  color: #2c8da7;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.page-heading span {
+  color: #2c8da7;
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.page-heading h1 {
+  color: #174a5a;
+  font-size: 1.55rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.page-heading p,
+.empty,
+.delivery-card p {
+  color: #405247;
+  margin: 0;
+}
+
+.form-card,
+.history-section,
+.delivery-card {
+  background: #fff;
+  border: 1px solid #caedf4;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(23, 74, 90, 0.1);
+}
+
+.form-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.form-card label,
+.form-card fieldset {
+  color: #174a5a;
+  display: grid;
+  font-weight: 900;
+  gap: 7px;
+}
+
+.form-card fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.form-card legend {
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.form-card input,
+.form-card textarea {
+  border: 1px solid #bfe8f1;
+  border-radius: 8px;
+  color: #26362d;
+  font: inherit;
+  min-height: 42px;
+  padding: 0 10px;
+  width: 100%;
+}
+
+.form-card textarea {
+  min-height: 86px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.check-grid {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.check-option {
+  align-items: center;
+  background: #f8fdff;
+  border: 1px solid #caedf4;
+  border-radius: 8px;
+  color: #174a5a;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.check-option.selected {
+  background: #eaf8fb;
+  border-color: #55b6ce;
+}
+
+.check-option input {
+  accent-color: #55b6ce;
+  flex: 0 0 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.form-card button {
+  align-items: center;
+  background: #55b6ce;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 8px;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.success-message,
+.error-message {
+  border-radius: 8px;
+  margin: 0;
+  padding: 10px;
+}
+
+.success-message {
+  background: #eaf7ef;
+  border: 1px solid #b9e5ca;
+  color: #155f34;
+}
+
+.error-message {
+  background: #fff0f0;
+  border: 1px solid #f2c0c0;
+  color: #9b1c1c;
+}
+
+.history-section {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+}
+
+.history-section h2 {
+  color: #174a5a;
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.delivery-card {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+}
+
+.delivery-card div {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delivery-card strong {
+  color: #174a5a;
+}
+
+.delivery-card span {
+  color: #53717b;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.delivery-card button {
+  align-items: center;
+  background: #55b6ce;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 8px;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 10px;
+}
+
+.delivery-card button:disabled {
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .dropoff-content {
+    max-width: var(--tablet-shell-max);
+  }
+}

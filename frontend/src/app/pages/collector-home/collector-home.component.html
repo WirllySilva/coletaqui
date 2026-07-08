@@ -21,6 +21,18 @@
       </article>
     </section>
 
+    <section class="dropoff-card" *ngIf="canConfirmDropOff">
+      <div>
+        <span class="status-badge">Ponto de coleta</span>
+        <h2>Confirmar entrega no local</h2>
+        <p>Registre materiais entregues por moradores para pontuar no ranking comunitario.</p>
+      </div>
+      <a class="primary-action" routerLink="/collector-drop-offs">
+        <i class="bi bi-shop"></i>
+        Confirmar entrega
+      </a>
+    </section>
+
     <section class="next-card">
       <div class="section-heading">
         <h2>Próxima coleta</h2>

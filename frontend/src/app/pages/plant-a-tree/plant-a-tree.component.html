@@ -1,1 +1,79 @@
-<app-info-page title="Plante uma rvore" description="Acompanhe aes ambientais e recompensas ligadas a boas prticas." image="assets/plant-a-tree-icon.png" [items]="items" />
+<div class="tree-page">
+  <app-header />
+
+  <main class="tree-content">
+    <a routerLink="/home" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="tree-hero">
+      <span><i class="bi bi-tree-fill"></i> Plante uma árvore</span>
+      <h1>Ajude Araçoiaba a ficar mais verde</h1>
+      <p>Veja árvores já registradas pela comunidade e cadastre seu plantio com foto e localização.</p>
+    </section>
+
+    <section class="guide-card">
+      <div class="guide-head">
+        <h2>Antes de plantar</h2>
+        <a routerLink="/plantatree/register"><i class="bi bi-plus-circle-fill"></i> Registrar plantio</a>
+      </div>
+
+      <p class="guide-intro">
+        A cidade incentiva o reflorestamento com espécies adequadas à região da Mata Norte, como araçá, ipês e pau-ferro.
+        Quando houver distribuição de mudas pela prefeitura ou pela Secretaria de Agricultura e Meio Ambiente, use esta página
+        para registrar o plantio e acompanhar o impacto da comunidade.
+      </p>
+
+      <ul>
+        <li *ngFor="let tip of tips"><i class="bi bi-check-circle-fill"></i>{{ tip }}</li>
+      </ul>
+    </section>
+
+    <section class="map-panel" aria-label="Mapa de árvores plantadas">
+      <div id="tree-map" class="leaflet-map"></div>
+      <span class="map-chip">Árvores validadas</span>
+      <span class="map-count">{{ communityTrees.length }} registro{{ communityTrees.length === 1 ? '' : 's' }}</span>
+      <a class="register-map-button" routerLink="/plantatree/register">
+        <i class="bi bi-plus-circle-fill"></i>
+        Registrar plantio
+      </a>
+    </section>
+
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <section id="selected-tree" class="tree-list selected-tree" *ngIf="selectedTree as tree">
+      <h2>Árvore selecionada</h2>
+      <article class="tree-card">
+        <div>
+          <strong>{{ tree.treeName || tree.species }}</strong>
+          <span class="validated">Validada</span>
+        </div>
+        <p><i class="bi bi-person-fill"></i> {{ tree.userName || 'Morador' }}</p>
+        <p><i class="bi bi-flower1"></i> {{ tree.species }} • {{ treeAge(tree) }}</p>
+        <p><i class="bi bi-geo-alt-fill"></i> {{ tree.neighborhood }} - {{ tree.locationType }}</p>
+        <p *ngIf="tree.locationDescription"><i class="bi bi-signpost-fill"></i> {{ tree.locationDescription }}</p>
+      </article>
+    </section>
+
+    <section class="tree-list">
+      <div class="guide-head">
+        <h2>Minhas árvores</h2>
+        <a routerLink="/plantatree/register"><i class="bi bi-plus-circle-fill"></i> Novo registro</a>
+      </div>
+      <p class="empty" *ngIf="isLoading">Carregando árvores...</p>
+      <p class="empty" *ngIf="!isLoading && !myTrees.length">Você ainda não registrou árvores.</p>
+
+      <article class="tree-card" *ngFor="let tree of myTrees.slice(0, 4)">
+        <div>
+          <strong>{{ tree.treeName || tree.species }}</strong>
+          <span [class.validated]="tree.status === 'VALIDATED'" [class.rejected]="tree.status === 'REJECTED'">{{ statusLabel(tree.status) }}</span>
+        </div>
+        <p><i class="bi bi-flower1"></i> {{ tree.species }} • {{ treeAge(tree) }}</p>
+        <p><i class="bi bi-geo-alt-fill"></i> {{ tree.neighborhood }} - {{ tree.locationType }}</p>
+        <p class="rejection-reason" *ngIf="tree.status === 'REJECTED' && tree.rejectionReason">
+          <i class="bi bi-exclamation-circle-fill"></i> {{ tree.rejectionReason }}
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

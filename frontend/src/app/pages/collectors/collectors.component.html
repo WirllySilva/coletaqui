@@ -45,7 +45,7 @@
       <article class="collector-card" *ngFor="let collector of filteredCollectors">
         <div class="collector-main">
           <div class="collector-avatar">
-            <i class="bi bi-truck"></i>
+            <i class="bi" [ngClass]="serviceTypeIcon(collector.collectorServiceType)"></i>
           </div>
           <div>
             <h2>{{ collector.name || 'Coletor sem nome' }}</h2>
@@ -54,6 +54,21 @@
         </div>
 
         <p class="region" *ngIf="collector.region"><i class="bi bi-pin-map"></i> {{ collector.region }}</p>
+
+        <div class="attendance-panel">
+          <strong>Tipo de atendimento</strong>
+          <p>{{ serviceTypeDescription(collector) }}</p>
+          <div class="attendance-options">
+            <span [class.available]="canSchedule(collector)">
+              <i class="bi bi-house-check-fill"></i>
+              Coleta domiciliar
+            </span>
+            <span [class.available]="canDropOff(collector)">
+              <i class="bi bi-shop"></i>
+              Recebimento no local
+            </span>
+          </div>
+        </div>
 
         <div class="info-block">
           <strong>Materiais aceitos</strong>
@@ -89,7 +104,7 @@
 
         <div class="collector-actions">
           <a class="primary-button" routerLink="/my-appointments" *ngIf="canSchedule(collector)">
-            <i class="bi bi-calendar-plus-fill"></i> Agendar coleta
+            <i class="bi bi-calendar-plus-fill"></i> Solicitar coleta
           </a>
           <a class="route-button" [href]="routeLink(collector)" target="_blank" rel="noopener" *ngIf="canDropOff(collector) && collector.address">
             <i class="bi bi-map"></i> Abrir rota

@@ -150,17 +150,17 @@ export class CollectionPointsComponent implements OnInit, AfterViewInit, OnDestr
     const L = this.leaflet as LeafletModule;
     const material = this.mainMaterial(point);
     const icons: Record<string, string> = {
-      bateria: 'bi-battery-half',
-      baterias: 'bi-battery-half',
-      pilha: 'bi-battery-half',
-      pilhas: 'bi-battery-half',
-      papel: 'bi-newspaper',
+      bateria: 'bi-battery-charging',
+      baterias: 'bi-battery-charging',
+      pilha: 'bi-battery-charging',
+      pilhas: 'bi-battery-charging',
+      papel: 'bi-file-earmark-text',
       plastico: 'bi-cup-straw',
       plástico: 'bi-cup-straw',
       vidro: 'bi-cup',
       oleo: 'bi-droplet-fill',
       óleo: 'bi-droplet-fill',
-      metal: 'bi-nut-fill',
+      metal: 'bi-gear-fill',
       organico: 'bi-flower1',
       orgânico: 'bi-flower1',
     };

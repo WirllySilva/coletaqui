@@ -8,4 +8,6 @@ public interface CollectionPointRepository extends JpaRepository<CollectionPoint
 	List<CollectionPoint> findAllByOrderByCreatedAtDesc();
 
 	List<CollectionPoint> findByActiveTrueOrderByNameAsc();
+
+	long countByActiveTrue();
 }

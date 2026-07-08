@@ -21,6 +21,7 @@ export class CollectorHomeComponent implements OnInit {
   openRequests: Schedule[] = [];
   agenda: Schedule[] = [];
   isLoading = true;
+  canConfirmDropOff = false;
 
   constructor(
     private readonly scheduleService: ScheduleService,
@@ -40,6 +41,8 @@ export class CollectorHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.canConfirmDropOff = this.currentCollectorCanReceiveMaterials();
+
     this.scheduleService.listOpenSchedules().subscribe({
       next: requests => {
         this.openRequests = requests;
@@ -58,5 +61,19 @@ export class CollectorHomeComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
     });
+  }
+
+  private currentCollectorCanReceiveMaterials(): boolean {
+    const raw = localStorage.getItem('coletaqui_user');
+    if (!raw) {
+      return false;
+    }
+
+    try {
+      const user = JSON.parse(raw) as { collectorServiceType?: string | null };
+      return user.collectorServiceType === 'DROP_OFF_POINT' || user.collectorServiceType === 'HOME_COLLECTION_AND_DROP_OFF';
+    } catch {
+      return false;
+    }
   }
 }

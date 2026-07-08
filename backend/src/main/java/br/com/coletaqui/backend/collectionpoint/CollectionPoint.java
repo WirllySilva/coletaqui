@@ -1,9 +1,13 @@
 package br.com.coletaqui.backend.collectionpoint;
 
+import br.com.coletaqui.backend.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -37,6 +41,10 @@ public class CollectionPoint {
 
 	@Column(length = 120)
 	private String openingHours;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "responsible_collector_id")
+	private User responsibleCollector;
 
 	private Double latitude;
 
@@ -121,6 +129,14 @@ public class CollectionPoint {
 
 	public void setOpeningHours(String openingHours) {
 		this.openingHours = openingHours;
+	}
+
+	public User getResponsibleCollector() {
+		return responsibleCollector;
+	}
+
+	public void setResponsibleCollector(User responsibleCollector) {
+		this.responsibleCollector = responsibleCollector;
 	}
 
 	public Double getLatitude() {

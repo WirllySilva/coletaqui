@@ -11,9 +11,13 @@
     <article><strong>{{ summary.users }}</strong><span>Usuarios</span></article>
     <article><strong>{{ summary.collectors }}</strong><span>Coletores</span></article>
     <article><strong>{{ summary.pendingCollectors }}</strong><span>Pendentes</span></article>
+    <article><strong>{{ summary.activeCollectionPoints }}</strong><span>Pontos ativos</span></article>
     <article><strong>{{ summary.schedules }}</strong><span>Coletas</span></article>
     <article><strong>{{ summary.openSchedules }}</strong><span>Abertas</span></article>
     <article><strong>{{ summary.completedSchedules }}</strong><span>Concluidas</span></article>
+    <article><strong>{{ summary.confirmedPointDeliveries + summary.directDropOffDeliveries }}</strong><span>Entregas em pontos</span></article>
+    <article><strong>{{ summary.validatedTreePlantings }}</strong><span>Árvores validadas</span></article>
+    <article><strong>{{ summary.pendingTreePlantings }}</strong><span>Árvores pendentes</span></article>
   </section>
 
   <section class="content-grid" *ngIf="impact">
@@ -56,6 +60,27 @@
         </div>
       </div>
       <ng-template #emptyNeighborhoods><p>Nenhuma solicitacao registrada ainda.</p></ng-template>
+    </article>
+
+    <article class="panel" *ngIf="summary">
+      <h2>Entregas em pontos</h2>
+      <div class="bar-list">
+        <div class="bar-row">
+          <span>Confirmadas</span>
+          <div><i [style.width.%]="confirmedPointDeliveryPercent"></i></div>
+          <strong>{{ confirmedPointDeliveryTotal }}</strong>
+        </div>
+        <div class="bar-row">
+          <span>Avisadas</span>
+          <div><i [style.width.%]="pointDeliveryTotal ? ((summary.pointDeliveries - summary.confirmedPointDeliveries) / pointDeliveryTotal) * 100 : 0"></i></div>
+          <strong>{{ summary.pointDeliveries - summary.confirmedPointDeliveries }}</strong>
+        </div>
+        <div class="bar-row">
+          <span>Diretas no balcão</span>
+          <div><i [style.width.%]="pointDeliveryTotal ? (summary.directDropOffDeliveries / pointDeliveryTotal) * 100 : 0"></i></div>
+          <strong>{{ summary.directDropOffDeliveries }}</strong>
+        </div>
+      </div>
     </article>
   </section>
 </section>

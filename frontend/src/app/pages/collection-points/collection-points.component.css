@@ -186,6 +186,14 @@
   background: #9b6a2f;
 }
 
+:host ::ng-deep .marker-metal {
+  background: #6c757d;
+}
+
+:host ::ng-deep .marker-organico {
+  background: #7f9f38;
+}
+
 :host ::ng-deep .leaflet-popup-content {
   display: grid;
   gap: 5px;
@@ -273,11 +281,17 @@
   padding: 5px 9px;
 }
 
-.route-button {
+.point-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+}
+
+.route-button,
+.delivery-button,
+.delivery-unavailable {
   align-items: center;
-  background: #e9f8ef;
   border-radius: 8px;
-  color: #155f34;
   display: inline-flex;
   font-weight: 900;
   gap: 8px;
@@ -286,9 +300,30 @@
   text-decoration: none;
 }
 
-.route-button i {
+.delivery-button {
+  background: #198754;
+  color: #fff;
+}
+
+.route-button {
+  background: #e9f8ef;
+  color: #155f34;
+}
+
+.delivery-unavailable {
+  background: #f1f5f2;
+  color: #607168;
+}
+
+.route-button i,
+.delivery-button i,
+.delivery-unavailable i {
   color: #198754;
   margin: 0;
+}
+
+.delivery-button i {
+  color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -310,6 +345,10 @@
   }
 
   .points-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .point-actions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

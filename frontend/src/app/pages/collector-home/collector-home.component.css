@@ -96,12 +96,30 @@
 }
 
 .next-card,
+.dropoff-card,
 .request-card {
   background: #fff;
   border: 1px solid #caedf4;
   border-radius: 8px;
   box-shadow: 0 8px 18px rgba(23, 74, 90, 0.1);
   padding: 14px;
+}
+
+.dropoff-card {
+  display: grid;
+  gap: 12px;
+}
+
+.dropoff-card h2 {
+  color: #174a5a;
+  font-size: 1.12rem;
+  font-weight: 900;
+  margin: 8px 0 4px;
+}
+
+.dropoff-card p {
+  color: #405247;
+  margin: 0;
 }
 
 .section-heading {

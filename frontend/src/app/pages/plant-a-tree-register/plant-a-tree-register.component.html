@@ -1,0 +1,90 @@
+<div class="tree-page">
+  <app-header />
+
+  <main class="tree-content">
+    <a routerLink="/plantatree" class="back-link"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="tree-hero">
+      <span><i class="bi bi-tree-fill"></i> Registrar plantio</span>
+      <h1>Cadastre sua árvore</h1>
+      <p>Envie uma foto e, se possível, use sua localização para ajudar o admin a validar o plantio.</p>
+    </section>
+
+    <section class="form-card">
+      <h2>Dados da árvore</h2>
+
+      <label>
+        Nome da árvore
+        <input name="treeName" [(ngModel)]="form.treeName" placeholder="Ex.: Ipê da vó Maria" />
+      </label>
+
+      <div class="form-grid">
+        <label>
+          Espécie
+          <select name="species" [(ngModel)]="form.species">
+            <option *ngFor="let species of speciesOptions" [value]="species">{{ species }}</option>
+          </select>
+        </label>
+
+        <label>
+          Data do plantio
+          <input name="plantedDate" type="date" [(ngModel)]="form.plantedDate" />
+        </label>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          Local
+          <select name="locationType" [(ngModel)]="form.locationType">
+            <option *ngFor="let type of locationTypes" [value]="type">{{ type }}</option>
+          </select>
+        </label>
+
+        <label>
+          Bairro
+          <input name="neighborhood" [(ngModel)]="form.neighborhood" placeholder="Ex.: Centro" />
+        </label>
+      </div>
+
+      <label>
+        Referência do local
+        <input name="locationDescription" [(ngModel)]="form.locationDescription" placeholder="Ex.: próximo à escola" />
+      </label>
+
+      <label>
+        Foto do plantio
+        <input type="file" accept="image/*" capture="environment" (change)="onPhotoChange($event)" />
+      </label>
+
+      <img class="photo-preview" *ngIf="photoPreview" [src]="photoPreview" alt="Prévia da foto do plantio" />
+
+      <div class="location-card">
+        <div>
+          <strong>Localização GPS</strong>
+          <span *ngIf="form.latitude && form.longitude">{{ form.latitude }}, {{ form.longitude }}</span>
+          <span *ngIf="!form.latitude || !form.longitude">Opcional, mas recomendado</span>
+        </div>
+        <button class="secondary-button" type="button" [disabled]="isLocating" (click)="useMyLocation()">
+          <i class="bi bi-crosshair"></i>
+          {{ isLocating ? 'Localizando...' : 'Usar localização' }}
+        </button>
+      </div>
+
+      <label>
+        Observação
+        <textarea name="notes" rows="3" [(ngModel)]="form.notes" placeholder="Ex.: muda retirada em ação ambiental"></textarea>
+      </label>
+
+      <p class="empty">A foto fica disponível apenas para validação do admin e é removida após validar ou rejeitar o registro.</p>
+      <p class="success-message" *ngIf="message">{{ message }}</p>
+      <p class="error-message" *ngIf="error">{{ error }}</p>
+
+      <button type="button" [disabled]="isSaving" (click)="submit()">
+        <i class="bi bi-tree-fill"></i>
+        {{ isSaving ? 'Registrando...' : 'Registrar árvore' }}
+      </button>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

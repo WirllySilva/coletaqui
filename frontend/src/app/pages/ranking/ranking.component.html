@@ -1,1 +1,51 @@
-<app-info-page title="Ranking" description="Espaco de gamificacao para incentivar moradores a participar das coletas seletivas." image="assets/ranking-icon.png" [items]="items" />
+<div class="ranking-page">
+  <app-header />
+
+  <main class="ranking-content">
+    <a class="back-link" routerLink="/home"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="ranking-hero">
+      <span><i class="bi bi-trophy-fill"></i> Ranking comunitario</span>
+      <h1>Moradores que ajudam Araçoiaba</h1>
+      <p>O ranking reconhece moradores que concluem coletas e descartam materiais de maior impacto ambiental.</p>
+    </section>
+
+    <section class="rules-card">
+      <h2>Como pontua</h2>
+      <ul>
+        <li *ngFor="let rule of rules"><i class="bi bi-check-circle-fill"></i>{{ rule }}</li>
+      </ul>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando ranking...</p>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && error">
+      <p>{{ error }}</p>
+    </section>
+
+    <section class="state-card" *ngIf="!isLoading && !error && !entries.length">
+      <p>Ainda nao ha coletas concluidas para formar o ranking.</p>
+      <a routerLink="/schedule-options">Solicitar uma coleta</a>
+    </section>
+
+    <section class="ranking-list" *ngIf="!isLoading && !error && entries.length">
+      <article class="ranking-card" *ngFor="let entry of entries" [class.current-user]="entry.currentUser">
+        <div class="position" [class.podium]="entry.position <= 3">
+          {{ positionLabel(entry.position) }}
+        </div>
+
+        <div class="resident-info">
+          <h2>{{ entry.name }}</h2>
+          <span *ngIf="entry.currentUser">Voce</span>
+          <p>{{ entry.completedCollections }} coleta{{ entry.completedCollections === 1 ? '' : 's' }} concluida{{ entry.completedCollections === 1 ? '' : 's' }}</p>
+        </div>
+
+        <strong>{{ entry.points }} pts</strong>
+      </article>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

@@ -39,6 +39,7 @@ public class SecurityConfig {
 					"/auth/collector/request-otp",
 					"/auth/collector/verify-otp",
 					"/auth/admin/login",
+					"/uploads/**",
 					"/swagger-ui/**",
 					"/swagger-ui.html",
 					"/v3/api-docs/**"

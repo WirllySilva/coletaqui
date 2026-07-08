@@ -56,10 +56,22 @@
           <span *ngFor="let material of materials(point)">{{ material }}</span>
         </div>
 
-        <a class="route-button" [href]="wazeLink(point)" target="_blank" rel="noopener">
-          <i class="bi bi-map"></i>
-          Navegar com Waze
-        </a>
+        <div class="point-actions">
+          <a class="delivery-button" *ngIf="point.responsibleCollectorId; else unavailableDelivery" [routerLink]="['/collection-points', point.id, 'delivery']">
+            <i class="bi bi-check-circle-fill"></i>
+            Registrar entrega
+          </a>
+          <ng-template #unavailableDelivery>
+            <span class="delivery-unavailable">
+              <i class="bi bi-info-circle-fill"></i>
+              Sem confirmação pelo app
+            </span>
+          </ng-template>
+          <a class="route-button" [href]="wazeLink(point)" target="_blank" rel="noopener">
+            <i class="bi bi-map"></i>
+            Navegar com Waze
+          </a>
+        </div>
       </article>
     </section>
 

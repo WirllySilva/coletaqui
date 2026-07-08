@@ -60,6 +60,28 @@ export class CollectorsPageComponent implements OnInit {
     return labels[type] ?? 'Coleta domiciliar';
   }
 
+  serviceTypeIcon(type: CollectorServiceType): string {
+    const icons: Record<CollectorServiceType, string> = {
+      HOME_COLLECTION: 'bi-house-check-fill',
+      DROP_OFF_POINT: 'bi-shop',
+      HOME_COLLECTION_AND_DROP_OFF: 'bi-truck-front-fill',
+    };
+
+    return icons[type] ?? 'bi-truck';
+  }
+
+  serviceTypeDescription(collector: Collector): string {
+    if (collector.collectorServiceType === 'HOME_COLLECTION') {
+      return 'Atende somente por coleta domiciliar. O endereço do coletor não é exibido.';
+    }
+
+    if (collector.collectorServiceType === 'DROP_OFF_POINT') {
+      return 'Recebe materiais no local informado. Não realiza busca em domicílio.';
+    }
+
+    return 'Realiza coleta domiciliar e também recebe materiais no estabelecimento.';
+  }
+
   materialList(collector: Collector): string[] {
     return this.splitList(collector.materials);
   }

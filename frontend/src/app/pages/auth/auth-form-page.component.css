@@ -180,8 +180,66 @@ legend {
   width: 16px;
 }
 
+.legal-acceptance {
+  display: grid;
+  gap: 8px;
+}
+
+.legal-option {
+  align-items: flex-start;
+  background: #f7fbf8;
+  border: 1px solid #d7eadf;
+  border-radius: 8px;
+  color: #2f4939;
+  cursor: pointer;
+  display: flex;
+  font-size: 0.88rem;
+  font-weight: 700;
+  gap: 8px;
+  line-height: 1.35;
+  padding: 10px;
+}
+
+.legal-option.selected {
+  background: #e9f8ef;
+  border-color: #198754;
+}
+
+.legal-option input {
+  accent-color: #198754;
+  flex: 0 0 auto;
+  height: 16px;
+  margin-top: 2px;
+  width: 16px;
+}
+
+.legal-option a {
+  color: #0f6b3b;
+  font-weight: 900;
+  text-decoration: underline;
+}
+
 .collector-auth .check-option input {
   accent-color: #55b6ce;
+}
+
+.collector-auth .legal-option {
+  background: #f8fdff;
+  border-color: #caedf4;
+  color: #174a5a;
+}
+
+.collector-auth .legal-option.selected {
+  background: #eaf8fb;
+  border-color: #55b6ce;
+}
+
+.collector-auth .legal-option input {
+  accent-color: #55b6ce;
+}
+
+.collector-auth .legal-option a {
+  color: #2c8da7;
 }
 
 .helper-text,

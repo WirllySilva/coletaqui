@@ -1,0 +1,61 @@
+<div class="impact-page">
+  <app-header />
+
+  <main class="impact-content">
+    <a class="back-link" routerLink="/home"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <span><i class="bi bi-stars"></i> Meu impacto</span>
+      <h1>Suas coletas e entregas</h1>
+      <p>Acompanhe tudo que você já movimentou pelo Coletaqui Araçoiaba.</p>
+    </section>
+
+    <section class="state-card" *ngIf="isLoading">
+      <p>Carregando seu histórico...</p>
+    </section>
+
+    <section class="state-card error" *ngIf="!isLoading && error">
+      <p>{{ error }}</p>
+    </section>
+
+    <section class="metric-grid" *ngIf="impact">
+      <article>
+        <strong>{{ impact.points }}</strong>
+        <span>Pontos</span>
+      </article>
+      <article>
+        <strong>{{ impact.completedActions }}</strong>
+        <span>Confirmadas</span>
+      </article>
+      <article>
+        <strong>{{ impact.plannedActions }}</strong>
+        <span>Em aberto</span>
+      </article>
+    </section>
+
+    <section class="timeline" *ngIf="impact && impact.items.length">
+      <article class="impact-card" *ngFor="let item of impact.items">
+        <div class="impact-icon">
+          <i class="bi" [ngClass]="iconFor(item)"></i>
+        </div>
+        <div>
+          <div class="impact-head">
+            <h2>{{ item.title }}</h2>
+            <span [ngClass]="statusClass(item)">{{ item.status }}</span>
+          </div>
+          <p><i class="bi bi-calendar-event"></i> {{ item.date | date:'dd/MM/yyyy' }}</p>
+          <p *ngIf="item.location"><i class="bi bi-pin-map-fill"></i> {{ item.location }}</p>
+          <p><i class="bi bi-recycle"></i> {{ item.materials.join(', ') }}</p>
+          <p *ngIf="item.notes"><i class="bi bi-chat-left-text"></i> {{ item.notes }}</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="state-card empty-state" *ngIf="impact && !impact.items.length">
+      <p>Você ainda não possui coletas ou entregas registradas.</p>
+      <a routerLink="/schedule-options">Começar agora</a>
+    </section>
+  </main>
+
+  <app-footer />
+</div>
