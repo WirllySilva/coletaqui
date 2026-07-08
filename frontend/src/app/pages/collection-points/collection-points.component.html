@@ -10,12 +10,29 @@
       <p>Consulte pontos fixos cadastrados para deixar materiais sem precisar solicitar coleta domiciliar.</p>
     </section>
 
-    <section class="map-panel" aria-label="Mapa dos pontos de coleta">
-      <span class="map-chip">Mapa ilustrativo</span>
-      <span class="point-marker marker-main"><i class="bi bi-recycle"></i></span>
-      <span class="point-marker marker-paper"></span>
-      <span class="point-marker marker-glass"></span>
-      <span class="point-marker marker-oil"></span>
+    <section class="context-grid" aria-label="Opções relacionadas">
+      <button type="button" (click)="scrollToMap()">
+        <i class="bi bi-shop"></i>
+        <strong>Entrega no local</strong>
+        <span>Toque para ver o mapa com os pontos fixos cadastrados.</span>
+      </button>
+      <a routerLink="/my-appointments">
+        <i class="bi bi-truck"></i>
+        <strong>Precisa que busquem?</strong>
+        <span>Solicite uma coleta domiciliar.</span>
+      </a>
+    </section>
+
+    <section id="collection-points-map-section" class="map-panel" aria-label="Mapa dos pontos de coleta">
+      <div id="collection-points-map" class="leaflet-map"></div>
+      <span class="map-chip">Mapa dos pontos</span>
+      <span class="map-count">{{ mappedPointCount }} no mapa</span>
+      <div class="map-empty" *ngIf="!isLoading && !error && activePointCount > 0 && mappedPointCount === 0">
+        Adicione latitude e longitude nos pontos para exibir os marcadores.
+      </div>
+      <a class="open-map-button" href="https://www.openstreetmap.org/?mlat=-7.7902&amp;mlon=-35.0906#map=14/-7.7902/-35.0906" target="_blank" rel="noopener">
+        Abrir mapa
+      </a>
     </section>
 
     <section class="state-card" *ngIf="isLoading">
@@ -26,8 +43,8 @@
       <p>{{ error }}</p>
     </section>
 
-    <section class="points-list" *ngIf="!isLoading && !error && points.length">
-      <article class="point-card" *ngFor="let point of points">
+    <section id="selected-collection-point" class="points-list selected-point-list" *ngIf="!isLoading && !error && selectedPoint as point">
+      <article class="point-card selected-point-card">
         <div>
           <h2>{{ point.name }}</h2>
           <p class="address"><i class="bi bi-pin-map-fill"></i> {{ point.address }}, {{ point.city }}/{{ point.state }}</p>
@@ -38,6 +55,11 @@
         <div class="material-list" *ngIf="materials(point).length">
           <span *ngFor="let material of materials(point)">{{ material }}</span>
         </div>
+
+        <a class="route-button" [href]="wazeLink(point)" target="_blank" rel="noopener">
+          <i class="bi bi-map"></i>
+          Navegar com Waze
+        </a>
       </article>
     </section>
 

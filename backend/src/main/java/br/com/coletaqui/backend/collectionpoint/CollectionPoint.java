@@ -38,6 +38,10 @@ public class CollectionPoint {
 	@Column(length = 120)
 	private String openingHours;
 
+	private Double latitude;
+
+	private Double longitude;
+
 	@Column(nullable = false)
 	private boolean active = true;
 
@@ -117,6 +121,22 @@ public class CollectionPoint {
 
 	public void setOpeningHours(String openingHours) {
 		this.openingHours = openingHours;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
 	}
 
 	public boolean isActive() {

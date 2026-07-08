@@ -7,8 +7,27 @@
     <section class="page-title">
       <span><i class="bi bi-geo-alt-fill"></i> Araçoiaba/PE</span>
       <h1>Coletores</h1>
-      <p>Veja coletores e estabelecimentos cadastrados para coleta seletiva na cidade.</p>
+      <p>Veja pessoas e estabelecimentos que podem buscar materiais em casa ou receber materiais no próprio local.</p>
     </section>
+
+    <section class="context-card">
+      <i class="bi bi-info-circle-fill"></i>
+      <p>
+        Para <strong>entregar em ponto fixo</strong>, use Pontos. Para <strong>solicitar busca em casa</strong>, use Agendar.
+        Esta tela ajuda você a conhecer os coletores disponíveis.
+      </p>
+    </section>
+
+    <nav class="filter-tabs" aria-label="Filtrar coletores">
+      <button
+        type="button"
+        *ngFor="let filter of serviceFilters"
+        [class.active]="selectedFilter === filter.value"
+        (click)="selectedFilter = filter.value"
+      >
+        {{ filter.label }}
+      </button>
+    </nav>
 
     <section class="state-card" *ngIf="isLoading">
       <p>Carregando coletores...</p>
@@ -18,12 +37,12 @@
       <p>{{ error }}</p>
     </section>
 
-    <section class="state-card" *ngIf="!isLoading && !error && !collectors.length">
-      <p>Nenhum coletor cadastrado ainda.</p>
+    <section class="state-card" *ngIf="!isLoading && !error && !filteredCollectors.length">
+      <p>Nenhum coletor encontrado para este filtro.</p>
     </section>
 
-    <section class="collector-list" *ngIf="!isLoading && !error && collectors.length">
-      <article class="collector-card" *ngFor="let collector of collectors">
+    <section class="collector-list" *ngIf="!isLoading && !error && filteredCollectors.length">
+      <article class="collector-card" *ngFor="let collector of filteredCollectors">
         <div class="collector-main">
           <div class="collector-avatar">
             <i class="bi bi-truck"></i>
@@ -42,7 +61,7 @@
             <span *ngFor="let material of materialList(collector)">{{ material }}</span>
           </div>
           <ng-template #noMaterials>
-            <p>Materiais ainda nao informados.</p>
+            <p>Materiais ainda não informados.</p>
           </ng-template>
         </div>
 
@@ -52,11 +71,11 @@
             <span *ngFor="let option of availabilityList(collector)">{{ option }}</span>
           </div>
           <ng-template #noAvailability>
-            <p>Disponibilidade ainda nao informada.</p>
+            <p>Disponibilidade ainda não informada.</p>
           </ng-template>
         </div>
 
-        <div class="address-box" *ngIf="collector.address; else homeCollectionOnly">
+        <div class="address-box" *ngIf="canDropOff(collector) && collector.address; else homeCollectionOnly">
           <i class="bi bi-shop"></i>
           <span>{{ collector.address }}</span>
         </div>
@@ -64,13 +83,21 @@
         <ng-template #homeCollectionOnly>
           <div class="address-box subtle">
             <i class="bi bi-house-check"></i>
-            <span>Atendimento por coleta domiciliar.</span>
+            <span>{{ canSchedule(collector) ? 'Atendimento por coleta domiciliar.' : 'Endereço não disponível para entrega.' }}</span>
           </div>
         </ng-template>
 
-        <a class="contact-button" [href]="whatsappLink(collector)" target="_blank" rel="noopener">
-          <i class="bi bi-whatsapp"></i> Chamar no WhatsApp
-        </a>
+        <div class="collector-actions">
+          <a class="primary-button" routerLink="/my-appointments" *ngIf="canSchedule(collector)">
+            <i class="bi bi-calendar-plus-fill"></i> Agendar coleta
+          </a>
+          <a class="route-button" [href]="routeLink(collector)" target="_blank" rel="noopener" *ngIf="canDropOff(collector) && collector.address">
+            <i class="bi bi-map"></i> Abrir rota
+          </a>
+          <a class="contact-button" [href]="whatsappLink(collector)" target="_blank" rel="noopener">
+            <i class="bi bi-whatsapp"></i> WhatsApp
+          </a>
+        </div>
       </article>
     </section>
   </main>

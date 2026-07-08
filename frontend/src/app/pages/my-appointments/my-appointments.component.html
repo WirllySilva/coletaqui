@@ -5,75 +5,102 @@
     <button type="button" class="back-link" (click)="goHome()"><i class="bi bi-arrow-left"></i> Voltar</button>
 
     <section class="page-heading">
+      <span><i class="bi bi-calendar-check-fill"></i> Nova solicitação</span>
       <h1>Agendar coleta</h1>
-      <p>Escolha o endereço, os materiais e envie uma solicitação para os coletores.</p>
+      <p>Use esta tela para solicitar coleta domiciliar. A solicitação ficará disponível para os coletores ativos de Araçoiaba.</p>
     </section>
 
-    <section class="schedule-card">
-      <p class="muted" *ngIf="isLoading">Carregando dados...</p>
-      <p class="empty-warning" *ngIf="!isLoading && !addresses.length">
-        Cadastre um endereço em Meu perfil antes de solicitar uma coleta.
-      </p>
+    <section class="success-panel" *ngIf="submittedSchedule; else scheduleForm">
+      <i class="bi bi-check-circle-fill"></i>
+      <h2>Solicitação enviada</h2>
+      <p>Os coletores ativos poderão visualizar o pedido e aceitar a coleta.</p>
+      <div class="success-summary">
+        <span><i class="bi bi-calendar-check"></i> {{ submittedSchedule.desiredDate | date:'dd/MM/yyyy' }}</span>
+        <span><i class="bi bi-clock"></i> {{ submittedSchedule.preferredPeriod }}</span>
+      </div>
+      <div class="success-actions">
+        <a class="btn btn-success btn-lg" routerLink="/my-requests">Ver minhas solicitações</a>
+        <button class="btn btn-outline-success btn-lg" type="button" (click)="newSchedule()">Nova solicitação</button>
+        <a class="btn btn-light btn-lg" routerLink="/home">Início</a>
+      </div>
+    </section>
 
-      <ng-container *ngIf="addresses.length">
-        <label class="form-label" for="address">Endereço da coleta</label>
-        <select id="address" class="form-select" [(ngModel)]="selectedAddressId" name="selectedAddressId">
-          <option *ngFor="let address of addresses" [value]="address.id">
-            {{ address.label }} - {{ address.street }}, {{ address.neighborhood }}
-          </option>
-        </select>
+    <ng-template #scheduleForm>
+      <section class="schedule-card">
+        <p class="muted" *ngIf="isLoading">Carregando dados...</p>
+        <p class="empty-warning" *ngIf="!isLoading && !addresses.length">
+          Cadastre um endereço em Meu perfil antes de solicitar uma coleta.
+        </p>
 
-        <fieldset>
-          <legend>Materiais</legend>
-          <div class="check-grid">
-            <label class="check-option" *ngFor="let material of materials" [class.selected]="isMaterialSelected(material.id)">
-              <input type="checkbox" [checked]="isMaterialSelected(material.id)" (change)="toggleMaterial(material.id)" />
-              <span>{{ material.name }}</span>
+        <ng-container *ngIf="addresses.length">
+          <div class="form-step">
+            <span>1</span>
+            <div>
+              <strong>Local da coleta</strong>
+              <small>Escolha um dos endereços cadastrados no seu perfil.</small>
+            </div>
+          </div>
+
+          <label class="form-label" for="address">Endereço</label>
+          <select id="address" class="form-select" [(ngModel)]="selectedAddressId" name="selectedAddressId">
+            <option *ngFor="let address of addresses" [value]="address.id">
+              {{ address.label }} - {{ address.street }}, {{ address.neighborhood }}
+            </option>
+          </select>
+
+          <div class="form-step">
+            <span>2</span>
+            <div>
+              <strong>Materiais para coleta</strong>
+              <small>Marque todos os tipos de material que estão separados.</small>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Materiais</legend>
+            <div class="check-grid">
+              <label class="check-option" *ngFor="let material of materials" [class.selected]="isMaterialSelected(material.id)">
+                <input type="checkbox" [checked]="isMaterialSelected(material.id)" (change)="toggleMaterial(material.id)" />
+                <span>{{ material.name }}</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-step">
+            <span>3</span>
+            <div>
+              <strong>Melhor momento</strong>
+              <small>Informe uma data desejada e o período em que você pode receber o coletor.</small>
+            </div>
+          </div>
+
+          <div class="date-grid">
+            <label>
+              <span class="form-label">Data desejada</span>
+              <input class="form-control" type="date" [min]="minDate" [(ngModel)]="desiredDate" name="desiredDate" />
+            </label>
+
+            <label>
+              <span class="form-label">Disponibilidade</span>
+              <select class="form-select" [(ngModel)]="preferredPeriod" name="preferredPeriod">
+                <option value="">Escolha um período</option>
+                <option *ngFor="let option of periodOptions" [value]="option">{{ option }}</option>
+              </select>
             </label>
           </div>
-        </fieldset>
 
-        <label class="form-label" for="period">Disponibilidade</label>
-        <select id="period" class="form-select" [(ngModel)]="preferredPeriod" name="preferredPeriod">
-          <option value="">Escolha um período</option>
-          <option *ngFor="let option of periodOptions" [value]="option">{{ option }}</option>
-        </select>
+          <label class="form-label" for="notes">Observações</label>
+          <textarea id="notes" class="form-control" rows="3" [(ngModel)]="notes" name="notes" placeholder="Ex.: material separado na garagem, chamar no portão azul"></textarea>
 
-        <label class="form-label" for="notes">Observações</label>
-        <textarea id="notes" class="form-control" rows="3" [(ngModel)]="notes" name="notes" placeholder="Ex.: material separado na garagem"></textarea>
+          <p class="success-message" *ngIf="message">{{ message }}</p>
+          <p class="error-message" *ngIf="error">{{ error }}</p>
 
-        <p class="success-message" *ngIf="message">{{ message }}</p>
-        <p class="error-message" *ngIf="error">{{ error }}</p>
-
-        <button class="btn btn-success btn-lg" type="button" [disabled]="isSaving" (click)="createSchedule()">
-          {{ isSaving ? 'Enviando...' : 'Enviar solicitação' }}
-        </button>
-      </ng-container>
-    </section>
-
-    <section class="history-section">
-      <h2>Minhas solicitações</h2>
-
-      <article class="request-card" *ngFor="let schedule of schedules">
-        <div class="request-head" (click)="openDetail(schedule)">
-          <strong>{{ statusLabel(schedule.status) }}</strong>
-          <span>{{ schedule.preferredPeriod }}</span>
-        </div>
-        <p><i class="bi bi-geo-alt"></i> {{ schedule.address }}</p>
-        <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
-        <p *ngIf="schedule.collectorName"><i class="bi bi-truck"></i> Coletor: {{ schedule.collectorName }}</p>
-        <div class="request-actions">
-          <button class="detail-button" type="button" (click)="openDetail(schedule)">
-            <i class="bi bi-eye"></i> Ver detalhe
+          <button class="btn btn-success btn-lg" type="button" [disabled]="isSaving" (click)="createSchedule()">
+            {{ isSaving ? 'Enviando...' : 'Enviar solicitação' }}
           </button>
-          <button class="cancel-button" type="button" *ngIf="schedule.status === 'REQUESTED'" (click)="cancel(schedule)">
-            <i class="bi bi-x-circle"></i> Cancelar
-          </button>
-        </div>
-      </article>
-
-      <p class="muted" *ngIf="!schedules.length && !isLoading">Nenhuma solicitação criada ainda.</p>
-    </section>
+        </ng-container>
+      </section>
+    </ng-template>
   </main>
 
   <app-footer />

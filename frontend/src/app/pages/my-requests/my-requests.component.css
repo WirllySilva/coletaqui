@@ -1,0 +1,160 @@
+.requests-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.requests-content {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  background: none;
+  border: 0;
+  color: #0f6b3b;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  justify-self: flex-start;
+}
+
+.page-heading span {
+  color: #0f6b3b;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 900;
+  margin: 6px 0;
+}
+
+.page-heading p,
+.state-card p,
+.request-card p {
+  color: #405247;
+  margin: 0;
+}
+
+.state-card,
+.request-card,
+.success-message,
+.error-message {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+  padding: 14px;
+}
+
+.success-message {
+  background: #eaf7ef;
+  border-color: #b9e5ca;
+  color: #155f34;
+}
+
+.error-message {
+  background: #fff0f0;
+  border-color: #f2c0c0;
+  color: #9b1c1c;
+}
+
+.request-list {
+  display: grid;
+  gap: 10px;
+}
+
+.request-card {
+  display: grid;
+  gap: 10px;
+}
+
+.request-head {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.request-head strong {
+  color: #198754;
+}
+
+.request-head span {
+  color: #5b6a61;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.request-card i {
+  color: #198754;
+  margin-right: 6px;
+}
+
+.request-actions {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.detail-button,
+.cancel-button,
+.empty-state a {
+  align-items: center;
+  border: 0;
+  border-radius: 8px;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 6px;
+  justify-content: center;
+  min-height: 38px;
+  text-decoration: none;
+}
+
+.detail-button,
+.empty-state a {
+  background: #e9f8ef;
+  color: #155f34;
+}
+
+.cancel-button {
+  background: #fff0f0;
+  color: #9b1c1c;
+}
+
+.cancel-button i {
+  color: #9b1c1c;
+}
+
+.empty-state {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .requests-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .requests-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .request-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .requests-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

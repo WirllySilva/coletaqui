@@ -3,6 +3,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminMaterial, AdminService, CollectionPoint, UpsertCollectionPointPayload } from '../../services/admin.service';
 
+type CollectionPointForm = Omit<UpsertCollectionPointPayload, 'latitude' | 'longitude' | 'openingHours'> & {
+  latitude: string;
+  longitude: string;
+  weekdays: string[];
+  openingStart: string;
+  openingEnd: string;
+};
+
 @Component({
   selector: 'app-admin-collection-points',
   imports: [CommonModule, FormsModule],
@@ -10,11 +18,14 @@ import { AdminMaterial, AdminService, CollectionPoint, UpsertCollectionPointPayl
   styleUrl: './admin-pages.css',
 })
 export class AdminCollectionPointsComponent implements OnInit {
+  readonly weekdays = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  readonly timeOptions = this.buildTimeOptions();
+
   points: CollectionPoint[] = [];
   materials: AdminMaterial[] = [];
   selectedMaterials: string[] = [];
   editing: CollectionPoint | null = null;
-  form: UpsertCollectionPointPayload = this.emptyForm();
+  form: CollectionPointForm = this.emptyForm();
   message = '';
   error = '';
 
@@ -31,9 +42,29 @@ export class AdminCollectionPointsComponent implements OnInit {
   submit(): void {
     this.message = '';
     this.error = '';
-    const payload = {
-      ...this.form,
+    const latitude = this.parseCoordinate(this.form.latitude);
+    const longitude = this.parseCoordinate(this.form.longitude);
+    if (!this.isCoordinateInsideAracoiaba(latitude, longitude)) {
+      this.error = 'Informe coordenadas válidas dentro de Araçoiaba. Ex.: latitude -7.789004 e longitude -35.087497.';
+      return;
+    }
+
+    const openingHours = this.composeOpeningHours();
+    if (openingHours === undefined) {
+      return;
+    }
+
+    const payload: UpsertCollectionPointPayload = {
+      name: this.form.name,
+      description: this.form.description,
+      address: this.form.address,
+      city: this.form.city,
+      state: this.form.state,
       materials: this.selectedMaterials.join(', '),
+      openingHours,
+      latitude,
+      longitude,
+      active: this.form.active,
     };
     const request = this.editing
       ? this.adminService.updateCollectionPoint(this.editing.id, payload)
@@ -49,7 +80,7 @@ export class AdminCollectionPointsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel salvar o ponto.';
+        this.error = 'Não foi possível salvar o ponto.';
         this.changeDetector.detectChanges();
       },
     });
@@ -58,6 +89,7 @@ export class AdminCollectionPointsComponent implements OnInit {
   edit(point: CollectionPoint): void {
     this.editing = point;
     this.selectedMaterials = this.parseMaterials(point.materials);
+    const schedule = this.parseOpeningHours(point.openingHours);
     this.form = {
       name: point.name,
       description: point.description ?? '',
@@ -65,7 +97,11 @@ export class AdminCollectionPointsComponent implements OnInit {
       city: point.city,
       state: point.state,
       materials: point.materials ?? '',
-      openingHours: point.openingHours ?? '',
+      weekdays: schedule.weekdays,
+      openingStart: schedule.openingStart,
+      openingEnd: schedule.openingEnd,
+      latitude: point.latitude?.toString() ?? '',
+      longitude: point.longitude?.toString() ?? '',
       active: point.active,
     };
   }
@@ -78,7 +114,7 @@ export class AdminCollectionPointsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel alterar o status do ponto.';
+        this.error = 'Não foi possível alterar o status do ponto.';
         this.changeDetector.detectChanges();
       },
     });
@@ -100,6 +136,16 @@ export class AdminCollectionPointsComponent implements OnInit {
       : [...this.selectedMaterials, name];
   }
 
+  isWeekdaySelected(day: string): boolean {
+    return this.form.weekdays.includes(day);
+  }
+
+  toggleWeekday(day: string): void {
+    this.form.weekdays = this.isWeekdaySelected(day)
+      ? this.form.weekdays.filter(item => item !== day)
+      : [...this.form.weekdays, day];
+  }
+
   private load(): void {
     this.adminService.collectionPoints().subscribe({
       next: points => {
@@ -107,7 +153,7 @@ export class AdminCollectionPointsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar pontos.';
+        this.error = 'Não foi possível carregar pontos.';
         this.changeDetector.detectChanges();
       },
     });
@@ -130,7 +176,7 @@ export class AdminCollectionPointsComponent implements OnInit {
     return value.split(',').map(item => item.trim()).filter(Boolean);
   }
 
-  private emptyForm(): UpsertCollectionPointPayload {
+  private emptyForm(): CollectionPointForm {
     return {
       name: '',
       description: '',
@@ -138,8 +184,88 @@ export class AdminCollectionPointsComponent implements OnInit {
       city: 'Araçoiaba',
       state: 'PE',
       materials: '',
-      openingHours: '',
+      weekdays: [],
+      openingStart: '',
+      openingEnd: '',
+      latitude: '',
+      longitude: '',
       active: true,
     };
+  }
+
+  private parseCoordinate(value: string): number | null {
+    const normalized = value.trim().replace(',', '.');
+    if (!normalized) {
+      return null;
+    }
+
+    const parsed = Number(normalized);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+
+  private isCoordinateInsideAracoiaba(latitude: number | null, longitude: number | null): boolean {
+    if (latitude === null && longitude === null) {
+      return true;
+    }
+
+    if (latitude === null || longitude === null) {
+      return false;
+    }
+
+    return latitude >= -7.835 && latitude <= -7.745 && longitude >= -35.14 && longitude <= -35.045;
+  }
+
+  private composeOpeningHours(): string | null | undefined {
+    const hasWeekdays = this.form.weekdays.length > 0;
+    const hasStart = Boolean(this.form.openingStart);
+    const hasEnd = Boolean(this.form.openingEnd);
+
+    if (!hasWeekdays && !hasStart && !hasEnd) {
+      return null;
+    }
+
+    if (!hasWeekdays || !hasStart || !hasEnd) {
+      this.error = 'Informe os dias da semana, o horário de início e o horário de fim.';
+      return undefined;
+    }
+
+    if (this.toMinutes(this.form.openingStart) >= this.toMinutes(this.form.openingEnd)) {
+      this.error = 'O horário de início deve ser menor que o horário de fim.';
+      return undefined;
+    }
+
+    return `${this.form.weekdays.join(', ')} - ${this.form.openingStart} às ${this.form.openingEnd}`;
+  }
+
+  private parseOpeningHours(value?: string | null): Pick<CollectionPointForm, 'weekdays' | 'openingStart' | 'openingEnd'> {
+    const empty = { weekdays: [], openingStart: '', openingEnd: '' };
+    if (!value) {
+      return empty;
+    }
+
+    const match = value.match(/^(.*?) - (\d{2}:\d{2}) às (\d{2}:\d{2})$/);
+    if (!match) {
+      return empty;
+    }
+
+    return {
+      weekdays: match[1].split(',').map(day => day.trim()).filter(day => this.weekdays.includes(day)),
+      openingStart: match[2],
+      openingEnd: match[3],
+    };
+  }
+
+  private buildTimeOptions(): string[] {
+    return Array.from({ length: 49 }, (_, index) => {
+      const totalMinutes = index * 30;
+      const hours = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+      const minutes = (totalMinutes % 60).toString().padStart(2, '0');
+      return `${hours}:${minutes}`;
+    });
+  }
+
+  private toMinutes(value: string): number {
+    const [hours, minutes] = value.split(':').map(Number);
+    return hours * 60 + minutes;
   }
 }

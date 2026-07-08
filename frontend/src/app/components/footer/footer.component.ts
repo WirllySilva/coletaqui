@@ -29,7 +29,7 @@ export class FooterComponent implements OnInit {
     return [
       { label: 'Início', route: '/home', icon: 'bi-house-fill' },
       { label: 'Pontos', route: '/collection-points', icon: 'bi-geo-alt-fill' },
-      { label: 'Agendar', route: '/my-appointments', icon: 'bi-calendar-check-fill' },
+      { label: 'Agendar', route: '/schedule-options', icon: 'bi-calendar-check-fill' },
     ];
   }
 

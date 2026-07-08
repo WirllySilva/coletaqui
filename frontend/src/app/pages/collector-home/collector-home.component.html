@@ -28,8 +28,9 @@
       </div>
       <div class="next-body" *ngIf="nextCollection; else noNextCollection">
         <div class="time-box">
-          <i class="bi bi-clock-fill"></i>
-          <strong>{{ nextCollection.preferredPeriod }}</strong>
+          <i class="bi bi-calendar-check-fill"></i>
+          <strong>{{ nextCollection.desiredDate ? (nextCollection.desiredDate | date:'dd/MM') : nextCollection.preferredPeriod }}</strong>
+          <span *ngIf="nextCollection.desiredDate">{{ nextCollection.preferredPeriod }}</span>
         </div>
         <div>
           <p><i class="bi bi-geo-alt-fill"></i> {{ nextCollection.address }}</p>
@@ -58,7 +59,7 @@
           <h3>{{ request.requesterName || 'Solicitante' }}</h3>
           <p><i class="bi bi-geo-alt"></i> {{ request.address }}</p>
           <p><i class="bi bi-box-seam"></i> {{ request.materials.join(', ') }}</p>
-          <p><i class="bi bi-calendar-event"></i> {{ request.preferredPeriod }}</p>
+          <p><i class="bi bi-calendar-event"></i> {{ request.desiredDate ? (request.desiredDate | date:'dd/MM/yyyy') : 'Sem data' }} - {{ request.preferredPeriod }}</p>
         </div>
         <a class="accept-button" routerLink="/collector-requests">Ver detalhes</a>
       </article>

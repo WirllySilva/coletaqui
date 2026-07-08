@@ -59,13 +59,14 @@ export class AdminSchedulesComponent implements OnInit {
   }
 
   exportCsv(): void {
-    const headers = ['Status', 'Solicitante', 'Telefone', 'Coletor', 'Materiais', 'Periodo', 'Endereco', 'Criada em'];
+    const headers = ['Status', 'Solicitante', 'Telefone', 'Coletor', 'Materiais', 'Data desejada', 'Periodo', 'Endereco', 'Criada em'];
     const rows = this.filteredSchedules.map(schedule => [
       schedule.status,
       schedule.requesterName || '',
       schedule.requesterPhone || '',
       schedule.collectorName || '',
       schedule.materials.join(', '),
+      schedule.desiredDate || '',
       schedule.preferredPeriod,
       schedule.address,
       schedule.createdAt,

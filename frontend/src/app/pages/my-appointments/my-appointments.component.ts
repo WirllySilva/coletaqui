@@ -17,9 +17,10 @@ import { UserAddress, UserService } from '../../services/user.service';
 export class MyAppointmentsPageComponent implements OnInit {
   addresses: UserAddress[] = [];
   materials: MaterialType[] = [];
-  schedules: Schedule[] = [];
+  submittedSchedule: Schedule | null = null;
   selectedAddressId = '';
   selectedMaterialIds: string[] = [];
+  desiredDate = '';
   preferredPeriod = '';
   notes = '';
   isLoading = true;
@@ -36,6 +37,10 @@ export class MyAppointmentsPageComponent implements OnInit {
     private readonly changeDetector: ChangeDetectorRef,
   ) {}
 
+  get minDate(): string {
+    return new Date().toISOString().slice(0, 10);
+  }
+
   ngOnInit(): void {
     this.loadData();
   }
@@ -51,8 +56,8 @@ export class MyAppointmentsPageComponent implements OnInit {
   }
 
   createSchedule(): void {
-    if (!this.selectedAddressId || !this.selectedMaterialIds.length || !this.preferredPeriod) {
-      this.error = 'Escolha endereço, materiais e disponibilidade.';
+    if (!this.selectedAddressId || !this.selectedMaterialIds.length || !this.desiredDate || !this.preferredPeriod) {
+      this.error = 'Escolha endereço, materiais, data e disponibilidade.';
       return;
     }
 
@@ -63,6 +68,7 @@ export class MyAppointmentsPageComponent implements OnInit {
     this.scheduleService.createSchedule({
       addressId: this.selectedAddressId,
       materialTypeIds: this.selectedMaterialIds,
+      desiredDate: this.desiredDate,
       preferredPeriod: this.preferredPeriod,
       notes: this.notes.trim() || null,
     }).pipe(
@@ -72,8 +78,9 @@ export class MyAppointmentsPageComponent implements OnInit {
       }),
     ).subscribe({
       next: schedule => {
-        this.schedules = [schedule, ...this.schedules];
+        this.submittedSchedule = schedule;
         this.selectedMaterialIds = [];
+        this.desiredDate = '';
         this.preferredPeriod = '';
         this.notes = '';
         this.message = 'Solicitação enviada para os coletores.';
@@ -90,35 +97,10 @@ export class MyAppointmentsPageComponent implements OnInit {
     void this.router.navigateByUrl('/home');
   }
 
-  openDetail(schedule: Schedule): void {
-    void this.router.navigate(['/schedules', schedule.id]);
-  }
-
-  cancel(schedule: Schedule): void {
+  newSchedule(): void {
     this.message = '';
     this.error = '';
-
-    this.scheduleService.cancelSchedule(schedule.id).subscribe({
-      next: updated => {
-        this.schedules = this.schedules.map(item => item.id === updated.id ? updated : item);
-        this.message = 'Solicitacao cancelada.';
-        this.changeDetector.detectChanges();
-      },
-      error: () => {
-        this.error = 'Nao foi possivel cancelar a solicitacao.';
-        this.changeDetector.detectChanges();
-      },
-    });
-  }
-
-  statusLabel(status: Schedule['status']): string {
-    const labels: Record<Schedule['status'], string> = {
-      REQUESTED: 'Solicitada',
-      ACCEPTED: 'Aceita',
-      COMPLETED: 'Concluída',
-      CANCELED: 'Cancelada',
-    };
-    return labels[status];
+    this.submittedSchedule = null;
   }
 
   private loadData(): void {
@@ -130,27 +112,24 @@ export class MyAppointmentsPageComponent implements OnInit {
         this.selectedAddressId = addresses.find(address => address.defaultAddress)?.id ?? addresses[0]?.id ?? '';
         this.changeDetector.detectChanges();
       },
-    });
-
-    this.scheduleService.listMaterials().subscribe({
-      next: materials => {
-        this.materials = materials;
+      error: () => {
+        this.error = 'Não foi possível carregar seus endereços.';
         this.changeDetector.detectChanges();
       },
     });
 
-    this.scheduleService.listMySchedules().pipe(
+    this.scheduleService.listMaterials().pipe(
       finalize(() => {
         this.isLoading = false;
         this.changeDetector.detectChanges();
       }),
     ).subscribe({
-      next: schedules => {
-        this.schedules = schedules;
+      next: materials => {
+        this.materials = materials;
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Não foi possível carregar seus agendamentos.';
+        this.error = 'Não foi possível carregar os materiais.';
         this.changeDetector.detectChanges();
       },
     });

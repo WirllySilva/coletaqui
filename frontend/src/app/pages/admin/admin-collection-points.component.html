@@ -15,10 +15,12 @@
         Nome
         <input name="name" [(ngModel)]="form.name" placeholder="Ex.: Associação do Centro" required />
       </label>
+
       <label>
         Endereço
         <input name="address" [(ngModel)]="form.address" placeholder="Rua, número e referência" required />
       </label>
+
       <div class="form-grid">
         <label>
           Cidade
@@ -29,6 +31,7 @@
           <input name="state" maxlength="2" [(ngModel)]="form.state" />
         </label>
       </div>
+
       <fieldset class="option-fieldset">
         <legend>Materiais aceitos</legend>
         <div class="option-grid" *ngIf="materials.length; else noMaterials">
@@ -45,17 +48,58 @@
           <p class="empty">Nenhum material ativo cadastrado.</p>
         </ng-template>
       </fieldset>
-      <label>
-        Horário
-        <input name="openingHours" [(ngModel)]="form.openingHours" placeholder="Segunda a sexta, 8h às 17h" />
-      </label>
+
+      <fieldset class="option-fieldset">
+        <legend>Dias de funcionamento</legend>
+        <div class="option-grid weekday-grid">
+          <label *ngFor="let day of weekdays">
+            <input
+              type="checkbox"
+              [checked]="isWeekdaySelected(day)"
+              (change)="toggleWeekday(day)"
+            />
+            {{ day }}
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid time-grid">
+        <label>
+          Início
+          <select name="openingStart" [(ngModel)]="form.openingStart">
+            <option value="">Selecione</option>
+            <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+          </select>
+        </label>
+        <label>
+          Fim
+          <select name="openingEnd" [(ngModel)]="form.openingEnd">
+            <option value="">Selecione</option>
+            <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="form-grid coordinate-grid">
+        <label>
+          Latitude
+          <input name="latitude" inputmode="decimal" [(ngModel)]="form.latitude" placeholder="-7.789004" />
+        </label>
+        <label>
+          Longitude
+          <input name="longitude" inputmode="decimal" [(ngModel)]="form.longitude" placeholder="-35.087497" />
+        </label>
+      </div>
+
       <label>
         Observação
         <input name="description" [(ngModel)]="form.description" placeholder="Informações adicionais" />
       </label>
+
       <div class="check-row">
         <label><input name="active" type="checkbox" [(ngModel)]="form.active" /> Ativo</label>
       </div>
+
       <div class="action-row">
         <button type="submit">{{ editing ? 'Salvar' : 'Criar ponto' }}</button>
         <button class="ghost-button" type="button" *ngIf="editing" (click)="cancelEdit()">Cancelar</button>
@@ -71,6 +115,7 @@
           <th>Endereço</th>
           <th>Materiais</th>
           <th>Horário</th>
+          <th>Coordenadas</th>
           <th>Status</th>
           <th>Ações</th>
         </tr>
@@ -81,6 +126,7 @@
           <td>{{ point.address }}, {{ point.city }}/{{ point.state }}</td>
           <td>{{ point.materials || '-' }}</td>
           <td>{{ point.openingHours || '-' }}</td>
+          <td>{{ point.latitude && point.longitude ? point.latitude + ', ' + point.longitude : '-' }}</td>
           <td><span class="status" [class.blocked]="!point.active">{{ point.active ? 'Ativo' : 'Inativo' }}</span></td>
           <td>
             <div class="action-row">

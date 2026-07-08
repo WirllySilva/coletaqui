@@ -56,6 +56,8 @@ public class CollectionPointService {
 		point.setState(blankToDefault(request.state(), "PE").toUpperCase());
 		point.setMaterials(blankToNull(request.materials()));
 		point.setOpeningHours(blankToNull(request.openingHours()));
+		point.setLatitude(request.latitude());
+		point.setLongitude(request.longitude());
 		point.setActive(request.active());
 	}
 
@@ -69,6 +71,8 @@ public class CollectionPointService {
 			point.getState(),
 			point.getMaterials(),
 			point.getOpeningHours(),
+			point.getLatitude(),
+			point.getLongitude(),
 			point.isActive(),
 			point.getCreatedAt(),
 			point.getUpdatedAt()

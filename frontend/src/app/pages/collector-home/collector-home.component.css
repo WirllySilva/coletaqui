@@ -164,6 +164,12 @@
   font-size: 1.35rem;
 }
 
+.time-box span {
+  color: #53717b;
+  font-size: 0.72rem;
+  line-height: 1.1;
+}
+
 .next-body p,
 .request-card p {
   align-items: center;

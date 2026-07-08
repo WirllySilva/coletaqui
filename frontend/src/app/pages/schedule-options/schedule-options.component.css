@@ -1,0 +1,136 @@
+.options-page {
+  background: #e0f7e9;
+  min-height: 100vh;
+  padding: 118px 16px 110px;
+}
+
+.options-content {
+  display: grid;
+  gap: 14px;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
+.back-link {
+  color: #0f6b3b;
+  display: inline-flex;
+  font-weight: 800;
+  gap: 6px;
+  justify-self: flex-start;
+  text-decoration: none;
+}
+
+.page-heading span {
+  color: #0f6b3b;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.page-heading h1 {
+  color: #124d2b;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 6px 0;
+}
+
+.page-heading p {
+  color: #405247;
+  margin: 0;
+}
+
+.option-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.option-card {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(12, 63, 36, 0.1);
+  color: #405247;
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.option-card i {
+  color: #198754;
+  font-size: 1.45rem;
+}
+
+.option-card strong {
+  color: #124d2b;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.option-card span {
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.separator {
+  align-items: center;
+  color: #587060;
+  display: flex;
+  font-weight: 900;
+  gap: 10px;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.separator::before,
+.separator::after {
+  background: #c8ead6;
+  content: '';
+  flex: 1;
+  height: 1px;
+}
+
+.schedule-button,
+.requests-link {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  font-weight: 900;
+  gap: 8px;
+  justify-content: center;
+  min-height: 48px;
+  text-decoration: none;
+}
+
+.schedule-button {
+  background: #198754;
+  color: #fff;
+}
+
+.requests-link {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  color: #155f34;
+}
+
+@media (min-width: 768px) {
+  .options-page {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .options-content {
+    max-width: var(--tablet-shell-max);
+  }
+
+  .option-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .options-content {
+    max-width: var(--desktop-shell-max);
+  }
+}

@@ -30,6 +30,7 @@ import { InfoBannerPageComponent } from './pages/info-banner/info-banner.compone
 import { ImpactDashboardComponent } from './pages/impact-dashboard/impact-dashboard.component';
 import { MetalPageComponent } from './pages/metal/metal.component';
 import { MyAppointmentsPageComponent } from './pages/my-appointments/my-appointments.component';
+import { MyRequestsComponent } from './pages/my-requests/my-requests.component';
 import { OrganicPageComponent } from './pages/organic/organic.component';
 import { PaperPageComponent } from './pages/paper/paper.component';
 import { PlantATreePageComponent } from './pages/plant-a-tree/plant-a-tree.component';
@@ -38,6 +39,7 @@ import { RankingPageComponent } from './pages/ranking/ranking.component';
 import { RegisterChoicePageComponent } from './pages/register-choice/register-choice.component';
 import { SettingsPageComponent } from './pages/settings/settings.component';
 import { ScheduleDetailComponent } from './pages/schedule-detail/schedule-detail.component';
+import { ScheduleOptionsComponent } from './pages/schedule-options/schedule-options.component';
 import { UserDataPageComponent } from './pages/user-data/user-data.component';
 import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component';
 import { adminGuard } from './guards/admin.guard';
@@ -79,7 +81,9 @@ export const routes: Routes = [
   { path: 'collector', redirectTo: 'collector-home', pathMatch: 'full' },
   { path: 'plantatree', component: PlantATreePageComponent },
   { path: 'ranking', component: RankingPageComponent },
-  { path: 'my-appointments', component: MyAppointmentsPageComponent },
+  { path: 'schedule-options', component: ScheduleOptionsComponent, canActivate: [commonHomeGuard] },
+  { path: 'my-appointments', component: MyAppointmentsPageComponent, canActivate: [commonHomeGuard] },
+  { path: 'my-requests', component: MyRequestsComponent, canActivate: [commonHomeGuard] },
   { path: 'schedules/:scheduleId', component: ScheduleDetailComponent },
   { path: 'help-contact', component: HelpContactPageComponent },
   { path: 'settings', component: SettingsPageComponent },

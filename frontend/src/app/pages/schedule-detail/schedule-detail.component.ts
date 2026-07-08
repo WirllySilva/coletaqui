@@ -33,7 +33,7 @@ export class ScheduleDetailComponent implements OnInit {
   ngOnInit(): void {
     const scheduleId = this.route.snapshot.paramMap.get('scheduleId');
     if (!scheduleId) {
-      void this.router.navigateByUrl(this.isCollector ? '/collector-home' : '/my-appointments');
+      void this.router.navigateByUrl(this.isCollector ? '/collector-home' : '/my-requests');
       return;
     }
 
@@ -55,7 +55,7 @@ export class ScheduleDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    void this.router.navigateByUrl(this.isCollector ? '/collector-schedule' : '/my-appointments');
+    void this.router.navigateByUrl(this.isCollector ? '/collector-schedule' : '/my-requests');
   }
 
   accept(): void {

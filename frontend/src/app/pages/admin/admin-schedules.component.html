@@ -41,6 +41,7 @@
           <th>Solicitante</th>
           <th>Coletor</th>
           <th>Materiais</th>
+          <th>Data</th>
           <th>Periodo</th>
           <th>Endereco</th>
         </tr>
@@ -51,6 +52,7 @@
           <td>{{ schedule.requesterName || '-' }}</td>
           <td>{{ schedule.collectorName || '-' }}</td>
           <td>{{ schedule.materials.join(', ') }}</td>
+          <td>{{ schedule.desiredDate ? (schedule.desiredDate | date:'dd/MM/yyyy') : '-' }}</td>
           <td>{{ schedule.preferredPeriod }}</td>
           <td>{{ schedule.address }}</td>
         </tr>

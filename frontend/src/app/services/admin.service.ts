@@ -41,6 +41,8 @@ export interface CollectionPoint {
   state: string;
   materials?: string | null;
   openingHours?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   active: boolean;
   createdAt: string;
   updatedAt: string;
@@ -54,6 +56,8 @@ export interface UpsertCollectionPointPayload {
   state?: string | null;
   materials?: string | null;
   openingHours?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   active: boolean;
 }
 

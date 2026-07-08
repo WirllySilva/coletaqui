@@ -6,7 +6,7 @@
       </button>
       <div class="dropdown-menu dropdown-menu-end" [class.show]="menuOpen">
         <a class="dropdown-item" routerLink="/userdata" (click)="menuOpen = false"><i class="bi bi-person me-2"></i>Meu perfil</a>
-        <a class="dropdown-item" [routerLink]="isCollector ? '/collector-schedule' : '/my-appointments'" (click)="menuOpen = false"><i class="bi bi-calendar-check me-2"></i>{{ isCollector ? 'Minha agenda' : 'Meus agendamentos' }}</a>
+        <a class="dropdown-item" [routerLink]="isCollector ? '/collector-schedule' : '/my-requests'" (click)="menuOpen = false"><i class="bi bi-calendar-check me-2"></i>{{ isCollector ? 'Minha agenda' : 'Minhas solicitações' }}</a>
         <button class="dropdown-item" type="button" (click)="shareApp()"><i class="bi bi-share me-2"></i>Compartilhar app</button>
         <a class="dropdown-item" routerLink="/help-contact" (click)="menuOpen = false"><i class="bi bi-whatsapp me-2 text-success"></i>Ajuda e contato</a>
         <a class="dropdown-item" routerLink="/settings" (click)="menuOpen = false"><i class="bi bi-gear me-2"></i>Configurações</a>

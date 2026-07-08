@@ -1,0 +1,45 @@
+<div class="requests-page">
+  <app-header />
+
+  <main class="requests-content">
+    <button type="button" class="back-link" (click)="goBack()"><i class="bi bi-arrow-left"></i> Voltar</button>
+
+    <section class="page-heading">
+      <span><i class="bi bi-list-check"></i> Histórico</span>
+      <h1>Minhas solicitações</h1>
+      <p>Acompanhe as coletas solicitadas, aceitas, concluídas ou canceladas.</p>
+    </section>
+
+    <p class="state-card" *ngIf="isLoading">Carregando solicitações...</p>
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <section class="request-list" *ngIf="!isLoading && schedules.length">
+      <article class="request-card" *ngFor="let schedule of schedules">
+        <div class="request-head" (click)="openDetail(schedule)">
+          <strong>{{ statusLabel(schedule.status) }}</strong>
+          <span>{{ schedule.desiredDate ? (schedule.desiredDate | date:'dd/MM/yyyy') : 'Sem data' }}</span>
+        </div>
+        <p><i class="bi bi-clock"></i> {{ schedule.preferredPeriod }}</p>
+        <p><i class="bi bi-geo-alt"></i> {{ schedule.address }}</p>
+        <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
+        <p *ngIf="schedule.collectorName"><i class="bi bi-truck"></i> Coletor: {{ schedule.collectorName }}</p>
+        <div class="request-actions">
+          <button class="detail-button" type="button" (click)="openDetail(schedule)">
+            <i class="bi bi-eye"></i> Ver detalhe
+          </button>
+          <button class="cancel-button" type="button" *ngIf="schedule.status === 'REQUESTED'" (click)="cancel(schedule)">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="state-card empty-state" *ngIf="!isLoading && !schedules.length">
+      <p>Nenhuma solicitação criada ainda.</p>
+      <a routerLink="/my-appointments">Agendar coleta</a>
+    </section>
+  </main>
+
+  <app-footer />
+</div>

@@ -280,9 +280,11 @@
   min-width: 0;
 }
 
-.form-panel input {
+.form-panel input,
+.form-panel select {
   border: 1px solid #cfdcd4;
   border-radius: 8px;
+  background: #fff;
   color: #26362d;
   font: inherit;
   min-height: 40px;
@@ -296,6 +298,14 @@
   gap: 12px;
   grid-template-columns: minmax(0, 1fr) minmax(72px, 90px);
   min-width: 0;
+}
+
+.coordinate-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.time-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .check-row {
@@ -353,6 +363,10 @@
   height: 16px;
   min-height: auto;
   width: auto;
+}
+
+.weekday-grid {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 .table-panel {

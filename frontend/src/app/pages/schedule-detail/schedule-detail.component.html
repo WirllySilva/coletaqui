@@ -38,9 +38,16 @@
 
       <div class="detail-grid">
         <div class="detail-block">
+          <strong><i class="bi bi-calendar-check"></i> Data desejada</strong>
+          <p>{{ schedule.desiredDate ? (schedule.desiredDate | date:'dd/MM/yyyy') : 'Não informada' }}</p>
+        </div>
+        <div class="detail-block">
           <strong><i class="bi bi-clock"></i> Disponibilidade</strong>
           <p>{{ schedule.preferredPeriod }}</p>
         </div>
+      </div>
+
+      <div class="detail-grid">
         <div class="detail-block">
           <strong><i class="bi bi-calendar-event"></i> Criada em</strong>
           <p>{{ schedule.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>

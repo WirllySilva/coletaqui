@@ -45,6 +45,54 @@
   margin: 0;
 }
 
+.context-card {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(12, 63, 36, 0.08);
+  color: #405247;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
+.context-card i {
+  color: #198754;
+  margin-top: 2px;
+}
+
+.context-card p {
+  margin: 0;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.filter-tabs button {
+  background: #fff;
+  border: 1px solid #c8ead6;
+  border-radius: 999px;
+  color: #155f34;
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 900;
+  min-height: 36px;
+  padding: 0 12px;
+}
+
+.filter-tabs button.active {
+  background: #198754;
+  border-color: #198754;
+  color: #fff;
+}
+
 .state-card,
 .collector-card {
   background: #fff;
@@ -181,17 +229,37 @@
   color: #2c8da7;
 }
 
+.collector-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.primary-button,
+.route-button,
 .contact-button {
   align-items: center;
-  background: #198754;
   border-radius: 8px;
-  color: #fff;
   display: inline-flex;
   font-weight: 900;
   gap: 8px;
   justify-content: center;
   min-height: 44px;
   text-decoration: none;
+}
+
+.primary-button {
+  background: #198754;
+  color: #fff;
+}
+
+.route-button {
+  background: #e9f8ef;
+  color: #155f34;
+}
+
+.contact-button {
+  background: #eefafe;
+  color: #2c8da7;
 }
 
 @media (min-width: 768px) {

@@ -12,6 +12,8 @@ public record CollectionPointResponse(
 	String state,
 	String materials,
 	String openingHours,
+	Double latitude,
+	Double longitude,
 	boolean active,
 	OffsetDateTime createdAt,
 	OffsetDateTime updatedAt

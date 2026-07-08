@@ -18,6 +18,7 @@ export interface Schedule {
   collectorName?: string | null;
   collectorPhone?: string | null;
   address: string;
+  desiredDate?: string | null;
   preferredPeriod: string;
   materials: string[];
   notes?: string | null;
@@ -47,6 +48,7 @@ export interface ImpactDashboard {
 export interface CreateSchedulePayload {
   addressId: string;
   materialTypeIds: string[];
+  desiredDate: string;
   preferredPeriod: string;
   notes?: string | null;
 }

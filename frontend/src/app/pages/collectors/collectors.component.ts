@@ -14,8 +14,16 @@ import { Collector, CollectorServiceType, UserService } from '../../services/use
 })
 export class CollectorsPageComponent implements OnInit {
   collectors: Collector[] = [];
+  selectedFilter: 'ALL' | CollectorServiceType = 'ALL';
   isLoading = true;
   error = '';
+
+  serviceFilters: Array<{ label: string; value: 'ALL' | CollectorServiceType }> = [
+    { label: 'Todos', value: 'ALL' },
+    { label: 'Coleta domiciliar', value: 'HOME_COLLECTION' },
+    { label: 'Recebimento no local', value: 'DROP_OFF_POINT' },
+    { label: 'Coleta + recebimento', value: 'HOME_COLLECTION_AND_DROP_OFF' },
+  ];
 
   constructor(
     private readonly userService: UserService,
@@ -24,6 +32,22 @@ export class CollectorsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCollectors();
+  }
+
+  get filteredCollectors(): Collector[] {
+    if (this.selectedFilter === 'ALL') {
+      return this.collectors;
+    }
+
+    return this.collectors.filter(collector => collector.collectorServiceType === this.selectedFilter);
+  }
+
+  canSchedule(collector: Collector): boolean {
+    return collector.collectorServiceType === 'HOME_COLLECTION' || collector.collectorServiceType === 'HOME_COLLECTION_AND_DROP_OFF';
+  }
+
+  canDropOff(collector: Collector): boolean {
+    return collector.collectorServiceType === 'DROP_OFF_POINT' || collector.collectorServiceType === 'HOME_COLLECTION_AND_DROP_OFF';
   }
 
   serviceTypeLabel(type: CollectorServiceType): string {
@@ -46,6 +70,10 @@ export class CollectorsPageComponent implements OnInit {
 
   whatsappLink(collector: Collector): string {
     return `https://wa.me/55${collector.phone}`;
+  }
+
+  routeLink(collector: Collector): string {
+    return `https://www.google.com/maps/search/?api=1&query=${collector.address ?? ''}`;
   }
 
   private loadCollectors(): void {

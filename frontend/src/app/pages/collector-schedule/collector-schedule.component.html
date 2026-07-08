@@ -20,6 +20,7 @@
       </div>
       <p><i class="bi bi-geo-alt"></i> {{ schedule.address }}</p>
       <p><i class="bi bi-recycle"></i> {{ schedule.materials.join(', ') }}</p>
+      <p *ngIf="schedule.desiredDate"><i class="bi bi-calendar-check"></i> {{ schedule.desiredDate | date:'dd/MM/yyyy' }}</p>
       <p><i class="bi bi-clock"></i> {{ schedule.preferredPeriod }}</p>
       <p *ngIf="schedule.requesterPhone"><i class="bi bi-phone"></i> {{ schedule.requesterPhone }}</p>
       <div class="request-actions">

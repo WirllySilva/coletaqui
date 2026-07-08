@@ -12,6 +12,7 @@ import br.com.coletaqui.backend.user.UserRole;
 import br.com.coletaqui.backend.user.UserStatus;
 import br.com.coletaqui.backend.user.address.UserAddress;
 import br.com.coletaqui.backend.user.address.UserAddressRepository;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -56,11 +57,16 @@ public class ScheduleService {
 			throw new IllegalArgumentException("Um ou mais materiais nao foram encontrados.");
 		}
 
+		if (request.desiredDate().isBefore(LocalDate.now())) {
+			throw new IllegalArgumentException("Data desejada nao pode ser anterior a hoje.");
+		}
+
 		var schedule = new Schedule();
 		schedule.setUser(user);
 		schedule.setAddress(address);
 		schedule.setMaterials(new LinkedHashSet<>(materials));
 		schedule.setAddressSnapshot(addressSnapshot(address));
+		schedule.setDesiredDate(request.desiredDate());
 		schedule.setPreferredPeriod(request.preferredPeriod().trim());
 		schedule.setNotes(blankToNull(request.notes()));
 		schedule.setStatus(ScheduleStatus.REQUESTED);
@@ -230,6 +236,7 @@ public class ScheduleService {
 			collector == null ? null : collector.getName(),
 			collector == null ? null : collector.getPhone(),
 			schedule.getAddressSnapshot(),
+			schedule.getDesiredDate(),
 			schedule.getPreferredPeriod(),
 			schedule.getMaterials().stream().map(MaterialType::getName).sorted().toList(),
 			schedule.getNotes(),

@@ -1,0 +1,41 @@
+<div class="options-page">
+  <app-header />
+
+  <main class="options-content">
+    <a class="back-link" routerLink="/home"><i class="bi bi-arrow-left"></i> Voltar</a>
+
+    <section class="page-heading">
+      <span><i class="bi bi-recycle"></i> Descarte correto</span>
+      <h1>Agendar ou escolher ponto de entrega</h1>
+      <p>Escolha a melhor forma de destinar seus materiais recicláveis em Araçoiaba.</p>
+    </section>
+
+    <section class="option-grid" aria-label="Opções de descarte">
+      <a routerLink="/collection-points" class="option-card">
+        <i class="bi bi-geo-alt-fill"></i>
+        <strong>Escolher ponto de entrega</strong>
+        <span>Veja locais fixos onde você pode levar os materiais.</span>
+      </a>
+
+      <a routerLink="/collectors" class="option-card">
+        <i class="bi bi-people-fill"></i>
+        <strong>Ver coletores</strong>
+        <span>Conheça pessoas e estabelecimentos que coletam ou recebem materiais.</span>
+      </a>
+    </section>
+
+    <div class="separator"><span>ou</span></div>
+
+    <a routerLink="/my-appointments" class="schedule-button">
+      <i class="bi bi-calendar-plus-fill"></i>
+      Agendar coleta domiciliar
+    </a>
+
+    <a routerLink="/my-requests" class="requests-link">
+      <i class="bi bi-list-check"></i>
+      Ver minhas solicitações
+    </a>
+  </main>
+
+  <app-footer />
+</div>

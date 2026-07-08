@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -51,6 +52,8 @@ public class Schedule {
 
 	@Column(nullable = false, length = 255)
 	private String addressSnapshot;
+
+	private LocalDate desiredDate;
 
 	@Column(nullable = false, length = 120)
 	private String preferredPeriod;
@@ -132,6 +135,14 @@ public class Schedule {
 
 	public String getPreferredPeriod() {
 		return preferredPeriod;
+	}
+
+	public LocalDate getDesiredDate() {
+		return desiredDate;
+	}
+
+	public void setDesiredDate(LocalDate desiredDate) {
+		this.desiredDate = desiredDate;
 	}
 
 	public void setPreferredPeriod(String preferredPeriod) {
