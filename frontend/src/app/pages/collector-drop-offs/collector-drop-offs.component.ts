@@ -7,6 +7,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { CollectionPointDelivery, CollectionPointDeliveryService } from '../../services/collection-point-delivery.service';
 import { DropOffDelivery, DropOffService } from '../../services/drop-off.service';
 import { MaterialType, ScheduleService } from '../../services/schedule.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-collector-drop-offs',
@@ -52,7 +53,7 @@ export class CollectorDropOffsComponent implements OnInit {
     this.error = '';
 
     if (!this.userPhone.trim() || !this.selectedMaterialIds.length) {
-      this.error = 'Informe o telefone do morador e pelo menos um material recebido.';
+      this.error = 'Informe o telefone do morador e marque pelo menos um material recebido.';
       return;
     }
 
@@ -67,7 +68,7 @@ export class CollectorDropOffsComponent implements OnInit {
         this.userPhone = '';
         this.selectedMaterialIds = [];
         this.notes = '';
-        this.message = 'Entrega confirmada e pontuada no ranking do morador.';
+        this.message = 'Entrega confirmada. Os pontos foram registrados no ranking do morador.';
         this.isSaving = false;
         this.changeDetector.detectChanges();
       },
@@ -87,7 +88,7 @@ export class CollectorDropOffsComponent implements OnInit {
     this.collectionPointDeliveryService.confirm(delivery.id).subscribe({
       next: updated => {
         this.plannedDeliveries = this.plannedDeliveries.map(item => item.id === updated.id ? updated : item);
-        this.message = 'Entrega registrada no ponto e pontuada no ranking do morador.';
+        this.message = 'Entrega confirmada no ponto. Os pontos foram registrados no ranking do morador.';
         this.isSaving = false;
         this.changeDetector.detectChanges();
       },
@@ -128,12 +129,6 @@ export class CollectorDropOffsComponent implements OnInit {
   }
 
   private errorMessage(error: unknown): string {
-    if (typeof error === 'object' && error !== null && 'error' in error) {
-      const body = error.error as { message?: string };
-      if (body?.message) {
-        return body.message;
-      }
-    }
-    return 'Nao foi possivel confirmar a entrega.';
+    return friendlyErrorMessage(error, 'Não foi possível confirmar a entrega. Confira o telefone e os materiais.');
   }
 }

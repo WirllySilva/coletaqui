@@ -43,7 +43,7 @@ export class AdminLoginComponent {
         void this.router.navigateByUrl('/admin/dashboard');
       },
       error: () => {
-        this.error = 'E-mail ou senha invalidos.';
+        this.error = 'E-mail ou senha inválidos.';
       },
     });
   }

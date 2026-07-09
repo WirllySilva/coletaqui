@@ -31,7 +31,7 @@ export class AdminUsersComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar usuarios.';
+        this.error = 'Não foi possível carregar os usuários.';
         this.changeDetector.detectChanges();
       },
     });

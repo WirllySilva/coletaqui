@@ -52,14 +52,14 @@ export class AdminSchedulesComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar coletas.';
+        this.error = 'Não foi possível carregar as coletas.';
         this.changeDetector.detectChanges();
       },
     });
   }
 
   exportCsv(): void {
-    const headers = ['Status', 'Solicitante', 'Telefone', 'Coletor', 'Materiais', 'Data desejada', 'Periodo', 'Endereco', 'Criada em'];
+    const headers = ['Status', 'Solicitante', 'Telefone', 'Coletor', 'Materiais', 'Data desejada', 'Período', 'Endereço', 'Criada em'];
     const rows = this.filteredSchedules.map(schedule => [
       schedule.status,
       schedule.requesterName || '',

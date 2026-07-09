@@ -24,6 +24,197 @@
   margin: 0;
 }
 
+.dashboard-page {
+  gap: 22px;
+}
+
+.dashboard-title {
+  border-bottom: 1px solid #dce7df;
+  padding-bottom: 18px;
+}
+
+.dashboard-hero-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+}
+
+.hero-metric-card {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #dce7df;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(18, 77, 43, 0.08);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 42px 1fr;
+  min-height: 138px;
+  padding: 18px;
+}
+
+.hero-metric-card > i {
+  align-items: center;
+  background: #e9f8ef;
+  border-radius: 8px;
+  color: #198754;
+  display: inline-flex;
+  font-size: 1.25rem;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.hero-metric-card div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.hero-metric-card strong {
+  color: #0f6b3b;
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hero-metric-card span {
+  color: #173d28;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.hero-metric-card small {
+  color: #647267;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.dashboard-section {
+  display: grid;
+  gap: 12px;
+}
+
+.section-heading,
+.panel-heading {
+  display: grid;
+  gap: 2px;
+}
+
+.section-heading span,
+.panel-heading span {
+  color: #198754;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.section-heading h2,
+.panel-heading h2 {
+  color: #173d28;
+  font-size: 1.12rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.pending-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pending-card {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #dce7df;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(18, 77, 43, 0.08);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 44px 1fr;
+  padding: 16px;
+}
+
+.pending-card > i {
+  align-items: center;
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 1.2rem;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.pending-card.warning > i {
+  background: #fff8df;
+  color: #8a6200;
+}
+
+.pending-card.success > i {
+  background: #e9f8ef;
+  color: #198754;
+}
+
+.pending-card div {
+  display: grid;
+  gap: 3px;
+}
+
+.pending-card strong {
+  color: #173d28;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.pending-card span {
+  color: #405247;
+  font-weight: 900;
+}
+
+.pending-card small {
+  color: #647267;
+  font-weight: 700;
+}
+
+.compact-stat-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.compact-stat {
+  background: #fff;
+  border: 1px solid #dce7df;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(18, 77, 43, 0.08);
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+}
+
+.compact-stat span {
+  color: #405247;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.compact-stat strong {
+  color: #198754;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.compact-stat small {
+  color: #647267;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.environmental-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .metric-grid {
   display: grid;
   gap: 12px;
@@ -73,6 +264,14 @@
   font-size: 1.1rem;
   font-weight: 900;
   margin: 0 0 14px;
+}
+
+.panel-heading {
+  margin-bottom: 14px;
+}
+
+.panel-heading h2 {
+  margin: 0;
 }
 
 .status-chart-panel {
@@ -578,6 +777,16 @@ td button.ghost-button,
 }
 
 @media (max-width: 1200px) {
+  .dashboard-hero-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pending-grid,
+  .compact-stat-grid,
+  .environmental-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .metric-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -601,6 +810,17 @@ td button.ghost-button,
 }
 
 @media (max-width: 640px) {
+  .dashboard-hero-grid,
+  .pending-grid,
+  .compact-stat-grid,
+  .environmental-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-metric-card {
+    min-height: auto;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }

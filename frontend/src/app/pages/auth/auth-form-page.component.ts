@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { AuthResponse, AuthService } from '../../services/auth.service';
 import { CollectorServiceType } from '../../services/user.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-auth-form-page',
@@ -167,7 +168,7 @@ export class AuthFormPageComponent {
         this.changeDetector.detectChanges();
       },
       error: error => {
-        this.error = this.authErrorMessage(error, 'Não foi possível enviar o código pelo WhatsApp. Tente novamente.');
+        this.error = this.authErrorMessage(error, 'Não foi possível enviar o código pelo WhatsApp. Confira o telefone e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -201,7 +202,7 @@ export class AuthFormPageComponent {
         this.changeDetector.detectChanges();
       },
       error: error => {
-        this.error = this.authErrorMessage(error, 'Código inválido ou expirado. Solicite um novo OTP se necessário.');
+        this.error = this.authErrorMessage(error, 'Código inválido ou expirado. Confira o código ou solicite um novo.');
         this.changeDetector.detectChanges();
       },
     });
@@ -226,7 +227,7 @@ export class AuthFormPageComponent {
     ).subscribe({
       next: response => this.navigateAfterLogin(response),
       error: error => {
-        this.error = this.authErrorMessage(error, 'Não foi possível concluir o cadastro. Tente novamente.');
+        this.error = this.authErrorMessage(error, 'Não foi possível concluir o cadastro. Confira os campos e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -293,15 +294,15 @@ export class AuthFormPageComponent {
 
   private validationMessage(): string {
     if (this.step === 'phone') {
-      return 'Informe um telefone válido com DDD.';
+      return 'Informe um celular válido. Pode digitar com DDD ou apenas o número de Araçoiaba.';
     }
 
     if (this.step === 'otp') {
-      return 'Informe o código OTP com 6 dígitos.';
+      return 'Digite o código de 6 números recebido pelo WhatsApp.';
     }
 
     if (!this.termsAccepted || !this.privacyAccepted) {
-      return 'Aceite os Termos de Uso e a Política de Privacidade para concluir o cadastro.';
+      return 'Para continuar, leia e aceite os Termos de Uso e a Política de Privacidade.';
     }
 
     if (this.profile === 'collector') {
@@ -313,15 +314,10 @@ export class AuthFormPageComponent {
 
   private authErrorMessage(error: unknown, fallback: string): string {
     if (typeof error === 'object' && error !== null && 'status' in error && error.status === 502) {
-      return 'A API ainda não está pronta. Aguarde alguns segundos e tente novamente.';
+      return 'O servidor ainda está iniciando. Aguarde alguns segundos e tente novamente.';
     }
 
-    if (typeof error === 'object' && error !== null && 'error' in error) {
-      const apiError = error.error as { message?: string };
-      return apiError.message || fallback;
-    }
-
-    return fallback;
+    return friendlyErrorMessage(error, fallback);
   }
 
   private toggleValue(values: string[], value: string): string[] {

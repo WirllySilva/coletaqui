@@ -1,28 +1,62 @@
-<section class="admin-page">
-  <div class="page-title">
-    <span>Visao geral</span>
+<section class="admin-page dashboard-page">
+  <div class="page-title dashboard-title">
+    <span>Visão geral</span>
     <h1>Dashboard administrativo</h1>
     <p>Indicadores gerais da plataforma Coletaqui Araçoiaba.</p>
   </div>
 
   <p class="error-message" *ngIf="error">{{ error }}</p>
 
-  <section class="metric-grid" *ngIf="summary">
-    <article><strong>{{ summary.users }}</strong><span>Usuarios</span></article>
-    <article><strong>{{ summary.collectors }}</strong><span>Coletores</span></article>
-    <article><strong>{{ summary.pendingCollectors }}</strong><span>Pendentes</span></article>
-    <article><strong>{{ summary.activeCollectionPoints }}</strong><span>Pontos ativos</span></article>
-    <article><strong>{{ summary.schedules }}</strong><span>Coletas</span></article>
-    <article><strong>{{ summary.openSchedules }}</strong><span>Abertas</span></article>
-    <article><strong>{{ summary.completedSchedules }}</strong><span>Concluidas</span></article>
-    <article><strong>{{ summary.confirmedPointDeliveries + summary.directDropOffDeliveries }}</strong><span>Entregas em pontos</span></article>
-    <article><strong>{{ summary.validatedTreePlantings }}</strong><span>Árvores validadas</span></article>
-    <article><strong>{{ summary.pendingTreePlantings }}</strong><span>Árvores pendentes</span></article>
+  <section class="dashboard-hero-grid" *ngIf="summary">
+    <article class="hero-metric-card" *ngFor="let metric of primaryMetrics">
+      <i class="bi" [ngClass]="metric.icon"></i>
+      <div>
+        <strong>{{ metric.value }}</strong>
+        <span>{{ metric.label }}</span>
+        <small>{{ metric.hint }}</small>
+      </div>
+    </article>
+  </section>
+
+  <section class="dashboard-section" *ngIf="summary">
+    <div class="section-heading">
+      <span>Prioridades</span>
+      <h2>Pendências administrativas</h2>
+    </div>
+
+    <div class="pending-grid">
+      <article class="pending-card" *ngFor="let item of pendingItems" [class.warning]="item.tone === 'warning'" [class.success]="item.tone === 'success'">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <div>
+          <strong>{{ item.value }}</strong>
+          <span>{{ item.label }}</span>
+          <small>{{ item.description }}</small>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="dashboard-section" *ngIf="summary">
+    <div class="section-heading">
+      <span>Operação</span>
+      <h2>Coletas, pontos e entregas</h2>
+    </div>
+
+    <div class="compact-stat-grid">
+      <article class="compact-stat" *ngFor="let stat of operationStats">
+        <span>{{ stat.label }}</span>
+        <strong>{{ stat.value }}</strong>
+        <small>{{ stat.meta }}</small>
+      </article>
+    </div>
   </section>
 
   <section class="content-grid" *ngIf="impact">
     <article class="panel status-chart-panel">
-      <h2>Coletas por status</h2>
+      <div class="panel-heading">
+        <span>Coletas</span>
+        <h2>Status das solicitações</h2>
+      </div>
       <div class="donut-layout">
         <div class="donut-chart" [style.background]="statusChartBackground">
           <span>{{ impact.total }}</span>
@@ -39,7 +73,10 @@
     </article>
 
     <article class="panel">
-      <h2>Materiais mais coletados</h2>
+      <div class="panel-heading">
+        <span>Materiais</span>
+        <h2>Mais coletados</h2>
+      </div>
       <div class="bar-list" *ngIf="impact.materials.length; else emptyMaterials">
         <div class="bar-row" *ngFor="let metric of impact.materials">
           <span>{{ metric.label }}</span>
@@ -47,11 +84,14 @@
           <strong>{{ metric.total }}</strong>
         </div>
       </div>
-      <ng-template #emptyMaterials><p>Nenhuma coleta concluida ainda.</p></ng-template>
+      <ng-template #emptyMaterials><p>Nenhuma coleta concluída ainda.</p></ng-template>
     </article>
 
     <article class="panel">
-      <h2>Bairros com maior demanda</h2>
+      <div class="panel-heading">
+        <span>Bairros</span>
+        <h2>Maior demanda</h2>
+      </div>
       <div class="bar-list" *ngIf="impact.neighborhoods.length; else emptyNeighborhoods">
         <div class="bar-row" *ngFor="let metric of impact.neighborhoods">
           <span>{{ metric.label }}</span>
@@ -59,11 +99,14 @@
           <strong>{{ metric.total }}</strong>
         </div>
       </div>
-      <ng-template #emptyNeighborhoods><p>Nenhuma solicitacao registrada ainda.</p></ng-template>
+      <ng-template #emptyNeighborhoods><p>Nenhuma solicitação registrada ainda.</p></ng-template>
     </article>
 
     <article class="panel" *ngIf="summary">
-      <h2>Entregas em pontos</h2>
+      <div class="panel-heading">
+        <span>Pontos</span>
+        <h2>Entregas em pontos</h2>
+      </div>
       <div class="bar-list">
         <div class="bar-row">
           <span>Confirmadas</span>
@@ -82,5 +125,20 @@
         </div>
       </div>
     </article>
+  </section>
+
+  <section class="dashboard-section" *ngIf="summary">
+    <div class="section-heading">
+      <span>Impacto ambiental</span>
+      <h2>Árvores e ações comunitárias</h2>
+    </div>
+
+    <div class="compact-stat-grid environmental-grid">
+      <article class="compact-stat" *ngFor="let stat of environmentalStats">
+        <span>{{ stat.label }}</span>
+        <strong>{{ stat.value }}</strong>
+        <small>{{ stat.meta }}</small>
+      </article>
+    </div>
   </section>
 </section>

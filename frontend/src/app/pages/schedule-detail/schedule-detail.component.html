@@ -6,7 +6,7 @@
 
     <section class="page-heading">
       <h1>Detalhe da coleta</h1>
-      <p>Acompanhe as informacoes da solicitacao e o andamento do atendimento.</p>
+      <p>Acompanhe as informações da solicitação e o andamento do atendimento.</p>
     </section>
 
     <section class="detail-card" *ngIf="isLoading">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="detail-block">
-        <strong><i class="bi bi-geo-alt"></i> Endereco</strong>
+        <strong><i class="bi bi-geo-alt"></i> Endereço</strong>
         <p>{{ schedule.address }}</p>
       </div>
 
@@ -86,13 +86,13 @@
 
       <div class="actions">
         <button class="secondary-button" type="button" *ngIf="!isCollector && schedule.status === 'REQUESTED'" [disabled]="isSaving" (click)="cancel()">
-          <i class="bi bi-x-circle"></i> Cancelar solicitacao
+          <i class="bi bi-x-circle"></i> Cancelar solicitação
         </button>
         <button class="primary-button" type="button" *ngIf="isCollector && schedule.status === 'REQUESTED'" [disabled]="isSaving" (click)="accept()">
           <i class="bi bi-check-circle-fill"></i> Aceitar coleta
         </button>
         <button class="primary-button" type="button" *ngIf="isCollector && schedule.status === 'ACCEPTED'" [disabled]="isSaving" (click)="complete()">
-          <i class="bi bi-check2-circle"></i> Marcar como concluida
+          <i class="bi bi-check2-circle"></i> Marcar como concluída
         </button>
       </div>
     </section>

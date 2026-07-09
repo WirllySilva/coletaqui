@@ -46,7 +46,7 @@ export class AdminCollectorsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel aprovar o coletor.';
+        this.error = 'Não foi possível aprovar o coletor. Tente novamente.';
         this.changeDetector.detectChanges();
       },
     });
@@ -62,7 +62,7 @@ export class AdminCollectorsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel bloquear o coletor.';
+        this.error = 'Não foi possível bloquear o coletor. Tente novamente.';
         this.changeDetector.detectChanges();
       },
     });
@@ -78,7 +78,7 @@ export class AdminCollectorsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel reativar o coletor.';
+        this.error = 'Não foi possível reativar o coletor. Tente novamente.';
         this.changeDetector.detectChanges();
       },
     });
@@ -105,7 +105,7 @@ export class AdminCollectorsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar coletores.';
+        this.error = 'Não foi possível carregar os coletores.';
         this.changeDetector.detectChanges();
       },
     });

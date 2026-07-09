@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { Schedule, ScheduleService } from '../../services/schedule.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-schedule-detail',
@@ -47,8 +48,8 @@ export class ScheduleDetailComponent implements OnInit {
         this.schedule = schedule;
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Nao foi possivel carregar o detalhe da coleta.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar os detalhes da coleta.');
         this.changeDetector.detectChanges();
       },
     });
@@ -69,21 +70,21 @@ export class ScheduleDetailComponent implements OnInit {
     if (!this.schedule) {
       return;
     }
-    this.runAction(this.scheduleService.completeSchedule(this.schedule.id), 'Coleta marcada como concluida.');
+    this.runAction(this.scheduleService.completeSchedule(this.schedule.id), 'Coleta marcada como concluída.');
   }
 
   cancel(): void {
     if (!this.schedule) {
       return;
     }
-    this.runAction(this.scheduleService.cancelSchedule(this.schedule.id), 'Solicitacao cancelada.');
+    this.runAction(this.scheduleService.cancelSchedule(this.schedule.id), 'Solicitação cancelada.');
   }
 
   statusLabel(status: Schedule['status']): string {
     const labels: Record<Schedule['status'], string> = {
       REQUESTED: 'Solicitada',
       ACCEPTED: 'Aceita',
-      COMPLETED: 'Concluida',
+      COMPLETED: 'Concluída',
       CANCELED: 'Cancelada',
     };
     return labels[status];
@@ -97,9 +98,9 @@ export class ScheduleDetailComponent implements OnInit {
       return 'Coleta aceita e em andamento.';
     }
     if (schedule.status === 'COMPLETED') {
-      return 'Coleta concluida.';
+      return 'Coleta concluída.';
     }
-    return 'Solicitacao cancelada.';
+    return 'Solicitação cancelada.';
   }
 
   whatsappLink(phone?: string | null): string {
@@ -122,8 +123,8 @@ export class ScheduleDetailComponent implements OnInit {
         this.message = successMessage;
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Nao foi possivel executar esta acao. Verifique o status da coleta.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível executar esta ação. Verifique o status da coleta.');
         this.changeDetector.detectChanges();
       },
     });

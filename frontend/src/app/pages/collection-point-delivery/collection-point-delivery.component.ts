@@ -7,6 +7,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { CollectionPointDelivery, CollectionPointDeliveryService } from '../../services/collection-point-delivery.service';
 import { MaterialType, ScheduleService } from '../../services/schedule.service';
 import { CollectionPoint, UserService } from '../../services/user.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-collection-point-delivery',
@@ -68,8 +69,8 @@ export class CollectionPointDeliveryComponent implements OnInit {
         this.syncSelectedMaterials();
         this.finishLoadingIfReady();
       },
-      error: () => {
-        this.error = 'Não foi possível carregar o ponto de coleta.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar o ponto de coleta.');
         this.pointLoaded = true;
         this.finishLoadingIfReady();
       },
@@ -82,8 +83,8 @@ export class CollectionPointDeliveryComponent implements OnInit {
         this.syncSelectedMaterials();
         this.finishLoadingIfReady();
       },
-      error: () => {
-        this.error = 'Não foi possível carregar os materiais.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar os materiais.');
         this.materialsLoaded = true;
         this.finishLoadingIfReady();
       },
@@ -111,7 +112,7 @@ export class CollectionPointDeliveryComponent implements OnInit {
     }
 
     if (!this.selectedMaterialIds.length) {
-      this.error = 'Selecione pelo menos um material.';
+      this.error = 'Selecione pelo menos um material para avisar o ponto de coleta.';
       return;
     }
 
@@ -132,7 +133,7 @@ export class CollectionPointDeliveryComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: error => {
-        this.error = error?.error?.message || 'Não foi possível registrar sua entrega.';
+        this.error = friendlyErrorMessage(error, 'Não foi possível registrar sua entrega. Confira os dados e tente novamente.');
         this.isSaving = false;
         this.changeDetector.detectChanges();
       },

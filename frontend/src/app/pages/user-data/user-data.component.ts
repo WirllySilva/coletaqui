@@ -6,6 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { CollectorServiceType, UserAddress, UserProfile, UserService } from '../../services/user.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-user-data-page',
@@ -35,9 +36,9 @@ export class UserDataPageComponent implements OnInit {
   availabilityOptions = ['Manhã', 'Tarde', 'Noite', 'Segunda a sexta', 'Fim de semana'];
 
   serviceTypeOptions: Array<{ value: CollectorServiceType; label: string; description: string }> = [
-    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereco do usuario.' },
+    { value: 'HOME_COLLECTION', label: 'Coleta domiciliar', description: 'Retiro os materiais no endereço do usuário.' },
     { value: 'DROP_OFF_POINT', label: 'Ponto de recebimento', description: 'Recebo materiais no meu estabelecimento.' },
-    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereco e tambem recebo no local.' },
+    { value: 'HOME_COLLECTION_AND_DROP_OFF', label: 'Coleta + recebimento', description: 'Retiro no endereço e também recebo no local.' },
   ];
 
   get isCollector(): boolean {
@@ -109,8 +110,8 @@ export class UserDataPageComponent implements OnInit {
         this.message = 'Perfil atualizado com sucesso.';
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Não foi possível atualizar seu perfil. Tente novamente.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível atualizar seu perfil. Confira os dados e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -121,7 +122,7 @@ export class UserDataPageComponent implements OnInit {
     this.addressForm.state = 'PE';
 
     if (!this.addressForm.label.trim() || !this.addressForm.street.trim() || !this.addressForm.neighborhood.trim()) {
-      this.addressError = 'Preencha identificacao, rua, bairro, cidade e UF.';
+      this.addressError = 'Preencha identificação, rua e bairro. Cidade e UF já ficam como Araçoiaba/PE.';
       return;
     }
 
@@ -147,12 +148,12 @@ export class UserDataPageComponent implements OnInit {
     ).subscribe({
       next: () => {
         this.addressForm = this.emptyAddressForm(false);
-        this.addressMessage = 'Endereco cadastrado com sucesso.';
+        this.addressMessage = 'Endereço cadastrado com sucesso.';
         this.loadAddresses();
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.addressError = 'Nao foi possivel cadastrar o endereco. Tente novamente.';
+      error: error => {
+        this.addressError = friendlyErrorMessage(error, 'Não foi possível cadastrar o endereço. Confira os dados e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -165,11 +166,11 @@ export class UserDataPageComponent implements OnInit {
     this.userService.deleteMyAddress(address.id).subscribe({
       next: () => {
         this.addresses = this.addresses.filter(item => item.id !== address.id);
-        this.addressMessage = 'Endereco removido.';
+        this.addressMessage = 'Endereço removido.';
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.addressError = 'Nao foi possivel remover o endereco.';
+      error: error => {
+        this.addressError = friendlyErrorMessage(error, 'Não foi possível remover o endereço. Tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -196,8 +197,8 @@ export class UserDataPageComponent implements OnInit {
         this.updateStoredUser(profile);
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Não foi possível carregar seu perfil.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar seu perfil. Saia e entre novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -219,8 +220,8 @@ export class UserDataPageComponent implements OnInit {
         }
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.addressError = 'Nao foi possivel carregar seus enderecos.';
+      error: error => {
+        this.addressError = friendlyErrorMessage(error, 'Não foi possível carregar seus endereços.');
         this.changeDetector.detectChanges();
       },
     });

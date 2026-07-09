@@ -7,6 +7,7 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { MaterialType, Schedule, ScheduleService } from '../../services/schedule.service';
 import { UserAddress, UserService } from '../../services/user.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-my-appointments-page',
@@ -57,7 +58,7 @@ export class MyAppointmentsPageComponent implements OnInit {
 
   createSchedule(): void {
     if (!this.selectedAddressId || !this.selectedMaterialIds.length || !this.desiredDate || !this.preferredPeriod) {
-      this.error = 'Escolha endereço, materiais, data e disponibilidade.';
+      this.error = 'Escolha o endereço, marque os materiais e informe a data e o melhor período.';
       return;
     }
 
@@ -83,11 +84,11 @@ export class MyAppointmentsPageComponent implements OnInit {
         this.desiredDate = '';
         this.preferredPeriod = '';
         this.notes = '';
-        this.message = 'Solicitação enviada para os coletores.';
+        this.message = 'Solicitação enviada. Agora é só aguardar um coletor aceitar.';
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Não foi possível enviar a solicitação. Tente novamente.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível enviar a solicitação. Confira os dados e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -112,8 +113,8 @@ export class MyAppointmentsPageComponent implements OnInit {
         this.selectedAddressId = addresses.find(address => address.defaultAddress)?.id ?? addresses[0]?.id ?? '';
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Não foi possível carregar seus endereços.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar seus endereços. Cadastre um endereço no seu perfil.');
         this.changeDetector.detectChanges();
       },
     });
@@ -128,8 +129,8 @@ export class MyAppointmentsPageComponent implements OnInit {
         this.materials = materials;
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Não foi possível carregar os materiais.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar os materiais. Tente novamente.');
         this.changeDetector.detectChanges();
       },
     });

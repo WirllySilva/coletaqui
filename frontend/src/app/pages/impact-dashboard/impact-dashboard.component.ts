@@ -30,7 +30,7 @@ export class ImpactDashboardComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar os indicadores.';
+        this.error = 'Não foi possível carregar os indicadores.';
         this.isLoading = false;
         this.changeDetector.detectChanges();
       },

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { collectorHomeGuard, commonHomeGuard } from './guards/role-home.guard';
+import { authenticatedAppGuard, collectorAccountGuard, collectorHomeGuard, commonHomeGuard, commonUserGuard } from './guards/role-home.guard';
 import { AboutPageComponent } from './pages/about/about.component';
 import { AccountTypeChoicePageComponent } from './pages/account-type-choice/account-type-choice.component';
 import { AdminAccountComponent } from './pages/admin/admin-account.component';
@@ -63,7 +63,7 @@ export const routes: Routes = [
   { path: 'collectorloginpage', component: CollectorLoginPageComponent },
   { path: 'commonuser-register', component: CommonUserRegisterPageComponent },
   { path: 'collector-register', component: CollectorRegisterPageComponent },
-  { path: 'collector-pending', component: CollectorPendingComponent },
+  { path: 'collector-pending', component: CollectorPendingComponent, canActivate: [collectorAccountGuard] },
   { path: 'collector-home', component: CollectorHomeComponent, canActivate: [collectorHomeGuard] },
   { path: 'collector-drop-offs', component: CollectorDropOffsComponent, canActivate: [collectorHomeGuard] },
   { path: 'collector-requests', component: CollectorRequestsComponent, canActivate: [collectorHomeGuard] },
@@ -89,20 +89,20 @@ export const routes: Routes = [
     ],
   },
   { path: 'howtoseparate', component: HowToSeparatePageComponent },
-  { path: 'collection-points', component: CollectionPointsComponent, canActivate: [commonHomeGuard] },
-  { path: 'collection-points/:pointId/delivery', component: CollectionPointDeliveryComponent, canActivate: [commonHomeGuard] },
-  { path: 'collectors', component: CollectorsPageComponent },
+  { path: 'collection-points', component: CollectionPointsComponent, canActivate: [commonUserGuard] },
+  { path: 'collection-points/:pointId/delivery', component: CollectionPointDeliveryComponent, canActivate: [commonUserGuard] },
+  { path: 'collectors', component: CollectorsPageComponent, canActivate: [commonUserGuard] },
   { path: 'collector', redirectTo: 'collector-home', pathMatch: 'full' },
-  { path: 'plantatree', component: PlantATreePageComponent, canActivate: [commonHomeGuard] },
-  { path: 'plantatree/register', component: PlantATreeRegisterComponent, canActivate: [commonHomeGuard] },
-  { path: 'ranking', component: RankingPageComponent, canActivate: [commonHomeGuard] },
-  { path: 'schedule-options', component: ScheduleOptionsComponent, canActivate: [commonHomeGuard] },
-  { path: 'my-appointments', component: MyAppointmentsPageComponent, canActivate: [commonHomeGuard] },
-  { path: 'my-requests', component: MyRequestsComponent, canActivate: [commonHomeGuard] },
-  { path: 'user-impact', component: UserImpactComponent, canActivate: [commonHomeGuard] },
-  { path: 'schedules/:scheduleId', component: ScheduleDetailComponent },
+  { path: 'plantatree', component: PlantATreePageComponent, canActivate: [commonUserGuard] },
+  { path: 'plantatree/register', component: PlantATreeRegisterComponent, canActivate: [commonUserGuard] },
+  { path: 'ranking', component: RankingPageComponent, canActivate: [commonUserGuard] },
+  { path: 'schedule-options', component: ScheduleOptionsComponent, canActivate: [commonUserGuard] },
+  { path: 'my-appointments', component: MyAppointmentsPageComponent, canActivate: [commonUserGuard] },
+  { path: 'my-requests', component: MyRequestsComponent, canActivate: [commonUserGuard] },
+  { path: 'user-impact', component: UserImpactComponent, canActivate: [commonUserGuard] },
+  { path: 'schedules/:scheduleId', component: ScheduleDetailComponent, canActivate: [authenticatedAppGuard] },
   { path: 'help-contact', component: HelpContactPageComponent },
-  { path: 'settings', component: SettingsPageComponent },
+  { path: 'settings', component: SettingsPageComponent, canActivate: [authenticatedAppGuard] },
   { path: 'infobanner', component: InfoBannerPageComponent },
   { path: 'paper', component: PaperPageComponent },
   { path: 'plastic', component: PlasticPageComponent },
@@ -110,7 +110,7 @@ export const routes: Routes = [
   { path: 'battery', component: BatteryPageComponent },
   { path: 'glass', component: GlassPageComponent },
   { path: 'metal', component: MetalPageComponent },
-  { path: 'userdata', component: UserDataPageComponent },
+  { path: 'userdata', component: UserDataPageComponent, canActivate: [authenticatedAppGuard] },
   { path: 'about', component: AboutPageComponent },
   { path: '**', redirectTo: '' },
 ];

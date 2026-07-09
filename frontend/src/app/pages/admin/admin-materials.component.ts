@@ -42,7 +42,7 @@ export class AdminMaterialsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel salvar o material.';
+        this.error = 'Não foi possível salvar o material. Confira os dados e tente novamente.';
         this.changeDetector.detectChanges();
       },
     });
@@ -66,7 +66,7 @@ export class AdminMaterialsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel alterar o status do material.';
+        this.error = 'Não foi possível alterar o status do material.';
         this.changeDetector.detectChanges();
       },
     });
@@ -84,7 +84,7 @@ export class AdminMaterialsComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar materiais.';
+        this.error = 'Não foi possível carregar os materiais.';
         this.changeDetector.detectChanges();
       },
     });

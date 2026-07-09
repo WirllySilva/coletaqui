@@ -31,7 +31,7 @@ export class AdminAccountComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar sua conta.';
+        this.error = 'Não foi possível carregar sua conta.';
         this.changeDetector.detectChanges();
       },
     });
@@ -47,7 +47,7 @@ export class AdminAccountComponent implements OnInit {
     }
 
     if (this.newPassword !== this.confirmPassword) {
-      this.error = 'A confirmacao da nova senha nao confere.';
+      this.error = 'A confirmação da nova senha não confere.';
       return;
     }
 
@@ -70,7 +70,7 @@ export class AdminAccountComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel alterar a senha. Verifique a senha atual.';
+        this.error = 'Não foi possível alterar a senha. Verifique a senha atual.';
         this.isSaving = false;
         this.changeDetector.detectChanges();
       },

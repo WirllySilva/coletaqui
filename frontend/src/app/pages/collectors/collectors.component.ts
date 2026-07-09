@@ -5,6 +5,7 @@ import { finalize } from 'rxjs/operators';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { Collector, CollectorServiceType, UserService } from '../../services/user.service';
+import { friendlyErrorMessage } from '../../utils/error-message';
 
 @Component({
   selector: 'app-collectors-page',
@@ -112,8 +113,8 @@ export class CollectorsPageComponent implements OnInit {
         this.collectors = collectors;
         this.changeDetector.detectChanges();
       },
-      error: () => {
-        this.error = 'Nao foi possivel carregar os coletores de Aracoiaba/PE.';
+      error: error => {
+        this.error = friendlyErrorMessage(error, 'Não foi possível carregar os coletores de Araçoiaba/PE.');
         this.changeDetector.detectChanges();
       },
     });

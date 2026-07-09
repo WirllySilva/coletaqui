@@ -69,13 +69,13 @@
     <section class="profile-card address-card" *ngIf="!isLoading">
       <div class="section-title">
         <div>
-          <h2>{{ isCollector ? 'Bases de atendimento' : 'Meus enderecos' }}</h2>
+          <h2>{{ isCollector ? 'Bases de atendimento' : 'Meus endereços' }}</h2>
           <p>{{ isCollector ? 'Cadastre pontos de referência para sua área de atuação.' : 'Cadastre os locais que poderao ser usados nos agendamentos.' }}</p>
         </div>
         <span class="address-count">{{ addresses.length }}</span>
       </div>
 
-      <p class="muted-message" *ngIf="isLoadingAddresses">Carregando enderecos...</p>
+      <p class="muted-message" *ngIf="isLoadingAddresses">Carregando endereços...</p>
 
       <div class="address-list" *ngIf="!isLoadingAddresses && addresses.length">
         <article class="address-item" *ngFor="let address of addresses">
@@ -93,7 +93,7 @@
       <p class="muted-message" *ngIf="!isLoadingAddresses && !addresses.length">Nenhum endereco cadastrado ainda.</p>
 
       <div class="address-form">
-        <label class="form-label" for="address-label">Identificacao</label>
+        <label class="form-label" for="address-label">Identificação</label>
         <input id="address-label" class="form-control" type="text" [(ngModel)]="addressForm.label" name="addressLabel" placeholder="Ex.: Casa, trabalho" />
 
         <label class="form-label" for="street">Rua</label>

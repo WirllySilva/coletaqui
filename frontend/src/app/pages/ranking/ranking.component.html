@@ -26,7 +26,7 @@
     </section>
 
     <section class="state-card" *ngIf="!isLoading && !error && !entries.length">
-      <p>Ainda nao ha coletas concluidas para formar o ranking.</p>
+      <p>Ainda não há coletas concluídas para formar o ranking.</p>
       <a routerLink="/schedule-options">Solicitar uma coleta</a>
     </section>
 
@@ -39,7 +39,7 @@
         <div class="resident-info">
           <h2>{{ entry.name }}</h2>
           <span *ngIf="entry.currentUser">Voce</span>
-          <p>{{ entry.completedCollections }} coleta{{ entry.completedCollections === 1 ? '' : 's' }} concluida{{ entry.completedCollections === 1 ? '' : 's' }}</p>
+          <p>{{ entry.completedCollections }} coleta{{ entry.completedCollections === 1 ? '' : 's' }} concluída{{ entry.completedCollections === 1 ? '' : 's' }}</p>
         </div>
 
         <strong>{{ entry.points }} pts</strong>

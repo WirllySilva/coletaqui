@@ -17,7 +17,7 @@ export class RankingPageComponent implements OnInit {
   error = '';
 
   rules = [
-    'Coleta concluida: 10 pontos',
+    'Coleta concluída: 10 pontos',
     'Oleo, pilhas e baterias: +8 pontos',
     'Vidro: +4 pontos',
     'Plastico e metal: +3 pontos',
@@ -37,7 +37,7 @@ export class RankingPageComponent implements OnInit {
         this.changeDetector.detectChanges();
       },
       error: () => {
-        this.error = 'Nao foi possivel carregar o ranking agora.';
+        this.error = 'Não foi possível carregar o ranking agora.';
         this.isLoading = false;
         this.changeDetector.detectChanges();
       },
