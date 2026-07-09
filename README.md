@@ -141,6 +141,7 @@ Em produção:
 - configurar o admin inicial com senha forte;
 - desativar exposição de OTP de desenvolvimento;
 - usar migrations em vez de depender de `ddl-auto=update`;
+- definir rotina de backup e restore do banco;
 - configurar armazenamento externo para fotos temporárias, se necessário.
 
 ## Funcionalidades Implementadas
@@ -205,6 +206,7 @@ Arquivos principais:
 - [Banco de Dados](docs/database.md)
 - [API e Rotas](docs/api-overview.md)
 - [Deploy e Operação](docs/deployment.md)
+- [Backup e Restore](docs/backup-restore.md)
 - [Termos de Uso](docs/terms-of-use.md)
 - [Política de Privacidade](docs/privacy-policy.md)
 

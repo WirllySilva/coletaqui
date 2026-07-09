@@ -145,6 +145,19 @@ Por segurança, o sistema não cria admin com senha padrão. Se `APP_ADMIN_EMAIL
 
 Detalhes do processo estão em [Admin inicial](admin-initial-user.md).
 
+## Backup e Restore
+
+Antes de usar o sistema com dados reais, defina uma rotina de backup do PostgreSQL.
+
+O procedimento local com Docker e as recomendações para produção estão em [Backup e restore](backup-restore.md).
+
+Pontos importantes:
+
+- nunca versionar backups no GitHub;
+- testar restore em ambiente separado;
+- proteger backups porque eles contêm dados pessoais;
+- configurar backup automático na hospedagem quando possível.
+
 ## Produção
 
 Checklist mínimo:

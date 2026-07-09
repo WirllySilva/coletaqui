@@ -14,3 +14,9 @@ target/
 .env
 .env.*
 
+# Local database backups and exported private data
+backups/
+*.dump
+*.backup
+*.sql.gz
+*.tar.gz
