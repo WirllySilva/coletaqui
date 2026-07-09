@@ -130,13 +130,28 @@ SUPABASE_SERVICE_KEY
 SUPABASE_TREE_BUCKET
 ```
 
+## Admin Inicial
+
+O backend pode criar o primeiro administrador automaticamente quando iniciar, desde que as variáveis abaixo sejam informadas:
+
+```text
+APP_ADMIN_EMAIL
+APP_ADMIN_PASSWORD
+APP_ADMIN_NAME
+APP_ADMIN_PHONE
+```
+
+Por segurança, o sistema não cria admin com senha padrão. Se `APP_ADMIN_EMAIL` e `APP_ADMIN_PASSWORD` não forem informados, nenhum novo admin é criado.
+
+Detalhes do processo estão em [Admin inicial](admin-initial-user.md).
+
 ## Produção
 
 Checklist mínimo:
 
 - configurar HTTPS;
 - trocar `JWT_SECRET`;
-- trocar senha admin padrão;
+- criar o admin inicial com senha forte;
 - usar credenciais fortes no PostgreSQL;
 - definir `OTP_EXPOSE_DEV_CODE=false`;
 - configurar serviço real de envio WhatsApp;

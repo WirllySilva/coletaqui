@@ -22,8 +22,8 @@ public class AdminUserSeeder implements CommandLineRunner {
 	public AdminUserSeeder(
 		UserRepository userRepository,
 		PasswordEncoder passwordEncoder,
-		@Value("${app.admin.email:admin@coletaqui.local}") String email,
-		@Value("${app.admin.password:admin123}") String password,
+		@Value("${app.admin.email:}") String email,
+		@Value("${app.admin.password:}") String password,
 		@Value("${app.admin.name:Administrador Coletaqui}") String name,
 		@Value("${app.admin.phone:00000000000}") String phone
 	) {
@@ -38,6 +38,18 @@ public class AdminUserSeeder implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) {
+		if (isBlank(email) && isBlank(password)) {
+			return;
+		}
+
+		if (isBlank(email) || isBlank(password)) {
+			throw new IllegalStateException("APP_ADMIN_EMAIL e APP_ADMIN_PASSWORD devem ser informados juntos para criar o admin inicial.");
+		}
+
+		if (password.length() < 8) {
+			throw new IllegalStateException("APP_ADMIN_PASSWORD deve ter pelo menos 8 caracteres.");
+		}
+
 		var normalizedEmail = email.trim().toLowerCase();
 		var admin = userRepository.findByEmailIgnoreCase(normalizedEmail).orElseGet(this::newAdmin);
 

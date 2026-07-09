@@ -75,9 +75,9 @@ Painel administrativo:
 
 ```text
 URL:   http://localhost:4200/admin/login
-Email: admin@coletaqui.local
-Senha: admin123
 ```
+
+O admin inicial deve ser criado por variáveis de ambiente seguras. Veja o passo a passo em [Admin inicial](docs/admin-initial-user.md).
 
 Parar containers:
 
@@ -123,8 +123,8 @@ JWT_EXPIRATION_MINUTES=1440
 OTP_EXPIRATION_MINUTES=5
 OTP_MAX_ATTEMPTS=5
 JPA_DDL_AUTO=update
-APP_ADMIN_EMAIL=admin@coletaqui.local
-APP_ADMIN_PASSWORD=admin123
+APP_ADMIN_EMAIL=admin@seudominio.com
+APP_ADMIN_PASSWORD=defina-uma-senha-forte
 APP_ADMIN_NAME=Administrador Coletaqui
 APP_ADMIN_PHONE=00000000000
 UPLOAD_LOCAL_DIR=uploads/tree-plantings
@@ -138,7 +138,7 @@ Em produção:
 
 - usar HTTPS;
 - trocar `JWT_SECRET`;
-- trocar credenciais administrativas;
+- configurar o admin inicial com senha forte;
 - desativar exposição de OTP de desenvolvimento;
 - usar migrations em vez de depender de `ddl-auto=update`;
 - configurar armazenamento externo para fotos temporárias, se necessário.
