@@ -122,6 +122,12 @@ JWT_SECRET=alterar-em-producao
 JWT_EXPIRATION_MINUTES=1440
 OTP_EXPIRATION_MINUTES=5
 OTP_MAX_ATTEMPTS=5
+OTP_EXPOSE_DEV_CODE=true
+TWILIO_VERIFY_ENABLED=false
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_VERIFY_SERVICE_SID=
+TWILIO_VERIFY_LOCALE=pt-BR
 JPA_DDL_AUTO=update
 APP_ADMIN_EMAIL=admin@seudominio.com
 APP_ADMIN_PASSWORD=defina-uma-senha-forte
@@ -140,6 +146,7 @@ Em produção:
 - trocar `JWT_SECRET`;
 - configurar o admin inicial com senha forte;
 - desativar exposição de OTP de desenvolvimento;
+- configurar Twilio Verify para OTP via WhatsApp;
 - usar migrations em vez de depender de `ddl-auto=update`;
 - definir rotina de backup e restore do banco;
 - configurar armazenamento externo para fotos temporárias, se necessário.
@@ -207,6 +214,7 @@ Arquivos principais:
 - [API e Rotas](docs/api-overview.md)
 - [Deploy e Operação](docs/deployment.md)
 - [Backup e Restore](docs/backup-restore.md)
+- [OTP via WhatsApp](docs/whatsapp-otp.md)
 - [Termos de Uso](docs/terms-of-use.md)
 - [Política de Privacidade](docs/privacy-policy.md)
 

@@ -118,6 +118,11 @@ JWT_EXPIRATION_MINUTES
 OTP_EXPIRATION_MINUTES
 OTP_MAX_ATTEMPTS
 OTP_EXPOSE_DEV_CODE
+TWILIO_VERIFY_ENABLED
+TWILIO_ACCOUNT_SID
+TWILIO_AUTH_TOKEN
+TWILIO_VERIFY_SERVICE_SID
+TWILIO_VERIFY_LOCALE
 JPA_DDL_AUTO
 APP_ADMIN_EMAIL
 APP_ADMIN_PASSWORD
@@ -157,6 +162,22 @@ Pontos importantes:
 - testar restore em ambiente separado;
 - proteger backups porque eles contêm dados pessoais;
 - configurar backup automático na hospedagem quando possível.
+
+## OTP via WhatsApp
+
+Em produção, o envio real de OTP por WhatsApp deve ser ativado com Twilio Verify.
+
+Guia completo: [OTP via WhatsApp com Twilio Verify](whatsapp-otp.md).
+
+Variáveis principais:
+
+```text
+TWILIO_VERIFY_ENABLED=true
+TWILIO_ACCOUNT_SID
+TWILIO_AUTH_TOKEN
+TWILIO_VERIFY_SERVICE_SID
+OTP_EXPOSE_DEV_CODE=false
+```
 
 ## Produção
 
