@@ -162,6 +162,24 @@
   color: #fff;
 }
 
+.project-link {
+  align-items: center;
+  color: #126f45;
+  display: inline-flex;
+  font-size: 0.94rem;
+  font-weight: 800;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 14px;
+  text-decoration: none;
+}
+
+.project-link:focus,
+.project-link:hover {
+  color: #0d5736;
+  text-decoration: underline;
+}
+
 .feature-strip {
   align-items: center;
   display: grid;
@@ -214,5 +232,11 @@
 
   .welcome-page h1 {
     font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .welcome-page {
+    padding: 26px 20px;
   }
 }

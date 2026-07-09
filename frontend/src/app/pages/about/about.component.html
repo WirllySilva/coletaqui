@@ -1,1 +1,81 @@
-<app-info-page title="Sobre o Coletaqui" description="Uma plataforma para aproximar pessoas, catadores e pontos de reciclagem." [items]="items" />
+<main class="about-page">
+  <section class="about-hero" aria-labelledby="about-title">
+    <a routerLink="/" class="back-link">
+      <i class="bi bi-arrow-left"></i>
+      Voltar
+    </a>
+
+    <span class="section-kicker">Atividade extensionista</span>
+    <h1 id="about-title">Sobre o Coletaqui Araçoiaba</h1>
+    <p>
+      O Coletaqui Araçoiaba faz parte de uma atividade extensionista e foi criado para aproximar tecnologia,
+      comunidade e sustentabilidade. A proposta é apoiar a coleta seletiva, incentivar a educação ambiental
+      e facilitar ações práticas de cuidado com a cidade.
+    </p>
+  </section>
+
+  <section class="about-section" aria-labelledby="goals-title">
+    <div class="section-heading">
+      <span>Objetivos principais</span>
+      <h2 id="goals-title">O que o projeto busca resolver</h2>
+    </div>
+
+    <div class="goal-grid">
+      <article>
+        <i class="bi bi-geo-alt-fill"></i>
+        <h3>Mapear pontos de coleta</h3>
+        <p>Organizar locais para entrega de recicláveis, óleo de cozinha usado, pilhas e baterias.</p>
+      </article>
+      <article>
+        <i class="bi bi-calendar-check-fill"></i>
+        <h3>Agendar coletas</h3>
+        <p>Permitir que moradores solicitem coleta domiciliar de materiais recicláveis.</p>
+      </article>
+      <article>
+        <i class="bi bi-bar-chart-fill"></i>
+        <h3>Acompanhar impacto</h3>
+        <p>Gerar indicadores, ranking e dashboards para analisar a participação da comunidade.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-section participation-section" aria-labelledby="participation-title">
+    <div class="section-heading">
+      <span>Como a comunidade participa</span>
+      <h2 id="participation-title">Cada perfil tem um papel no projeto</h2>
+    </div>
+
+    <div class="participation-list">
+      <article>
+        <strong>Morador</strong>
+        <p>Encontra pontos de coleta, agenda coletas, registra entregas, acompanha seu impacto e participa de ações ambientais.</p>
+      </article>
+      <article>
+        <strong>Coletor ou ponto de coleta</strong>
+        <p>Recebe solicitações, confirma coletas e valida entregas feitas pela população.</p>
+      </article>
+      <article>
+        <strong>Professor, banca e administração</strong>
+        <p>Conseguem visualizar a relação entre a atividade extensionista, o impacto social e os indicadores gerados pelo sistema.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="about-section impact-section" aria-labelledby="impact-title">
+    <div>
+      <span class="section-kicker">Impacto esperado</span>
+      <h2 id="impact-title">Uma cidade mais consciente e participativa</h2>
+      <p>
+        O projeto pretende ajudar Araçoiaba a reduzir o descarte incorreto, estimular hábitos sustentáveis
+        e valorizar a participação de moradores, coletores e estabelecimentos locais.
+      </p>
+    </div>
+    <div class="impact-mark" aria-hidden="true">
+      <i class="bi bi-recycle"></i>
+    </div>
+  </section>
+
+  <footer class="about-footer">
+    Projeto desenvolvido por <strong>Wirlly Silva</strong>.
+  </footer>
+</main>
