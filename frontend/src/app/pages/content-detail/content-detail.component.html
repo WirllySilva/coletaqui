@@ -1,0 +1,25 @@
+<main class="content-detail-page">
+  <button class="back-button" type="button" (click)="back()">
+    <i class="bi bi-arrow-left"></i>
+    Voltar
+  </button>
+
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <article class="content-article" *ngIf="content">
+    <img *ngIf="content.imageUrl" [src]="content.imageUrl" [alt]="content.title" />
+
+    <div class="content-heading">
+      <span>{{ content.type || 'Conteúdo' }}</span>
+      <h1>{{ content.title }}</h1>
+      <p>{{ content.summary }}</p>
+    </div>
+
+    <div class="content-body" *ngIf="content.body" [innerHTML]="content.body"></div>
+
+    <a class="external-link" *ngIf="content.linkUrl" [href]="content.linkUrl" target="_blank" rel="noopener">
+      <i class="bi bi-box-arrow-up-right"></i>
+      Abrir link externo
+    </a>
+  </article>
+</main>

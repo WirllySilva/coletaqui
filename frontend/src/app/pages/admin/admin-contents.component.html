@@ -1,0 +1,121 @@
+<section class="admin-page">
+  <div class="page-title">
+    <span>Conteúdos do app</span>
+    <h1>Dicas e notícias</h1>
+    <p>Gerencie os cards exibidos no carrossel da tela inicial do morador.</p>
+  </div>
+
+  <p class="success-message" *ngIf="message">{{ message }}</p>
+  <p class="error-message" *ngIf="error">{{ error }}</p>
+
+  <section class="form-panel">
+    <h2>{{ editing ? 'Editar conteúdo' : 'Novo conteúdo' }}</h2>
+    <form (ngSubmit)="submit()">
+      <div class="form-grid content-title-grid">
+        <label>
+          Título
+          <input name="title" [(ngModel)]="form.title" placeholder="Ex.: Campanha de coleta de óleo" required />
+        </label>
+        <label class="content-type-field">
+          Tipo
+          <select name="type" [(ngModel)]="form.type" required>
+            <option *ngFor="let type of types" [value]="type.value">{{ type.label }}</option>
+          </select>
+        </label>
+      </div>
+
+      <label>
+        Resumo
+        <input name="summary" [(ngModel)]="form.summary" placeholder="Texto curto que aparece no card" required />
+      </label>
+
+      <label>
+        Link externo
+        <input name="linkUrl" [(ngModel)]="form.linkUrl" placeholder="https://youtube.com/... ou link de uma notícia" />
+      </label>
+
+      <div class="form-grid content-form-grid">
+        <label>
+          URL da imagem
+          <input name="imageUrl" [(ngModel)]="form.imageUrl" placeholder="Opcional" />
+        </label>
+        <label>
+          Ordem
+          <input name="displayOrder" type="number" min="0" [(ngModel)]="form.displayOrder" />
+        </label>
+      </div>
+
+      <label>
+        Texto interno
+        <div class="editor-toolbar" aria-label="Ferramentas de formatação">
+          <button type="button" (mousedown)="$event.preventDefault()" (click)="format('formatBlock', 'h2')">Título</button>
+          <button type="button" (mousedown)="$event.preventDefault()" (click)="format('bold')"><i class="bi bi-type-bold"></i></button>
+          <button type="button" (mousedown)="$event.preventDefault()" (click)="format('italic')"><i class="bi bi-type-italic"></i></button>
+          <button type="button" (mousedown)="$event.preventDefault()" (click)="format('insertUnorderedList')"><i class="bi bi-list-ul"></i></button>
+          <button type="button" (mousedown)="$event.preventDefault()" (click)="format('formatBlock', 'p')">Texto</button>
+        </div>
+        <div
+          #bodyEditor
+          class="rich-editor"
+          contenteditable="true"
+          role="textbox"
+          aria-multiline="true"
+          data-placeholder="Opcional, para conteúdos que não tenham link externo"
+          [innerHTML]="form.body || ''"
+          (input)="syncBodyFromEditor()"
+        ></div>
+      </label>
+
+      <div class="form-grid content-form-grid">
+        <label>
+          Expira em
+          <input name="expiresAt" type="datetime-local" [(ngModel)]="form.expiresAt" />
+        </label>
+        <div class="check-row content-status-row">
+          <label><input name="active" type="checkbox" [(ngModel)]="form.active" /> Ativo</label>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button type="submit">{{ editing ? 'Salvar' : 'Criar conteúdo' }}</button>
+        <button class="ghost-button" type="button" *ngIf="editing" (click)="cancelEdit()">Cancelar</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="table-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Conteúdo</th>
+          <th>Tipo</th>
+          <th>Destino</th>
+          <th>Ordem</th>
+          <th>Status</th>
+          <th>Acoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let content of contents">
+          <td>
+            <strong>{{ content.title }}</strong>
+            <small class="table-note">{{ content.summary }}</small>
+          </td>
+          <td>{{ typeLabel(content.type) }}</td>
+          <td>{{ content.linkUrl || (content.body ? 'Página interna' : content.internalRoute || 'Sem link') }}</td>
+          <td>{{ content.displayOrder }}</td>
+          <td><span class="status" [class.blocked]="!content.active">{{ content.active ? 'Ativo' : 'Inativo' }}</span></td>
+          <td>
+            <div class="action-row">
+              <button type="button" (click)="edit(content)">Editar</button>
+              <button class="danger-button" type="button" *ngIf="content.active" (click)="toggle(content)">Desativar</button>
+              <button type="button" *ngIf="!content.active" (click)="toggle(content)">Ativar</button>
+              <button class="danger-button" type="button" (click)="delete(content)">Excluir</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="empty" *ngIf="!contents.length">Nenhum conteúdo cadastrado.</p>
+  </section>
+</section>

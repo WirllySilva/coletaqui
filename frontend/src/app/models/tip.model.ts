@@ -1,6 +1,10 @@
 export type Tip = {
-  id: number;
+  id: string;
   title: string;
   summary: string;
-  link: string;
+  type?: string;
+  linkUrl?: string | null;
+  internalRoute?: string | null;
+  imageUrl?: string | null;
+  body?: string | null;
 };

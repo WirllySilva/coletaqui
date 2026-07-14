@@ -480,7 +480,8 @@
 }
 
 .form-panel input,
-.form-panel select {
+.form-panel select,
+.form-panel textarea {
   border: 1px solid #cfdcd4;
   border-radius: 8px;
   background: #fff;
@@ -490,6 +491,71 @@
   min-width: 0;
   padding: 0 10px;
   width: 100%;
+}
+
+.form-panel textarea {
+  min-height: 112px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.content-form-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 240px);
+}
+
+.form-grid.content-title-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+}
+
+.content-type-field select {
+  padding-right: 34px;
+}
+
+.editor-toolbar {
+  background: #f6fbf8;
+  border: 1px solid #cfdcd4;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+}
+
+.editor-toolbar button {
+  background: #fff;
+  border: 1px solid #dce7df;
+  border-radius: 6px;
+  color: #284c36;
+  font-weight: 900;
+  min-height: 32px;
+  padding: 0 10px;
+}
+
+.rich-editor {
+  background: #fff;
+  border: 1px solid #cfdcd4;
+  border-radius: 0 0 8px 8px;
+  color: #26362d;
+  line-height: 1.55;
+  min-height: 180px;
+  overflow-wrap: anywhere;
+  padding: 12px;
+}
+
+.rich-editor:empty::before {
+  color: #88968d;
+  content: attr(data-placeholder);
+}
+
+.rich-editor:focus {
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.14);
+  outline: 0;
+}
+
+.content-status-row {
+  align-content: end;
+  min-height: 40px;
 }
 
 .form-grid {
@@ -624,6 +690,15 @@ th {
 td {
   color: #405247;
   font-size: 0.9rem;
+}
+
+.table-note {
+  color: #647267;
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 4px;
+  max-width: 340px;
 }
 
 .status {

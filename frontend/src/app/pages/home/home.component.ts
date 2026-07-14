@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { MapPreviewComponent } from '../../components/map-preview/map-preview.component';
 import { RecyclingTipsComponent } from '../../components/recycling-tips/recycling-tips.component';
 import { Tip } from '../../models/tip.model';
+import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ import { Tip } from '../../models/tip.model';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   actions = [
     { label: 'Como separar', route: '/howtoseparate', icon: 'bi-recycle' },
     { label: 'Coletores', route: '/collectors', icon: 'bi-people-fill' },
@@ -21,15 +22,28 @@ export class HomeComponent {
     { label: 'Ranking', route: '/ranking', icon: 'bi-trophy-fill' },
   ];
 
-  tips: Tip[] = [
-    { id: 1, title: 'Como separar materiais recicláveis', summary: 'Aprenda a separar corretamente os materiais recicláveis.', link: '/howtoseparate' },
-    { id: 2, title: 'Dicas para lavar recipientes', summary: 'Saiba como lavar recipientes antes de reciclar.', link: '/plastic' },
-    { id: 3, title: 'Tipos de plásticos', summary: 'Evite misturar diferentes tipos de plásticos.', link: '/plastic' },
-    { id: 4, title: 'Doação de objetos reutilizáveis', summary: 'Doe objetos em vez de descartá-los.', link: '/infobanner' },
-  ];
+  tips: Tip[] = [];
   highlights = [
     { value: 'Araçoiaba', label: 'Atuação local', icon: 'bi-geo-alt-fill' },
     { value: '4+', label: 'Tipos de materiais', icon: 'bi-box-seam-fill' },
     { value: 'Agenda', label: 'Coleta domiciliar', icon: 'bi-calendar-check-fill' },
   ];
+
+  constructor(
+    private readonly contentService: ContentService,
+    private readonly changeDetector: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit(): void {
+    this.contentService.active().subscribe({
+      next: tips => {
+        this.tips = tips;
+        this.changeDetector.detectChanges();
+      },
+      error: () => {
+        this.tips = [];
+        this.changeDetector.detectChanges();
+      },
+    });
+  }
 }

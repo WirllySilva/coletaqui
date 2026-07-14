@@ -21,14 +21,13 @@ public class WhatsAppOtpSender implements OtpSender {
 	private final String locale;
 
 	public WhatsAppOtpSender(
-		RestClient.Builder restClientBuilder,
 		@Value("${app.twilio.verify.enabled:false}") boolean enabled,
 		@Value("${app.twilio.account-sid:}") String accountSid,
 		@Value("${app.twilio.auth-token:}") String authToken,
 		@Value("${app.twilio.verify-service-sid:}") String verifyServiceSid,
 		@Value("${app.twilio.verify.locale:pt-BR}") String locale
 	) {
-		this.restClient = restClientBuilder.baseUrl("https://verify.twilio.com").build();
+		this.restClient = RestClient.builder().baseUrl("https://verify.twilio.com").build();
 		this.enabled = enabled;
 		this.accountSid = accountSid;
 		this.authToken = authToken;

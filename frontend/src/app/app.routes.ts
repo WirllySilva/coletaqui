@@ -5,6 +5,7 @@ import { AccountTypeChoicePageComponent } from './pages/account-type-choice/acco
 import { AdminAccountComponent } from './pages/admin/admin-account.component';
 import { AdminCollectorsComponent } from './pages/admin/admin-collectors.component';
 import { AdminCollectionPointsComponent } from './pages/admin/admin-collection-points.component';
+import { AdminContentsComponent } from './pages/admin/admin-contents.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard.component';
 import { AdminLoginComponent } from './pages/admin/admin-login.component';
 import { AdminMaterialsComponent } from './pages/admin/admin-materials.component';
@@ -83,6 +84,7 @@ export const routes: Routes = [
       { path: 'schedules', component: AdminSchedulesComponent },
       { path: 'ranking', component: AdminRankingComponent },
       { path: 'materials', component: AdminMaterialsComponent },
+      { path: 'contents', component: AdminContentsComponent },
       { path: 'collection-points', component: AdminCollectionPointsComponent },
       { path: 'tree-plantings', component: AdminTreePlantingsComponent },
       { path: 'account', component: AdminAccountComponent },
@@ -104,6 +106,7 @@ export const routes: Routes = [
   { path: 'help-contact', component: HelpContactPageComponent },
   { path: 'settings', component: SettingsPageComponent, canActivate: [authenticatedAppGuard] },
   { path: 'infobanner', component: InfoBannerPageComponent },
+  { path: 'contents/:contentId', loadComponent: () => import('./pages/content-detail/content-detail.component').then(m => m.ContentDetailComponent) },
   { path: 'paper', component: PaperPageComponent },
   { path: 'plastic', component: PlasticPageComponent },
   { path: 'organic', component: OrganicPageComponent },

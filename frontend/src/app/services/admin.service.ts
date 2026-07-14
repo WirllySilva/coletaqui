@@ -78,6 +78,37 @@ export interface ChangeAdminPasswordPayload {
   newPassword: string;
 }
 
+export type AdminContentType = 'TIP' | 'NEWS' | 'VIDEO' | 'CAMPAIGN' | 'NOTICE';
+
+export interface AdminContent {
+  id: string;
+  title: string;
+  summary: string;
+  type: AdminContentType;
+  linkUrl?: string | null;
+  internalRoute?: string | null;
+  imageUrl?: string | null;
+  body?: string | null;
+  displayOrder: number;
+  active: boolean;
+  expiresAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UpsertAdminContentPayload {
+  title: string;
+  summary: string;
+  type: AdminContentType;
+  linkUrl?: string | null;
+  internalRoute?: string | null;
+  imageUrl?: string | null;
+  body?: string | null;
+  displayOrder: number;
+  active: boolean;
+  expiresAt?: string | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -152,6 +183,26 @@ export class AdminService {
 
   toggleMaterial(materialId: string): Observable<AdminMaterial> {
     return this.http.post<AdminMaterial>(`${this.apiUrl}/materials/${materialId}/toggle`, {}, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  contents(): Observable<AdminContent[]> {
+    return this.http.get<AdminContent[]>(`${this.apiUrl}/contents`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  createContent(payload: UpsertAdminContentPayload): Observable<AdminContent> {
+    return this.http.post<AdminContent>(`${this.apiUrl}/contents`, payload, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  updateContent(contentId: string, payload: UpsertAdminContentPayload): Observable<AdminContent> {
+    return this.http.put<AdminContent>(`${this.apiUrl}/contents/${contentId}`, payload, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  toggleContent(contentId: string): Observable<AdminContent> {
+    return this.http.post<AdminContent>(`${this.apiUrl}/contents/${contentId}/toggle`, {}, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  deleteContent(contentId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/contents/${contentId}`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   collectionPoints(): Observable<CollectionPoint[]> {

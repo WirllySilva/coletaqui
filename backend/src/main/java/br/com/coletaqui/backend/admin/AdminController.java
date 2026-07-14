@@ -5,6 +5,9 @@ import br.com.coletaqui.backend.admin.dto.ChangeAdminPasswordRequest;
 import br.com.coletaqui.backend.collectionpoint.CollectionPointService;
 import br.com.coletaqui.backend.collectionpoint.dto.CollectionPointResponse;
 import br.com.coletaqui.backend.collectionpoint.dto.UpsertCollectionPointRequest;
+import br.com.coletaqui.backend.content.AppContentService;
+import br.com.coletaqui.backend.content.dto.AppContentResponse;
+import br.com.coletaqui.backend.content.dto.UpsertAppContentRequest;
 import br.com.coletaqui.backend.material.MaterialTypeService;
 import br.com.coletaqui.backend.material.dto.MaterialTypeResponse;
 import br.com.coletaqui.backend.material.dto.UpsertMaterialTypeRequest;
@@ -24,6 +27,7 @@ import java.util.UUID;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,19 +46,22 @@ public class AdminController {
 	private final MaterialTypeService materialTypeService;
 	private final CollectionPointService collectionPointService;
 	private final TreePlantingService treePlantingService;
+	private final AppContentService appContentService;
 
 	public AdminController(
 		AdminService adminService,
 		ScheduleService scheduleService,
 		MaterialTypeService materialTypeService,
 		CollectionPointService collectionPointService,
-		TreePlantingService treePlantingService
+		TreePlantingService treePlantingService,
+		AppContentService appContentService
 	) {
 		this.adminService = adminService;
 		this.scheduleService = scheduleService;
 		this.materialTypeService = materialTypeService;
 		this.collectionPointService = collectionPointService;
 		this.treePlantingService = treePlantingService;
+		this.appContentService = appContentService;
 	}
 
 	@GetMapping("/summary")
@@ -166,6 +173,46 @@ public class AdminController {
 	public ResponseEntity<MaterialTypeResponse> toggleMaterial(Authentication authentication, @PathVariable UUID materialId) {
 		adminService.ensureAdminAccess(userId(authentication));
 		return ResponseEntity.ok(materialTypeService.toggle(materialId));
+	}
+
+	@GetMapping("/contents")
+	@Operation(summary = "Lista conteudos do app")
+	public ResponseEntity<List<AppContentResponse>> contents(Authentication authentication) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.all());
+	}
+
+	@PostMapping("/contents")
+	@Operation(summary = "Cria conteudo do app")
+	public ResponseEntity<AppContentResponse> createContent(Authentication authentication, @Valid @RequestBody UpsertAppContentRequest request) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.create(request));
+	}
+
+	@PutMapping("/contents/{contentId}")
+	@Operation(summary = "Atualiza conteudo do app")
+	public ResponseEntity<AppContentResponse> updateContent(
+		Authentication authentication,
+		@PathVariable UUID contentId,
+		@Valid @RequestBody UpsertAppContentRequest request
+	) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.update(contentId, request));
+	}
+
+	@PostMapping("/contents/{contentId}/toggle")
+	@Operation(summary = "Ativa ou desativa conteudo do app")
+	public ResponseEntity<AppContentResponse> toggleContent(Authentication authentication, @PathVariable UUID contentId) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.toggle(contentId));
+	}
+
+	@DeleteMapping("/contents/{contentId}")
+	@Operation(summary = "Exclui conteudo do app")
+	public ResponseEntity<Void> deleteContent(Authentication authentication, @PathVariable UUID contentId) {
+		adminService.ensureAdminAccess(userId(authentication));
+		appContentService.delete(contentId);
+		return ResponseEntity.noContent().build();
 	}
 
 	@GetMapping("/collection-points")
