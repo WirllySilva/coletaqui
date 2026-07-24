@@ -38,6 +38,9 @@ public class AppContent {
 	@Column(length = 500)
 	private String imageUrl;
 
+	@Column(length = 500)
+	private String imagePath;
+
 	@Column(columnDefinition = "text")
 	private String body;
 
@@ -117,6 +120,14 @@ public class AppContent {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getBody() {

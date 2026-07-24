@@ -205,6 +205,16 @@ export class AdminService {
     return this.http.delete<void>(`${this.apiUrl}/contents/${contentId}`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
+  uploadContentImage(contentId: string, image: File): Observable<AdminContent> {
+    const formData = new FormData();
+    formData.append('image', image);
+    return this.http.post<AdminContent>(`${this.apiUrl}/contents/${contentId}/image`, formData, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  removeContentImage(contentId: string): Observable<AdminContent> {
+    return this.http.delete<AdminContent>(`${this.apiUrl}/contents/${contentId}/image`, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
   collectionPoints(): Observable<CollectionPoint[]> {
     return this.http.get<CollectionPoint[]>(`${this.apiUrl}/collection-points`, { headers: this.authHeaders() }).pipe(timeout(15000));
   }

@@ -4,16 +4,20 @@ import br.com.coletaqui.backend.content.dto.AppContentResponse;
 import br.com.coletaqui.backend.content.dto.UpsertAppContentRequest;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class AppContentService {
 	private final AppContentRepository appContentRepository;
+	private final AppContentImageStorage appContentImageStorage;
 
-	public AppContentService(AppContentRepository appContentRepository) {
+	public AppContentService(AppContentRepository appContentRepository, AppContentImageStorage appContentImageStorage) {
 		this.appContentRepository = appContentRepository;
+		this.appContentImageStorage = appContentImageStorage;
 	}
 
 	@Transactional(readOnly = true)
@@ -66,7 +70,28 @@ public class AppContentService {
 
 	@Transactional
 	public void delete(UUID contentId) {
-		appContentRepository.delete(find(contentId));
+		var content = find(contentId);
+		deleteStoredImage(content);
+		appContentRepository.delete(content);
+	}
+
+	@Transactional
+	public AppContentResponse uploadImage(UUID contentId, MultipartFile image) {
+		var content = find(contentId);
+		deleteStoredImage(content);
+		var storedImage = appContentImageStorage.store(image);
+		content.setImageUrl(storedImage.url());
+		content.setImagePath(storedImage.path());
+		return toResponse(content);
+	}
+
+	@Transactional
+	public AppContentResponse removeImage(UUID contentId) {
+		var content = find(contentId);
+		deleteStoredImage(content);
+		content.setImageUrl(null);
+		content.setImagePath(null);
+		return toResponse(content);
 	}
 
 	private AppContent find(UUID contentId) {
@@ -79,12 +104,17 @@ public class AppContentService {
 	}
 
 	private void apply(AppContent content, UpsertAppContentRequest request) {
+		var imageUrl = blankToNull(request.imageUrl());
+		if (content.getImagePath() != null && !Objects.equals(content.getImageUrl(), imageUrl)) {
+			deleteStoredImage(content);
+			content.setImagePath(null);
+		}
 		content.setTitle(request.title().trim());
 		content.setSummary(request.summary().trim());
 		content.setType(request.type());
 		content.setLinkUrl(blankToNull(request.linkUrl()));
 		content.setInternalRoute(normalizeInternalRoute(request.internalRoute()));
-		content.setImageUrl(blankToNull(request.imageUrl()));
+		content.setImageUrl(imageUrl);
 		content.setBody(blankToNull(request.body()));
 		content.setDisplayOrder(request.displayOrder());
 		content.setActive(request.active());
@@ -119,5 +149,9 @@ public class AppContentService {
 
 	private String blankToNull(String value) {
 		return value == null || value.isBlank() ? null : value.trim();
+	}
+
+	private void deleteStoredImage(AppContent content) {
+		appContentImageStorage.delete(content.getImagePath());
 	}
 }

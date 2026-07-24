@@ -40,9 +40,27 @@
           <input name="imageUrl" [(ngModel)]="form.imageUrl" placeholder="Opcional" />
         </label>
         <label>
+          Imagem do computador
+          <input #imageFileInput name="imageFile" type="file" accept="image/*" (change)="onImageFileSelected($event)" />
+        </label>
+      </div>
+
+      <div class="content-image-preview" *ngIf="selectedImagePreview || form.imageUrl">
+        <img [src]="selectedImagePreview || form.imageUrl" alt="Prévia da imagem do conteúdo" />
+        <div>
+          <strong>{{ selectedImageFile ? 'Nova imagem selecionada' : 'Imagem atual' }}</strong>
+          <span>{{ selectedImageFile?.name || form.imageUrl }}</span>
+          <button class="ghost-button" type="button" *ngIf="selectedImageFile" (click)="clearSelectedImage()">Remover imagem selecionada</button>
+          <button class="danger-button" type="button" *ngIf="editing?.imageUrl && !selectedImageFile" (click)="removeEditingImage()">Remover imagem</button>
+        </div>
+      </div>
+
+      <div class="form-grid content-form-grid">
+        <label>
           Ordem
           <input name="displayOrder" type="number" min="0" [(ngModel)]="form.displayOrder" />
         </label>
+        <span></span>
       </div>
 
       <label>
@@ -98,6 +116,7 @@
       <tbody>
         <tr *ngFor="let content of contents">
           <td>
+            <img class="admin-content-thumb" *ngIf="content.imageUrl" [src]="content.imageUrl" [alt]="content.title" />
             <strong>{{ content.title }}</strong>
             <small class="table-note">{{ content.summary }}</small>
           </td>

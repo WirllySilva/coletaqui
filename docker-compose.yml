@@ -42,6 +42,8 @@ services:
       APP_ADMIN_PHONE: ${APP_ADMIN_PHONE:-00000000000}
       UPLOAD_LOCAL_DIR: /app/uploads/tree-plantings
       UPLOAD_PUBLIC_BASE_URL: /uploads/tree-plantings
+      CONTENT_IMAGE_LOCAL_DIR: /app/uploads/content-images
+      CONTENT_IMAGE_PUBLIC_BASE_URL: /uploads/content-images
       SUPABASE_URL: ${SUPABASE_URL:-}
       SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-}
       SUPABASE_TREE_BUCKET: ${SUPABASE_TREE_BUCKET:-tree-plantings}

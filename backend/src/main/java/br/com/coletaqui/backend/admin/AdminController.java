@@ -34,7 +34,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/admin")
@@ -213,6 +215,24 @@ public class AdminController {
 		adminService.ensureAdminAccess(userId(authentication));
 		appContentService.delete(contentId);
 		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping(value = "/contents/{contentId}/image", consumes = "multipart/form-data")
+	@Operation(summary = "Envia imagem do conteudo")
+	public ResponseEntity<AppContentResponse> uploadContentImage(
+		Authentication authentication,
+		@PathVariable UUID contentId,
+		@RequestParam MultipartFile image
+	) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.uploadImage(contentId, image));
+	}
+
+	@DeleteMapping("/contents/{contentId}/image")
+	@Operation(summary = "Remove imagem do conteudo")
+	public ResponseEntity<AppContentResponse> removeContentImage(Authentication authentication, @PathVariable UUID contentId) {
+		adminService.ensureAdminAccess(userId(authentication));
+		return ResponseEntity.ok(appContentService.removeImage(contentId));
 	}
 
 	@GetMapping("/collection-points")
