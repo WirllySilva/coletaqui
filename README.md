@@ -209,6 +209,7 @@ LGPD e privacidade:
 Arquivos principais:
 
 - [Arquitetura](docs/architecture.md)
+- [Manual Geral e Fluxograma](docs/system-manual.md)
 - [Requisitos](docs/requirements.md)
 - [Banco de Dados](docs/database.md)
 - [API e Rotas](docs/api-overview.md)
