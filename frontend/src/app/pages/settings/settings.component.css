@@ -62,6 +62,26 @@
   box-shadow: 0 8px 20px rgba(23, 74, 90, 0.1);
 }
 
+.success-message,
+.error-message {
+  border-radius: 8px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+}
+
+.success-message {
+  background: #e9f8ef;
+  border: 1px solid #a8dfbd;
+  color: #126236;
+}
+
+.error-message {
+  background: #fff4f4;
+  border: 1px solid #f2b6b6;
+  color: #9d2626;
+}
+
 .setting-row {
   align-items: center;
   display: flex;

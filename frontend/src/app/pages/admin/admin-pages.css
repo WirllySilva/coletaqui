@@ -471,6 +471,12 @@
   min-width: 0;
 }
 
+.form-hint {
+  color: #5b6f64;
+  font-size: 0.85rem;
+  margin: -4px 0 0;
+}
+
 .form-panel label {
   color: #284c36;
   display: grid;

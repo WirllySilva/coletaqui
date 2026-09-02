@@ -3,6 +3,7 @@ import { appConfig } from './app/app.config';
 import { App } from './app/app';
 
 const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const shouldClearServiceWorker = new URLSearchParams(location.search).has('clear-sw');
 
 function blockBrowserZoom(): void {
   let lastTouchEnd = 0;
@@ -33,7 +34,7 @@ function blockBrowserZoom(): void {
 }
 
 async function clearLocalPwaCache(): Promise<void> {
-  if (!isLocalhost || !('serviceWorker' in navigator)) {
+  if (!isLocalhost || !shouldClearServiceWorker || !('serviceWorker' in navigator)) {
     return;
   }
 
@@ -49,5 +50,10 @@ async function clearLocalPwaCache(): Promise<void> {
 blockBrowserZoom();
 
 clearLocalPwaCache()
-  .finally(() => bootstrapApplication(App, appConfig))
+  .finally(() => {
+    if (shouldClearServiceWorker) {
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+    return bootstrapApplication(App, appConfig);
+  })
   .catch((err) => console.error(err));

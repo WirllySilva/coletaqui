@@ -78,6 +78,10 @@ export interface ChangeAdminPasswordPayload {
   newPassword: string;
 }
 
+export interface UpdateAdminContactPayload {
+  phone: string;
+}
+
 export type AdminContentType = 'TIP' | 'NEWS' | 'VIDEO' | 'CAMPAIGN' | 'NOTICE';
 
 export interface AdminContent {
@@ -127,6 +131,10 @@ export class AdminService {
 
   changePassword(payload: ChangeAdminPasswordPayload): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/me/change-password`, payload, { headers: this.authHeaders() }).pipe(timeout(15000));
+  }
+
+  updateContact(payload: UpdateAdminContactPayload): Observable<UserProfile> {
+    return this.http.put<UserProfile>(`${this.apiUrl}/me/contact`, payload, { headers: this.authHeaders() }).pipe(timeout(15000));
   }
 
   impact(): Observable<ImpactDashboard> {

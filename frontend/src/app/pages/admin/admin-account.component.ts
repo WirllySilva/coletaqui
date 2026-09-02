@@ -12,6 +12,7 @@ import { UserProfile } from '../../services/user.service';
 })
 export class AdminAccountComponent implements OnInit {
   admin: UserProfile | null = null;
+  contactPhone = '';
   currentPassword = '';
   newPassword = '';
   confirmPassword = '';
@@ -28,10 +29,37 @@ export class AdminAccountComponent implements OnInit {
     this.adminService.me().subscribe({
       next: admin => {
         this.admin = admin;
+        this.contactPhone = admin.phone ?? '';
         this.changeDetector.detectChanges();
       },
       error: () => {
         this.error = 'Não foi possível carregar sua conta.';
+        this.changeDetector.detectChanges();
+      },
+    });
+  }
+
+  updateContact(): void {
+    this.message = '';
+    this.error = '';
+
+    if (!this.contactPhone.trim()) {
+      this.error = 'Informe o WhatsApp de atendimento.';
+      return;
+    }
+
+    this.isSaving = true;
+    this.adminService.updateContact({ phone: this.contactPhone }).subscribe({
+      next: admin => {
+        this.admin = admin;
+        this.contactPhone = admin.phone ?? '';
+        this.message = 'WhatsApp de atendimento atualizado com sucesso.';
+        this.isSaving = false;
+        this.changeDetector.detectChanges();
+      },
+      error: error => {
+        this.error = error?.error?.message ?? 'Não foi possível atualizar o WhatsApp de atendimento.';
+        this.isSaving = false;
         this.changeDetector.detectChanges();
       },
     });

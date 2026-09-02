@@ -57,6 +57,8 @@ coletaqui/
 
 ## Como Rodar com Docker
 
+Para configurar variáveis locais, copie `.env.example` para `.env` e ajuste os valores.
+
 ```bash
 docker compose up --build
 ```
@@ -118,7 +120,7 @@ Principais variáveis do backend:
 DATABASE_URL=jdbc:postgresql://localhost:5432/coletaqui
 DATABASE_USERNAME=coletaqui
 DATABASE_PASSWORD=coletaqui
-JWT_SECRET=alterar-em-producao
+JWT_SECRET=troque-por-uma-chave-grande-e-aleatoria
 JWT_EXPIRATION_MINUTES=1440
 OTP_EXPIRATION_MINUTES=5
 OTP_MAX_ATTEMPTS=5
@@ -135,6 +137,9 @@ APP_ADMIN_NAME=Administrador Coletaqui
 APP_ADMIN_PHONE=00000000000
 UPLOAD_LOCAL_DIR=uploads/tree-plantings
 UPLOAD_PUBLIC_BASE_URL=/uploads/tree-plantings
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
+VAPID_SUBJECT=mailto:admin@seudominio.com
 SUPABASE_URL=
 SUPABASE_SERVICE_KEY=
 SUPABASE_TREE_BUCKET=tree-plantings
@@ -144,6 +149,7 @@ Em produção:
 
 - usar HTTPS;
 - trocar `JWT_SECRET`;
+- definir chaves VAPID próprias para notificações push;
 - configurar o admin inicial com senha forte;
 - desativar exposição de OTP de desenvolvimento;
 - configurar Twilio Verify para OTP via WhatsApp;

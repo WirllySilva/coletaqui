@@ -13,6 +13,7 @@ target/
 # Environment files
 .env
 .env.*
+!.env.example
 
 # Local database backups and exported private data
 backups/

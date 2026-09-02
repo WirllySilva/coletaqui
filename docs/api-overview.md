@@ -37,6 +37,9 @@ Observações:
 
 ```http
 GET  /admin/summary
+GET  /admin/me
+PUT  /admin/me/contact
+POST /admin/me/change-password
 GET  /admin/impact
 GET  /admin/users
 GET  /admin/collectors/pending
@@ -46,6 +49,31 @@ POST /admin/users/{targetUserId}/activate
 GET  /admin/schedules
 GET  /admin/ranking
 ```
+
+## Suporte e Contato
+
+```http
+GET /support/contact
+```
+
+Retorna o WhatsApp de atendimento configurado na conta do administrador.
+
+## Notificações Push
+
+```http
+GET    /push/public-key
+GET    /push/subscriptions
+POST   /push/subscriptions
+DELETE /push/subscriptions
+POST   /push/test
+```
+
+Uso:
+
+- frontend consulta a chave pública VAPID;
+- PWA cria inscrição push pelo service worker;
+- backend salva endpoint e chaves do dispositivo;
+- backend pode enviar notificação de teste e futuras notificações de eventos.
 
 ## Materiais
 

@@ -20,6 +20,7 @@ O Coletaqui usa PostgreSQL com Spring Data JPA/Hibernate. Em desenvolvimento, o 
 - `collection_point_deliveries`
 - `drop_off_deliveries`
 - `tree_plantings`
+- `push_subscriptions`
 
 ## Diagrama Geral
 
@@ -33,6 +34,7 @@ erDiagram
     USERS ||--o{ COLLECTION_POINT_DELIVERIES : "entrega"
     USERS ||--o{ DROP_OFF_DELIVERIES : "registra"
     USERS ||--o{ TREE_PLANTINGS : "planta"
+    USERS ||--o{ PUSH_SUBSCRIPTIONS : "inscreve_dispositivo"
 
     MATERIAL_TYPES ||--o{ SCHEDULE_MATERIALS : "compõe"
     SCHEDULES ||--o{ SCHEDULE_MATERIALS : "possui"
@@ -267,6 +269,30 @@ Regras:
 - foto é removida após validar ou rejeitar;
 - apenas árvores validadas aparecem no mapa público.
 
+## push_subscriptions
+
+Dispositivos inscritos para receber notificações push do PWA.
+
+Campos:
+
+| Campo | Descrição |
+| --- | --- |
+| `id` | UUID |
+| `user_id` | usuário dono do dispositivo |
+| `endpoint` | endpoint gerado pelo navegador |
+| `p256dh` | chave pública da inscrição |
+| `auth` | chave de autenticação da inscrição |
+| `user_agent` | identificação do navegador/dispositivo |
+| `active` | indica se a inscrição está ativa |
+| `created_at`, `updated_at` | auditoria |
+
+Regras:
+
+- um usuário pode ter vários dispositivos inscritos;
+- endpoint deve ser único;
+- ao desativar notificações, a inscrição é marcada como inativa;
+- endpoints expirados ou inválidos devem ser desativados pelo backend.
+
 ## Índices Recomendados
 
 - `users(phone)`
@@ -283,6 +309,8 @@ Regras:
 - `collection_point_deliveries(collection_point_id)`
 - `tree_plantings(user_id)`
 - `tree_plantings(status)`
+- `push_subscriptions(user_id)`
+- `push_subscriptions(endpoint)`
 
 ## Privacidade
 
@@ -294,6 +322,7 @@ Dados pessoais tratados:
 - localização opcional;
 - histórico de coletas/entregas;
 - foto temporária de plantio;
+- inscrição push do dispositivo;
 - aceite legal.
 
 Regras:

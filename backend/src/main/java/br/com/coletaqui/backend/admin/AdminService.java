@@ -2,6 +2,7 @@ package br.com.coletaqui.backend.admin;
 
 import br.com.coletaqui.backend.admin.dto.AdminSummaryResponse;
 import br.com.coletaqui.backend.admin.dto.ChangeAdminPasswordRequest;
+import br.com.coletaqui.backend.admin.dto.UpdateAdminContactRequest;
 import br.com.coletaqui.backend.collectionpoint.CollectionPointRepository;
 import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryRepository;
 import br.com.coletaqui.backend.collectionpointdelivery.CollectionPointDeliveryStatus;
@@ -18,6 +19,7 @@ import br.com.coletaqui.backend.user.UserStatus;
 import br.com.coletaqui.backend.user.dto.UserProfileResponse;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,7 @@ public class AdminService {
 	private final DropOffDeliveryRepository dropOffDeliveryRepository;
 	private final TreePlantingRepository treePlantingRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final String defaultAreaCode;
 
 	public AdminService(
 		UserRepository userRepository,
@@ -41,7 +44,8 @@ public class AdminService {
 		CollectionPointDeliveryRepository collectionPointDeliveryRepository,
 		DropOffDeliveryRepository dropOffDeliveryRepository,
 		TreePlantingRepository treePlantingRepository,
-		PasswordEncoder passwordEncoder
+		PasswordEncoder passwordEncoder,
+		@Value("${app.phone.default-area-code:81}") String defaultAreaCode
 	) {
 		this.userRepository = userRepository;
 		this.scheduleRepository = scheduleRepository;
@@ -51,6 +55,7 @@ public class AdminService {
 		this.dropOffDeliveryRepository = dropOffDeliveryRepository;
 		this.treePlantingRepository = treePlantingRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.defaultAreaCode = defaultAreaCode.replaceAll("\\D", "");
 	}
 
 	@Transactional(readOnly = true)
@@ -65,6 +70,19 @@ public class AdminService {
 			throw new IllegalArgumentException("Senha atual invalida.");
 		}
 		admin.setPasswordHash(passwordEncoder.encode(request.newPassword()));
+	}
+
+	@Transactional
+	public UserProfileResponse updateContact(UUID adminId, UpdateAdminContactRequest request) {
+		var admin = admin(adminId);
+		var phone = normalizePhone(request.phone());
+		userRepository.findByPhone(phone)
+			.filter(user -> !user.getId().equals(adminId))
+			.ifPresent(user -> {
+				throw new IllegalArgumentException("Este telefone ja esta cadastrado em outra conta.");
+			});
+		admin.setPhone(phone);
+		return toUserProfile(admin);
 	}
 
 	@Transactional(readOnly = true)
@@ -195,5 +213,23 @@ public class AdminService {
 			user.getCreatedAt(),
 			user.getUpdatedAt()
 		);
+	}
+
+	private String normalizePhone(String phone) {
+		if (phone == null || phone.isBlank()) {
+			throw new IllegalArgumentException("Telefone invalido.");
+		}
+
+		var digits = phone.replaceAll("\\D", "");
+		if (digits.length() == 13 && digits.startsWith("55")) {
+			digits = digits.substring(2);
+		}
+		if (digits.length() == 9 && digits.startsWith("9")) {
+			digits = defaultAreaCode + digits;
+		}
+		if (!digits.matches("[1-9]\\d9\\d{8}")) {
+			throw new IllegalArgumentException("Telefone invalido. Use DDD + numero, ou apenas o numero com 9 na frente para DDD 81.");
+		}
+		return digits;
 	}
 }

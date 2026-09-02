@@ -9,13 +9,16 @@
       <p>{{ isCollector ? 'Suporte para uso do painel do coletor.' : 'Encontre orientação rápida para usar o Coletaqui na comunidade.' }}</p>
     </section>
 
-    <section class="contact-card">
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
+    <button type="button" class="contact-card contact-button" (click)="openWhatsApp()">
       <i class="bi bi-whatsapp"></i>
       <div>
         <h2>Atendimento pelo WhatsApp</h2>
-        <p>Canal reservado para dúvidas, suporte e comunicação com a equipe do projeto.</p>
+        <p>{{ contact?.phone ? ('Falar com a equipe pelo telefone ' + contact?.phone) : 'Canal reservado para dúvidas, suporte e comunicação com a equipe do projeto.' }}</p>
       </div>
-    </section>
+      <i class="bi bi-box-arrow-up-right"></i>
+    </button>
 
     <section class="list-card">
       <h2>Podemos ajudar com</h2>

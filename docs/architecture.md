@@ -31,6 +31,8 @@ No Docker, o frontend é servido por Nginx. O Nginx também encaminha:
 - `/api/*` para o backend;
 - `/uploads/*` para arquivos temporários servidos pelo backend.
 
+O Nginx também serve o service worker real do Angular (`ngsw-worker.js`) e o manifesto de cache (`ngsw.json`), necessários para funcionamento de PWA e notificações push.
+
 ## Frontend
 
 Tecnologias:
@@ -130,6 +132,8 @@ Responsabilidades:
 - `schedule`: agendamentos de coleta domiciliar.
 - `tree`: registros de plantio de árvores e validação administrativa.
 - `admin`: consultas e ações administrativas.
+- `push`: inscrição de dispositivos PWA e envio de notificações push.
+- `support`: contato público de atendimento via WhatsApp configurado pelo admin.
 - `userimpact`: consolidação do impacto pessoal do morador.
 
 ## Autenticação
@@ -202,6 +206,24 @@ Regras principais:
 - Ranking usa pontuação por participação e materiais.
 - Admin visualiza ranking geral.
 
+### Notificações Push
+
+- Usuário comum ou coletor ativa notificações em Configurações.
+- Frontend solicita permissão ao navegador.
+- Service worker cria uma inscrição push.
+- Frontend envia a inscrição para o backend.
+- Backend salva o dispositivo em `push_subscriptions`.
+- Backend pode enviar notificação de teste e futuras notificações de eventos.
+
+As notificações push exigem HTTPS em produção. Em desenvolvimento, testes confiáveis devem usar `localhost` ou uma URL HTTPS.
+
+### Ajuda e Contato
+
+- Admin cadastra o WhatsApp de atendimento em `Admin > Minha conta`.
+- Backend expõe o contato por `/support/contact`.
+- Usuário comum e coletor acessam `Ajuda e contato`.
+- O botão abre o WhatsApp com mensagem inicial configurada.
+
 ### Plante uma Árvore
 
 - Morador acessa página educativa.
@@ -260,6 +282,8 @@ Serviços:
 - `db`: PostgreSQL.
 - `backend`: API Spring Boot.
 - `frontend`: Angular compilado servido por Nginx.
+
+Variáveis sensíveis, como `JWT_SECRET`, senha do PostgreSQL, chaves VAPID, credenciais Twilio e credenciais Supabase, devem ser configuradas por variáveis de ambiente. Use `.env.example` apenas como modelo.
 
 Comando:
 

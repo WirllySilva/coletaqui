@@ -67,6 +67,18 @@
   align-items: center;
   display: flex;
   gap: 14px;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+}
+
+.contact-button {
+  cursor: pointer;
+}
+
+.contact-button:hover {
+  border-color: #198754;
+  transform: translateY(-1px);
 }
 
 .contact-card > i {
@@ -90,6 +102,16 @@
 .contact-card p {
   color: #4c6455;
   margin: 0;
+}
+
+.error-message {
+  background: #fff4f4;
+  border: 1px solid #f2b6b6;
+  border-radius: 8px;
+  color: #9d2626;
+  font-weight: 700;
+  margin: 0 0 12px;
+  padding: 10px 12px;
 }
 
 .list-card ul {

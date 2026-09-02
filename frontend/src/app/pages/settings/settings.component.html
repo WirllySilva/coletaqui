@@ -9,13 +9,16 @@
       <p>{{ isCollector ? 'Ajustes do painel do coletor e preferências de atendimento.' : 'Ajustes gerais do aplicativo e preferências de uso.' }}</p>
     </section>
 
+    <p class="success-message" *ngIf="message">{{ message }}</p>
+    <p class="error-message" *ngIf="error">{{ error }}</p>
+
     <section class="settings-card">
       <label class="setting-row">
         <span>
           <strong>Notificações</strong>
           <small>{{ isCollector ? 'Receber avisos sobre novas solicitações e agenda.' : 'Receber avisos sobre agendamentos e novidades.' }}</small>
         </span>
-        <input type="checkbox" [(ngModel)]="notifications" />
+        <input type="checkbox" [ngModel]="notifications" (ngModelChange)="onNotificationChange($event)" />
       </label>
 
       <label class="setting-row">
@@ -23,9 +26,10 @@
           <strong>Localização</strong>
           <small>{{ isCollector ? 'Usar localização para organizar rotas e solicitações próximas.' : 'Usar localização para sugerir pontos próximos.' }}</small>
         </span>
-        <input type="checkbox" [(ngModel)]="location" />
+        <input type="checkbox" [ngModel]="location" (ngModelChange)="onLocationChange($event)" />
       </label>
     </section>
+
     <section class="settings-card">
       <a class="setting-link" routerLink="/terms">
         <i class="bi bi-file-text"></i>

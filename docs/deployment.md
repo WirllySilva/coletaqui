@@ -52,7 +52,7 @@ Credenciais locais padrão:
 ```text
 POSTGRES_DB=coletaqui
 POSTGRES_USER=coletaqui
-POSTGRES_PASSWORD=coletaqui
+POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-coletaqui}
 ```
 
 ### backend
@@ -133,7 +133,12 @@ UPLOAD_PUBLIC_BASE_URL
 SUPABASE_URL
 SUPABASE_SERVICE_KEY
 SUPABASE_TREE_BUCKET
+VAPID_PUBLIC_KEY
+VAPID_PRIVATE_KEY
+VAPID_SUBJECT
 ```
+
+Use `.env.example` como modelo para criar um `.env` local ou configurar variáveis no serviço de hospedagem. O `.env` real não deve ser enviado para o GitHub.
 
 ## Admin Inicial
 
@@ -179,12 +184,35 @@ TWILIO_VERIFY_SERVICE_SID
 OTP_EXPOSE_DEV_CODE=false
 ```
 
+## PWA e Notificações Push
+
+O frontend é servido por Nginx com o service worker real do Angular. Isso é necessário para instalação como PWA, cache controlado pelo Angular e notificações push.
+
+Para limpar um service worker antigo em teste local, acesse uma vez:
+
+```text
+http://localhost:4200/?clear-sw=1
+```
+
+Depois recarregue normalmente sem esse parâmetro.
+
+As notificações push precisam de:
+
+```text
+VAPID_PUBLIC_KEY
+VAPID_PRIVATE_KEY
+VAPID_SUBJECT
+```
+
+Em produção, gere chaves VAPID próprias e mantenha a chave privada apenas nas variáveis do backend. O navegador só recebe a chave pública.
+
 ## Produção
 
 Checklist mínimo:
 
 - configurar HTTPS;
 - trocar `JWT_SECRET`;
+- gerar e configurar chaves VAPID definitivas;
 - criar o admin inicial com senha forte;
 - usar credenciais fortes no PostgreSQL;
 - definir `OTP_EXPOSE_DEV_CODE=false`;

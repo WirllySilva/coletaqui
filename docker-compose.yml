@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: coletaqui
       POSTGRES_USER: coletaqui
-      POSTGRES_PASSWORD: coletaqui
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-coletaqui}
     ports:
       - "5432:5432"
     volumes:
@@ -26,11 +26,13 @@ services:
     environment:
       DATABASE_URL: jdbc:postgresql://db:5432/coletaqui
       DATABASE_USERNAME: coletaqui
-      DATABASE_PASSWORD: coletaqui
-      JWT_SECRET: alterar-em-producao
-      OTP_EXPIRATION_MINUTES: 5
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-coletaqui}
+      JWT_SECRET: ${JWT_SECRET:-alterar-em-producao-local}
+      JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-1440}
+      OTP_EXPIRATION_MINUTES: ${OTP_EXPIRATION_MINUTES:-5}
+      OTP_MAX_ATTEMPTS: ${OTP_MAX_ATTEMPTS:-5}
       OTP_EXPOSE_DEV_CODE: ${OTP_EXPOSE_DEV_CODE:-true}
-      JPA_DDL_AUTO: update
+      JPA_DDL_AUTO: ${JPA_DDL_AUTO:-update}
       TWILIO_VERIFY_ENABLED: ${TWILIO_VERIFY_ENABLED:-false}
       TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
@@ -40,10 +42,14 @@ services:
       APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD:-}
       APP_ADMIN_NAME: ${APP_ADMIN_NAME:-Administrador Coletaqui}
       APP_ADMIN_PHONE: ${APP_ADMIN_PHONE:-00000000000}
+      SUPPORT_WHATSAPP_MESSAGE: ${SUPPORT_WHATSAPP_MESSAGE:-Ola! Preciso de ajuda com o Coletaqui Aracoiaba.}
       UPLOAD_LOCAL_DIR: /app/uploads/tree-plantings
       UPLOAD_PUBLIC_BASE_URL: /uploads/tree-plantings
       CONTENT_IMAGE_LOCAL_DIR: /app/uploads/content-images
       CONTENT_IMAGE_PUBLIC_BASE_URL: /uploads/content-images
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-}
       SUPABASE_URL: ${SUPABASE_URL:-}
       SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-}
       SUPABASE_TREE_BUCKET: ${SUPABASE_TREE_BUCKET:-tree-plantings}

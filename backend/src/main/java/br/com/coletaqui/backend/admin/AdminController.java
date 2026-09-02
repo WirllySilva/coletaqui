@@ -2,6 +2,7 @@ package br.com.coletaqui.backend.admin;
 
 import br.com.coletaqui.backend.admin.dto.AdminSummaryResponse;
 import br.com.coletaqui.backend.admin.dto.ChangeAdminPasswordRequest;
+import br.com.coletaqui.backend.admin.dto.UpdateAdminContactRequest;
 import br.com.coletaqui.backend.collectionpoint.CollectionPointService;
 import br.com.coletaqui.backend.collectionpoint.dto.CollectionPointResponse;
 import br.com.coletaqui.backend.collectionpoint.dto.UpsertCollectionPointRequest;
@@ -83,6 +84,12 @@ public class AdminController {
 	public ResponseEntity<Void> changePassword(Authentication authentication, @Valid @RequestBody ChangeAdminPasswordRequest request) {
 		adminService.changePassword(userId(authentication), request);
 		return ResponseEntity.noContent().build();
+	}
+
+	@PutMapping("/me/contact")
+	@Operation(summary = "Atualiza WhatsApp de atendimento do projeto")
+	public ResponseEntity<UserProfileResponse> updateContact(Authentication authentication, @Valid @RequestBody UpdateAdminContactRequest request) {
+		return ResponseEntity.ok(adminService.updateContact(userId(authentication), request));
 	}
 
 	@GetMapping("/impact")

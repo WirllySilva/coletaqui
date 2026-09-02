@@ -23,6 +23,27 @@
     </article>
 
     <article class="form-panel">
+      <h2>WhatsApp de atendimento</h2>
+      <form (ngSubmit)="updateContact()">
+        <label>
+          Telefone do WhatsApp
+          <input
+            name="contactPhone"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            placeholder="Ex.: 81999998888"
+            [(ngModel)]="contactPhone"
+          />
+        </label>
+        <p class="form-hint">Esse telefone será usado no botão de ajuda e contato do app.</p>
+        <div class="action-row">
+          <button type="submit" [disabled]="isSaving">{{ isSaving ? 'Salvando...' : 'Salvar WhatsApp' }}</button>
+        </div>
+      </form>
+    </article>
+
+    <article class="form-panel">
       <h2>Alterar senha</h2>
       <form (ngSubmit)="changePassword()">
         <label>
