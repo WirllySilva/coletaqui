@@ -27,7 +27,7 @@ public class PushNotificationService {
 
 	private final PushSubscriptionRepository pushSubscriptionRepository;
 	private final UserRepository userRepository;
-	private final ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final String publicKey;
 	private final String privateKey;
 	private final String subject;
@@ -36,14 +36,12 @@ public class PushNotificationService {
 	public PushNotificationService(
 		PushSubscriptionRepository pushSubscriptionRepository,
 		UserRepository userRepository,
-		ObjectMapper objectMapper,
 		@Value("${app.push.vapid.public-key:}") String publicKey,
 		@Value("${app.push.vapid.private-key:}") String privateKey,
 		@Value("${app.push.vapid.subject:}") String subject
 	) {
 		this.pushSubscriptionRepository = pushSubscriptionRepository;
 		this.userRepository = userRepository;
-		this.objectMapper = objectMapper;
 		this.publicKey = publicKey;
 		this.privateKey = privateKey;
 		this.subject = subject;
