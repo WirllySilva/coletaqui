@@ -2,6 +2,6 @@
   <span></span>
 </div>
 
-<main class="route-shell" [style.--route-key]="transitionKey()">
+<main class="route-shell" [class.route-entering]="routeAnimating()">
   <router-outlet (activate)="onRouteActivate()" />
 </main>

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class App implements OnDestroy {
   readonly isNavigating = signal(false);
-  readonly transitionKey = signal(0);
+  readonly routeAnimating = signal(false);
   private readonly subscription: Subscription;
 
   constructor(router: Router) {
@@ -32,6 +32,9 @@ export class App implements OnDestroy {
   }
 
   onRouteActivate(): void {
-    this.transitionKey.update(value => value + 1);
+    this.routeAnimating.set(false);
+    window.requestAnimationFrame(() => {
+      this.routeAnimating.set(true);
+    });
   }
 }
