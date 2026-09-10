@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authenticatedAppGuard, collectorAccountGuard, collectorHomeGuard, commonHomeGuard, commonUserGuard } from './guards/role-home.guard';
+import { authenticatedAppGuard, collectorAccountGuard, collectorHomeGuard, commonHomeGuard, commonUserGuard, landingGuard } from './guards/role-home.guard';
 import { AboutPageComponent } from './pages/about/about.component';
 import { AccountTypeChoicePageComponent } from './pages/account-type-choice/account-type-choice.component';
 import { AdminAccountComponent } from './pages/admin/admin-account.component';
@@ -54,8 +54,8 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
 import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
-  { path: '', component: WelcomePageComponent },
-  { path: 'welcome', component: WelcomePageComponent },
+  { path: '', component: WelcomePageComponent, canActivate: [landingGuard] },
+  { path: 'welcome', component: WelcomePageComponent, canActivate: [landingGuard] },
   { path: 'loginselectionpage', component: AccountTypeChoicePageComponent },
   { path: 'terms', component: TermsPageComponent },
   { path: 'privacy', component: PrivacyPageComponent },

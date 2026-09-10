@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 	private static final String TERMS_VERSION = "2026-07-08";
 	private static final String PRIVACY_VERSION = "2026-07-08";
+	private static final String TWILIO_MANAGED_CODE_HASH = "TWILIO_MANAGED";
 
 	private final OtpCodeRepository otpCodeRepository;
 	private final UserRepository userRepository;
@@ -84,19 +85,21 @@ public class AuthService {
 	@Transactional
 	public OtpRequestResponse requestOtp(OtpRequest request) {
 		var phone = normalizePhone(request.phone());
+		var requestedRole = requireRole(request.role());
+		ensurePhoneCanUseRole(phone, requestedRole);
 		invalidateActiveOtps(phone);
 
 		var code = "%06d".formatted(random.nextInt(1_000_000));
 		var otp = new OtpCode();
 		otp.setPhone(phone);
-		otp.setCodeHash(hash(code));
+		otp.setCodeHash(otpSender.isExternalVerificationEnabled() ? TWILIO_MANAGED_CODE_HASH : hash(code));
 		otp.setChannel(channel);
 		otp.setExpiresAt(OffsetDateTime.now().plusMinutes(otpExpirationMinutes));
 		otpCodeRepository.save(otp);
 		otpSender.send(phone, code);
 
 		return new OtpRequestResponse(
-			"Código enviado por WhatsApp.",
+			"Código enviado por " + displayChannel() + ".",
 			phone,
 			channel,
 			otp.getExpiresAt(),
@@ -108,18 +111,15 @@ public class AuthService {
 	public AuthResponse verifyOtp(OtpVerifyRequest request) {
 		var phone = normalizePhone(request.phone());
 		var requestedRole = requireRole(request.role());
+		ensurePhoneCanUseRole(phone, requestedRole);
 		var otp = otpCodeRepository
 			.findFirstByPhoneAndUsedAtIsNullAndInvalidatedFalseOrderByCreatedAtDesc(phone)
 			.orElseThrow(() -> new IllegalArgumentException("OTP não encontrado ou já utilizado."));
 
-		validateOtp(otp, request.code());
+		validateOtp(otp, phone, request.code());
 		otp.setUsedAt(OffsetDateTime.now());
 
 		var user = userRepository.findByPhone(phone).orElseGet(() -> createIncompleteUser(phone, requestedRole));
-		if (user.getRole() != requestedRole && !user.isProfileComplete()) {
-			user.setRole(requestedRole);
-			user.setStatus(statusForRole(requestedRole));
-		}
 		if (user.getStatus() == UserStatus.BLOCKED || user.getStatus() == UserStatus.INACTIVE) {
 			throw new IllegalArgumentException("Usuario sem permissao para acessar o sistema.");
 		}
@@ -156,7 +156,7 @@ public class AuthService {
 		return toAuthResponse(user);
 	}
 
-	private void validateOtp(OtpCode otp, String code) {
+	private void validateOtp(OtpCode otp, String phone, String code) {
 		if (otp.getExpiresAt().isBefore(OffsetDateTime.now())) {
 			throw new IllegalArgumentException("OTP expirado.");
 		}
@@ -165,6 +165,14 @@ public class AuthService {
 		}
 
 		otp.setAttempts(otp.getAttempts() + 1);
+
+		if (otpSender.isExternalVerificationEnabled()) {
+			if (!otpSender.verify(phone, code)) {
+				throw new IllegalArgumentException("OTP inválido.");
+			}
+			return;
+		}
+
 		if (!otp.getCodeHash().equals(hash(code))) {
 			throw new IllegalArgumentException("OTP inválido.");
 		}
@@ -172,6 +180,20 @@ public class AuthService {
 
 	private void invalidateActiveOtps(String phone) {
 		otpCodeRepository.findByPhoneAndUsedAtIsNullAndInvalidatedFalse(phone).forEach(otp -> otp.setInvalidated(true));
+	}
+
+	private void ensurePhoneCanUseRole(String phone, UserRole requestedRole) {
+		userRepository.findByPhone(phone)
+			.filter(user -> user.getRole() != requestedRole)
+			.ifPresent(user -> {
+				if (user.getRole() == UserRole.COMMON_USER && requestedRole == UserRole.COLLECTOR) {
+					throw new IllegalArgumentException("Este número já pertence a um usuário comum. Entre pela tela de usuário comum ou use outro telefone para cadastro de coletor.");
+				}
+				if (user.getRole() == UserRole.COLLECTOR && requestedRole == UserRole.COMMON_USER) {
+					throw new IllegalArgumentException("Este número já pertence a um usuário coletor. Entre pela tela de coletor ou use outro telefone para cadastro de usuário comum.");
+				}
+				throw new IllegalArgumentException("Este número já pertence a outro tipo de conta.");
+			});
 	}
 
 	private User createIncompleteUser(String phone, UserRole role) {
@@ -251,5 +273,9 @@ public class AuthService {
 
 	private boolean isBlank(String value) {
 		return value == null || value.isBlank();
+	}
+
+	private String displayChannel() {
+		return "SMS".equalsIgnoreCase(channel) ? "SMS" : channel;
 	}
 }

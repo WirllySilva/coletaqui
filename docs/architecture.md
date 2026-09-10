@@ -143,7 +143,7 @@ Morador e coletor:
 1. Informa telefone.
 2. Backend normaliza o número.
 3. Backend gera OTP de 6 dígitos.
-4. OTP é enviado pelo canal WhatsApp.
+4. OTP é enviado pelo canal SMS.
 5. Usuário informa o código.
 6. Backend valida OTP e emite JWT.
 7. Se o perfil estiver incompleto, o usuário completa cadastro.

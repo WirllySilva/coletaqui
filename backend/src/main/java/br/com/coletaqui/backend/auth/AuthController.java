@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Autenticação", description = "Login e cadastro com OTP por WhatsApp")
+@Tag(name = "Autenticação", description = "Login e cadastro com OTP por SMS")
 public class AuthController {
 	private final AuthService authService;
 
@@ -30,13 +30,13 @@ public class AuthController {
 	}
 
 	@PostMapping("/request-otp")
-	@Operation(summary = "Solicita OTP por WhatsApp", description = "Envia um código OTP para iniciar login ou cadastro.")
+	@Operation(summary = "Solicita OTP por SMS", description = "Envia um código OTP para iniciar login ou cadastro.")
 	public ResponseEntity<OtpRequestResponse> requestOtp(@Valid @RequestBody OtpRequest request) {
 		return ResponseEntity.ok(authService.requestOtp(request));
 	}
 
 	@PostMapping("/verify-otp")
-	@Operation(summary = "Valida OTP", description = "Valida o código recebido por WhatsApp e retorna JWT.")
+	@Operation(summary = "Valida OTP", description = "Valida o código recebido por SMS e retorna JWT.")
 	public ResponseEntity<AuthResponse> verifyOtp(@Valid @RequestBody OtpVerifyRequest request) {
 		return ResponseEntity.ok(authService.verifyOtp(request));
 	}

@@ -15,7 +15,7 @@ public class OpenApiConfig {
 			.info(new Info()
 				.title("Coletaqui API")
 				.version("1.0")
-				.description("API do Coletaqui com autenticação OTP por WhatsApp."))
+				.description("API do Coletaqui com autenticação OTP por SMS."))
 			.components(new Components()
 				.addSecuritySchemes("bearerAuth", new SecurityScheme()
 					.type(SecurityScheme.Type.HTTP)

@@ -8,7 +8,7 @@ O Coletaqui Araçoiaba é uma plataforma comunitária voltada para facilitar a c
 
 ## 2. Cadastro e acesso
 
-O acesso ao sistema é feito por telefone e validação por código OTP enviado pelo WhatsApp. O usuário deve informar dados verdadeiros e manter suas informações atualizadas.
+O acesso ao sistema é feito por telefone e validação por código OTP enviado por SMS. O usuário deve informar dados verdadeiros e manter suas informações atualizadas.
 
 ## 3. Perfis do sistema
 

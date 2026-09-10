@@ -49,7 +49,7 @@ O sistema atende três perfis principais:
 
 ### RF-01 - Login e Cadastro por OTP
 
-O sistema deve permitir entrada de morador e coletor por telefone com OTP via WhatsApp.
+O sistema deve permitir entrada de morador e coletor por telefone com OTP via SMS.
 
 Critérios:
 
@@ -284,7 +284,7 @@ O sistema deve registrar eventos importantes em logs, sem expor OTP, senha, toke
 
 ## 6. Fora do Escopo Imediato
 
-- Integração definitiva com WhatsApp Business em produção.
+- Integração definitiva com envio real de SMS em produção.
 - Pagamentos ou remuneração de coletores.
 - PostGIS.
 - Notificações push completas.

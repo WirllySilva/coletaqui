@@ -88,7 +88,7 @@ O administrador pode:
 ```mermaid
 flowchart TD
     A["Morador acessa o Coletaqui Araçoiaba"] --> B["Entra ou cria conta com telefone"]
-    B --> C["Recebe código OTP via WhatsApp"]
+    B --> C["Recebe código OTP via SMS"]
     C --> D{"Código válido?"}
     D -- "Não" --> C
     D -- "Sim" --> E["Completa cadastro e aceita termos LGPD"]
@@ -127,7 +127,7 @@ flowchart TD
 2. Clica em "Entrar ou criar conta".
 3. Escolhe o acesso como usuário comum.
 4. Informa o telefone.
-5. O sistema valida o número e envia um código OTP pelo WhatsApp.
+5. O sistema valida o número e envia um código OTP por SMS.
 6. O morador digita o código recebido.
 7. Se for primeiro acesso, preenche seus dados.
 8. O sistema restringe o uso para Araçoiaba-PE.
@@ -407,9 +407,9 @@ O sistema usa esses registros para transformar ações individuais em indicadore
 - O projeto é focado em Araçoiaba-PE.
 - O cadastro deve manter cidade e UF padronizados para evitar uso fora da região planejada.
 - O usuário precisa aceitar termos de uso e política de privacidade.
-- O login de usuário comum e coletor usa telefone com OTP via WhatsApp.
+- O login de usuário comum e coletor usa telefone com OTP via SMS.
 - Em desenvolvimento, o OTP pode ser exibido em modo de teste.
-- Em produção, o envio real deve ser configurado com provedor de WhatsApp, como Twilio.
+- Em produção, o envio real deve ser configurado com provedor de SMS, como Twilio.
 - O admin usa login separado com e-mail e senha.
 - Coletores precisam de aprovação antes de operar.
 - Pontos cadastrados devem ter coordenadas para aparecer corretamente no mapa.
@@ -451,7 +451,7 @@ Verifique se o coletor foi aprovado pelo admin, se está ativo e se seus materia
 
 ### O usuário não consegue receber OTP
 
-Em desenvolvimento, confirme se a API está rodando. Em produção, confirme a configuração do provedor de WhatsApp.
+Em desenvolvimento, confirme se a API está rodando. Em produção, confirme a configuração do provedor de SMS.
 
 ### A árvore não aparece no mapa público
 
@@ -470,7 +470,7 @@ Verifique se foi enviada uma imagem local válida ou se a URL externa está aces
 - Documentação da API: Swagger/OpenAPI.
 - Containers: Docker Compose com frontend, backend e banco.
 - Mapa: Leaflet/OpenStreetMap.
-- Autenticação do morador/coletor: OTP via WhatsApp.
+- Autenticação do morador/coletor: OTP via SMS.
 - Autenticação do admin: e-mail e senha.
 
 ## 13. Resumo final

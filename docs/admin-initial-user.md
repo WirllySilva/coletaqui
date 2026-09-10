@@ -6,7 +6,7 @@ O painel administrativo do Coletaqui é acessado por e-mail e senha em:
 http://localhost:4200/admin/login
 ```
 
-Diferente de moradores e coletores, o administrador não usa OTP via WhatsApp. Por isso, o sistema precisa ter pelo menos um usuário com:
+Diferente de moradores e coletores, o administrador não usa OTP via SMS. Por isso, o sistema precisa ter pelo menos um usuário com:
 
 - `role = ADMIN`;
 - `status = ACTIVE`;

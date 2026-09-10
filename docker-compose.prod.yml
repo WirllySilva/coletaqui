@@ -5,9 +5,7 @@ services:
     environment:
       POSTGRES_DB: coletaqui
       POSTGRES_USER: coletaqui
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-coletaqui}
-    ports:
-      - "5432:5432"
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,24 +24,24 @@ services:
     environment:
       DATABASE_URL: jdbc:postgresql://db:5432/coletaqui
       DATABASE_USERNAME: coletaqui
-      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-coletaqui}
-      JWT_SECRET: ${JWT_SECRET:-alterar-em-producao-local}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-5256000}
       OTP_EXPIRATION_MINUTES: ${OTP_EXPIRATION_MINUTES:-5}
       OTP_MAX_ATTEMPTS: ${OTP_MAX_ATTEMPTS:-5}
       OTP_CHANNEL: ${OTP_CHANNEL:-SMS}
       OTP_EXPOSE_DEV_CODE: ${OTP_EXPOSE_DEV_CODE:-false}
       JPA_DDL_AUTO: ${JPA_DDL_AUTO:-update}
-      TWILIO_VERIFY_ENABLED: ${TWILIO_VERIFY_ENABLED:-false}
-      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID:-}
-      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN:-}
-      TWILIO_VERIFY_SERVICE_SID: ${TWILIO_VERIFY_SERVICE_SID:-}
+      TWILIO_VERIFY_ENABLED: ${TWILIO_VERIFY_ENABLED:-true}
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_VERIFY_SERVICE_SID: ${TWILIO_VERIFY_SERVICE_SID}
       TWILIO_VERIFY_CHANNEL: ${TWILIO_VERIFY_CHANNEL:-sms}
       TWILIO_VERIFY_LOCALE: ${TWILIO_VERIFY_LOCALE:-auto}
-      APP_ADMIN_EMAIL: ${APP_ADMIN_EMAIL:-}
-      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD:-}
+      APP_ADMIN_EMAIL: ${APP_ADMIN_EMAIL}
+      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD}
       APP_ADMIN_NAME: ${APP_ADMIN_NAME:-Administrador Coletaqui}
-      APP_ADMIN_PHONE: ${APP_ADMIN_PHONE:-00000000000}
+      APP_ADMIN_PHONE: ${APP_ADMIN_PHONE}
       SUPPORT_WHATSAPP_MESSAGE: ${SUPPORT_WHATSAPP_MESSAGE:-Ola! Preciso de ajuda com o Coletaqui Aracoiaba.}
       UPLOAD_LOCAL_DIR: /app/uploads/tree-plantings
       UPLOAD_PUBLIC_BASE_URL: /uploads/tree-plantings
@@ -55,8 +53,6 @@ services:
       SUPABASE_URL: ${SUPABASE_URL:-}
       SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-}
       SUPABASE_TREE_BUCKET: ${SUPABASE_TREE_BUCKET:-tree-plantings}
-    ports:
-      - "8080:8080"
     volumes:
       - backend_uploads:/app/uploads
 
@@ -66,9 +62,26 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - frontend
+      - backend
+    environment:
+      CADDY_SITE_ADDRESS: ${CADDY_SITE_ADDRESS:-:80}
     ports:
-      - "4200:80"
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
 
 volumes:
   postgres_data:
   backend_uploads:
+  caddy_data:
+  caddy_config:

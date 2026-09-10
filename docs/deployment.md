@@ -37,6 +37,47 @@ Remover banco local:
 docker compose down -v
 ```
 
+## Produção com VPS
+
+Em produção, use o arquivo `docker-compose.prod.yml`. Ele sobe:
+
+- `caddy`: entrada pública com HTTPS automático;
+- `frontend`: Angular servido internamente por Nginx;
+- `backend`: API Spring Boot interna;
+- `db`: PostgreSQL interno com volume persistente.
+
+No servidor, depois de clonar o repositório e criar o `.env`, rode:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Para atualizar depois de um novo `git pull`:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Para ver logs:
+
+```bash
+docker compose -f docker-compose.prod.yml logs -f
+```
+
+No `.env` de produção, configure o domínio:
+
+```text
+CADDY_SITE_ADDRESS=coletaquiaracoiaba.com.br
+```
+
+Se quiser responder também em `www`, use:
+
+```text
+CADDY_SITE_ADDRESS=coletaquiaracoiaba.com.br, www.coletaquiaracoiaba.com.br
+```
+
+Antes de subir, o DNS do domínio precisa apontar para o IP público da VPS. O Caddy só consegue emitir HTTPS quando as portas `80` e `443` estão liberadas e o domínio já resolve para o servidor.
+
 ## Serviços Docker
 
 ### db
@@ -117,11 +158,13 @@ JWT_SECRET
 JWT_EXPIRATION_MINUTES
 OTP_EXPIRATION_MINUTES
 OTP_MAX_ATTEMPTS
+OTP_CHANNEL
 OTP_EXPOSE_DEV_CODE
 TWILIO_VERIFY_ENABLED
 TWILIO_ACCOUNT_SID
 TWILIO_AUTH_TOKEN
 TWILIO_VERIFY_SERVICE_SID
+TWILIO_VERIFY_CHANNEL
 TWILIO_VERIFY_LOCALE
 JPA_DDL_AUTO
 APP_ADMIN_EMAIL
@@ -139,6 +182,14 @@ VAPID_SUBJECT
 ```
 
 Use `.env.example` como modelo para criar um `.env` local ou configurar variáveis no serviço de hospedagem. O `.env` real não deve ser enviado para o GitHub.
+
+Para reduzir custo com SMS, o padrão recomendado do Coletaqui é manter sessão longa:
+
+```text
+JWT_EXPIRATION_MINUTES=5256000
+```
+
+Com esse valor, o usuário continua logado ao fechar e reabrir o navegador. A sessão só é removida no aparelho quando ele clica em `Sair`.
 
 ## Admin Inicial
 
@@ -168,11 +219,11 @@ Pontos importantes:
 - proteger backups porque eles contêm dados pessoais;
 - configurar backup automático na hospedagem quando possível.
 
-## OTP via WhatsApp
+## OTP via SMS
 
-Em produção, o envio real de OTP por WhatsApp deve ser ativado com Twilio Verify.
+Em produção, o envio real de OTP por SMS deve ser ativado com Twilio Verify.
 
-Guia completo: [OTP via WhatsApp com Twilio Verify](whatsapp-otp.md).
+Guia completo: [OTP via SMS com Twilio Verify](sms-otp.md).
 
 Variáveis principais:
 
@@ -181,6 +232,8 @@ TWILIO_VERIFY_ENABLED=true
 TWILIO_ACCOUNT_SID
 TWILIO_AUTH_TOKEN
 TWILIO_VERIFY_SERVICE_SID
+TWILIO_VERIFY_CHANNEL=sms
+OTP_CHANNEL=SMS
 OTP_EXPOSE_DEV_CODE=false
 ```
 
@@ -216,7 +269,7 @@ Checklist mínimo:
 - criar o admin inicial com senha forte;
 - usar credenciais fortes no PostgreSQL;
 - definir `OTP_EXPOSE_DEV_CODE=false`;
-- configurar serviço real de envio WhatsApp;
+- configurar serviço real de envio SMS;
 - revisar Termos de Uso e Política de Privacidade;
 - configurar backups do PostgreSQL;
 - usar migrations com Flyway ou Liquibase;

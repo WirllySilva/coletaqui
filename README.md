@@ -93,6 +93,22 @@ Parar e remover dados locais do banco:
 docker compose down -v
 ```
 
+## Deploy em VPS
+
+Para produção, use o Compose com Caddy e HTTPS automático:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Configure o domínio no `.env`:
+
+```text
+CADDY_SITE_ADDRESS=coletaquiaracoiaba.com.br
+```
+
+Mais detalhes em [Deploy e Operação](docs/deployment.md).
+
 ## Como Rodar sem Docker
 
 Frontend:
@@ -121,15 +137,17 @@ DATABASE_URL=jdbc:postgresql://localhost:5432/coletaqui
 DATABASE_USERNAME=coletaqui
 DATABASE_PASSWORD=coletaqui
 JWT_SECRET=troque-por-uma-chave-grande-e-aleatoria
-JWT_EXPIRATION_MINUTES=1440
+JWT_EXPIRATION_MINUTES=5256000
 OTP_EXPIRATION_MINUTES=5
 OTP_MAX_ATTEMPTS=5
+OTP_CHANNEL=SMS
 OTP_EXPOSE_DEV_CODE=true
 TWILIO_VERIFY_ENABLED=false
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_VERIFY_SERVICE_SID=
-TWILIO_VERIFY_LOCALE=pt-BR
+TWILIO_VERIFY_CHANNEL=sms
+TWILIO_VERIFY_LOCALE=auto
 JPA_DDL_AUTO=update
 APP_ADMIN_EMAIL=admin@seudominio.com
 APP_ADMIN_PASSWORD=defina-uma-senha-forte
@@ -149,10 +167,11 @@ Em produção:
 
 - usar HTTPS;
 - trocar `JWT_SECRET`;
+- manter `JWT_EXPIRATION_MINUTES=5256000` para reduzir revalidações por SMS;
 - definir chaves VAPID próprias para notificações push;
 - configurar o admin inicial com senha forte;
 - desativar exposição de OTP de desenvolvimento;
-- configurar Twilio Verify para OTP via WhatsApp;
+- configurar Twilio Verify para OTP via SMS;
 - usar migrations em vez de depender de `ddl-auto=update`;
 - definir rotina de backup e restore do banco;
 - configurar armazenamento externo para fotos temporárias, se necessário.
@@ -161,8 +180,8 @@ Em produção:
 
 Autenticação:
 
-- Login/cadastro de usuário comum por telefone e OTP via WhatsApp.
-- Login/cadastro de coletor por telefone e OTP via WhatsApp.
+- Login/cadastro de usuário comum por telefone e OTP via SMS.
+- Login/cadastro de coletor por telefone e OTP via SMS.
 - Login administrativo por e-mail e senha.
 - JWT para rotas protegidas.
 - Aceite obrigatório de Termos de Uso e Política de Privacidade ao completar cadastro.
@@ -221,7 +240,7 @@ Arquivos principais:
 - [API e Rotas](docs/api-overview.md)
 - [Deploy e Operação](docs/deployment.md)
 - [Backup e Restore](docs/backup-restore.md)
-- [OTP via WhatsApp](docs/whatsapp-otp.md)
+- [OTP via SMS](docs/sms-otp.md)
 - [Termos de Uso](docs/terms-of-use.md)
 - [Política de Privacidade](docs/privacy-policy.md)
 

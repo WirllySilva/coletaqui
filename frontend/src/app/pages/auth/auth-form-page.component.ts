@@ -168,7 +168,7 @@ export class AuthFormPageComponent {
         this.changeDetector.detectChanges();
       },
       error: error => {
-        this.error = this.authErrorMessage(error, 'Não foi possível enviar o código pelo WhatsApp. Confira o telefone e tente novamente.');
+        this.error = this.authErrorMessage(error, 'Não foi possível enviar o código por SMS. Confira o telefone e tente novamente.');
         this.changeDetector.detectChanges();
       },
     });
@@ -298,7 +298,7 @@ export class AuthFormPageComponent {
     }
 
     if (this.step === 'otp') {
-      return 'Digite o código de 6 números recebido pelo WhatsApp.';
+      return 'Digite o código de 6 números recebido por SMS.';
     }
 
     if (!this.termsAccepted || !this.privacyAccepted) {

@@ -7,9 +7,9 @@ interface StoredUser {
 }
 
 export const commonHomeGuard: CanActivateFn = () => {
-  const router = inject(Router);
-  const user = currentUser();
-  const role = user?.role ?? null;
+	const router = inject(Router);
+	const user = currentUser();
+	const role = user?.role ?? null;
 
   if (!role) {
     return router.parseUrl('/loginselectionpage');
@@ -23,13 +23,25 @@ export const commonHomeGuard: CanActivateFn = () => {
     return router.parseUrl('/admin/dashboard');
   }
 
-  return true;
+	return true;
+};
+
+export const landingGuard: CanActivateFn = () => {
+	const router = inject(Router);
+	const user = currentUser();
+	const role = user?.role ?? null;
+
+	if (!user || !role) {
+		return true;
+	}
+
+	return homeRouteFor(user, role, router);
 };
 
 export const commonUserGuard: CanActivateFn = () => {
-  const router = inject(Router);
-  const user = currentUser();
-  const role = user?.role ?? null;
+	const router = inject(Router);
+	const user = currentUser();
+	const role = user?.role ?? null;
 
   if (!role) {
     return router.parseUrl('/loginselectionpage');
@@ -107,7 +119,7 @@ export const authenticatedAppGuard: CanActivateFn = () => {
 };
 
 function currentUser(): StoredUser | null {
-  const storedUser = localStorage.getItem('coletaqui_user');
+	const storedUser = localStorage.getItem('coletaqui_user');
 
   if (!storedUser) {
     return null;
@@ -116,6 +128,18 @@ function currentUser(): StoredUser | null {
   try {
     return JSON.parse(storedUser) as StoredUser;
   } catch {
-    return null;
-  }
+		return null;
+	}
+}
+
+function homeRouteFor(user: StoredUser, role: StoredUser['role'], router: Router) {
+	if (role === 'ADMIN') {
+		return router.parseUrl('/admin/dashboard');
+	}
+
+	if (role === 'COLLECTOR') {
+		return user.status === 'ACTIVE' ? router.parseUrl('/collector-home') : router.parseUrl('/collector-pending');
+	}
+
+	return router.parseUrl('/home');
 }
