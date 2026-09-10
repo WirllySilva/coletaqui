@@ -108,6 +108,7 @@ CADDY_SITE_ADDRESS=coletaquiaracoiaba.com.br
 ```
 
 Mais detalhes em [Deploy e Operação](docs/deployment.md).
+Checklist completo em [Checklist de Deploy em VPS](docs/vps-deploy-checklist.md).
 
 ## Como Rodar sem Docker
 

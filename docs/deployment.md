@@ -78,6 +78,8 @@ CADDY_SITE_ADDRESS=coletaquiaracoiaba.com.br, www.coletaquiaracoiaba.com.br
 
 Antes de subir, o DNS do domínio precisa apontar para o IP público da VPS. O Caddy só consegue emitir HTTPS quando as portas `80` e `443` estão liberadas e o domínio já resolve para o servidor.
 
+Passo a passo completo: [Checklist de Deploy em VPS](vps-deploy-checklist.md).
+
 ## Serviços Docker
 
 ### db

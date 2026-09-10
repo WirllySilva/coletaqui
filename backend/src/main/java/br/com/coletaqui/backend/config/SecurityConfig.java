@@ -42,6 +42,7 @@ public class SecurityConfig {
 					"/contents",
 					"/contents/**",
 					"/support/contact",
+					"/push/public-key",
 					"/uploads/**",
 					"/swagger-ui/**",
 					"/swagger-ui.html",
