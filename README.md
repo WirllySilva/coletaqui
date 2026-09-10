@@ -242,6 +242,10 @@ Arquivos principais:
 - [Deploy e Operação](docs/deployment.md)
 - [Backup e Restore](docs/backup-restore.md)
 - [OTP via SMS](docs/sms-otp.md)
+- [Guia de Instalação do PWA](docs/pwa-install-guide.md)
+- [Guia do Usuário Comum](docs/common-user-guide.md)
+- [Guia do Coletor e Ponto de Coleta](docs/collector-user-guide.md)
+- [Guia do Administrador](docs/admin-user-guide.md)
 - [Termos de Uso](docs/terms-of-use.md)
 - [Política de Privacidade](docs/privacy-policy.md)
 
