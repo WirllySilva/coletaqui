@@ -25,6 +25,7 @@ services:
       DATABASE_URL: jdbc:postgresql://db:5432/coletaqui
       DATABASE_USERNAME: coletaqui
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-https://coletaquiaracoiaba.com.br,https://www.coletaquiaracoiaba.com.br}
       JWT_SECRET: ${JWT_SECRET}
       JWT_EXPIRATION_MINUTES: ${JWT_EXPIRATION_MINUTES:-5256000}
       OTP_EXPIRATION_MINUTES: ${OTP_EXPIRATION_MINUTES:-5}
