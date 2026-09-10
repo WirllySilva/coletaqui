@@ -6,7 +6,14 @@
   </div>
 
   <p class="error-message" *ngIf="error">{{ error }}</p>
-  <p class="empty" *ngIf="isLoading">Carregando ranking...</p>
+  <section class="table-panel" *ngIf="isLoading" aria-label="Carregando ranking">
+    <div class="skeleton-stack">
+      <div class="skeleton-card compact" *ngFor="let item of [1, 2, 3, 4]">
+        <span class="skeleton-line long"></span>
+        <span class="skeleton-line medium"></span>
+      </div>
+    </div>
+  </section>
 
   <section class="table-panel" *ngIf="!isLoading && entries.length">
     <table>

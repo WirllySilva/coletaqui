@@ -7,7 +7,19 @@
 
   <p class="success-message" *ngIf="message">{{ message }}</p>
   <p class="error-message" *ngIf="error">{{ error }}</p>
-  <p class="empty" *ngIf="isLoading">Carregando árvores...</p>
+  <section class="table-panel" *ngIf="isLoading" aria-label="Carregando árvores">
+    <div class="skeleton-stack">
+      <div class="skeleton-card compact" *ngFor="let item of [1, 2, 3]">
+        <div class="skeleton-row">
+          <span class="skeleton-thumb"></span>
+          <div>
+            <span class="skeleton-line medium"></span>
+            <span class="skeleton-line long"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="table-panel" *ngIf="!isLoading && trees.length">
     <table class="tree-admin-table">

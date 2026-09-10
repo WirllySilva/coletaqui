@@ -41,6 +41,100 @@ a {
   text-decoration: none;
 }
 
+.skeleton-stack,
+.skeleton-list {
+  display: grid;
+  gap: 12px;
+}
+
+.skeleton-card,
+.skeleton-line,
+.skeleton-chip,
+.skeleton-avatar,
+.skeleton-thumb {
+  background: linear-gradient(90deg, #edf4ef 0%, #f8fbf9 46%, #edf4ef 100%);
+  background-size: 220% 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.skeleton-card,
+.skeleton-line,
+.skeleton-chip,
+.skeleton-avatar,
+.skeleton-thumb {
+  animation: skeleton-shimmer 1.25s ease-in-out infinite;
+}
+
+.skeleton-card {
+  border: 1px solid #dce7df;
+  min-height: 112px;
+  padding: 16px;
+}
+
+.skeleton-card.compact {
+  min-height: 78px;
+}
+
+.skeleton-line {
+  height: 12px;
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+
+.skeleton-line.short {
+  width: 34%;
+}
+
+.skeleton-line.medium {
+  width: 62%;
+}
+
+.skeleton-line.long {
+  width: 86%;
+}
+
+.skeleton-chip {
+  display: inline-block;
+  height: 24px;
+  margin-right: 8px;
+  width: 74px;
+}
+
+.skeleton-row {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 48px 1fr;
+}
+
+.skeleton-avatar,
+.skeleton-thumb {
+  aspect-ratio: 1;
+  width: 48px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 120% 0;
+  }
+
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-card,
+  .skeleton-line,
+  .skeleton-chip,
+  .skeleton-avatar,
+  .skeleton-thumb {
+    animation: none;
+  }
+}
+
 .auth-page {
   align-items: center;
   background: #eef8f0;

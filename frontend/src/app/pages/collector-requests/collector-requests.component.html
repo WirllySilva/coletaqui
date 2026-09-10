@@ -9,7 +9,13 @@
       <p>Veja pedidos disponíveis e aceite as coletas que fazem sentido para sua rota.</p>
     </section>
 
-    <p class="state-card" *ngIf="isLoading">Carregando solicitações...</p>
+    <section class="skeleton-list" *ngIf="isLoading" aria-label="Carregando solicitações">
+      <article class="skeleton-card compact" *ngFor="let item of [1, 2, 3]">
+        <span class="skeleton-line medium"></span>
+        <span class="skeleton-line long"></span>
+        <span class="skeleton-line short"></span>
+      </article>
+    </section>
     <p class="success-message" *ngIf="message">{{ message }}</p>
     <p class="error-message" *ngIf="error">{{ error }}</p>
 

@@ -35,8 +35,13 @@
       </a>
     </section>
 
-    <section class="state-card" *ngIf="isLoading">
-      <p>Carregando pontos...</p>
+    <section class="skeleton-list" *ngIf="isLoading" aria-label="Carregando pontos de coleta">
+      <article class="skeleton-card compact" *ngFor="let item of [1, 2, 3]">
+        <span class="skeleton-line medium"></span>
+        <span class="skeleton-line long"></span>
+        <span class="skeleton-chip"></span>
+        <span class="skeleton-chip"></span>
+      </article>
     </section>
 
     <section class="state-card error" *ngIf="!isLoading && error">

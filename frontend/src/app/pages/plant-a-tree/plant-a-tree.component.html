@@ -58,7 +58,13 @@
         <h2>Minhas árvores</h2>
         <a routerLink="/plantatree/register"><i class="bi bi-plus-circle-fill"></i> Novo registro</a>
       </div>
-      <p class="empty" *ngIf="isLoading">Carregando árvores...</p>
+      <div class="skeleton-list" *ngIf="isLoading" aria-label="Carregando árvores">
+        <article class="skeleton-card compact" *ngFor="let item of [1, 2]">
+          <span class="skeleton-line medium"></span>
+          <span class="skeleton-line long"></span>
+          <span class="skeleton-line short"></span>
+        </article>
+      </div>
       <p class="empty" *ngIf="!isLoading && !myTrees.length">Você ainda não registrou árvores.</p>
 
       <article class="tree-card" *ngFor="let tree of myTrees.slice(0, 4)">

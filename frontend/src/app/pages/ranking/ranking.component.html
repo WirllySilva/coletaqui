@@ -17,8 +17,16 @@
       </ul>
     </section>
 
-    <section class="state-card" *ngIf="isLoading">
-      <p>Carregando ranking...</p>
+    <section class="skeleton-list" *ngIf="isLoading" aria-label="Carregando ranking">
+      <article class="skeleton-card compact" *ngFor="let item of [1, 2, 3, 4]">
+        <div class="skeleton-row">
+          <span class="skeleton-avatar"></span>
+          <div>
+            <span class="skeleton-line medium"></span>
+            <span class="skeleton-line short"></span>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section class="state-card error" *ngIf="!isLoading && error">

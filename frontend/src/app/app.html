@@ -1,1 +1,7 @@
-<router-outlet />
+<div class="top-loading-bar" [class.active]="isNavigating()" aria-hidden="true">
+  <span></span>
+</div>
+
+<main class="route-shell" [style.--route-key]="transitionKey()">
+  <router-outlet (activate)="onRouteActivate()" />
+</main>

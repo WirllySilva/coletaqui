@@ -10,8 +10,16 @@
       <p>Acompanhe tudo que você já movimentou pelo Coletaqui Araçoiaba.</p>
     </section>
 
-    <section class="state-card" *ngIf="isLoading">
-      <p>Carregando seu histórico...</p>
+    <section class="skeleton-list" *ngIf="isLoading" aria-label="Carregando histórico">
+      <article class="skeleton-card compact" *ngFor="let item of [1, 2, 3]">
+        <div class="skeleton-row">
+          <span class="skeleton-avatar"></span>
+          <div>
+            <span class="skeleton-line medium"></span>
+            <span class="skeleton-line long"></span>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section class="state-card error" *ngIf="!isLoading && error">

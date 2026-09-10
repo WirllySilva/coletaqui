@@ -180,6 +180,14 @@
   text-decoration: underline;
 }
 
+.app-version {
+  color: #5e7568;
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
 .feature-strip {
   align-items: center;
   border-top: 1px solid rgba(18, 111, 69, 0.12);

@@ -1,0 +1,68 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.top-loading-bar {
+  height: 3px;
+  left: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: opacity 120ms ease;
+  z-index: 3000;
+}
+
+.top-loading-bar.active {
+  opacity: 1;
+}
+
+.top-loading-bar span {
+  animation: app-loading-bar 1.05s ease-in-out infinite;
+  background: linear-gradient(90deg, #168a55, #f4c430, #1eaaf5);
+  border-radius: 999px;
+  display: block;
+  height: 100%;
+  width: 42%;
+}
+
+.route-shell {
+  animation: route-enter 180ms ease-out;
+  min-height: 100vh;
+}
+
+@keyframes route-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes app-loading-bar {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  55% {
+    transform: translateX(90%);
+  }
+
+  100% {
+    transform: translateX(240%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-shell,
+  .top-loading-bar span {
+    animation: none;
+  }
+}

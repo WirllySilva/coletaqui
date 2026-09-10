@@ -10,8 +10,16 @@
       <p>Acompanhe as coletas aceitas e concluídas por você em Araçoiaba/PE.</p>
     </section>
 
-    <section class="state-card" *ngIf="isLoading">
-      <p>Carregando indicadores...</p>
+    <section class="skeleton-list" *ngIf="isLoading" aria-label="Carregando indicadores">
+      <article class="skeleton-card compact" *ngFor="let item of [1, 2, 3]">
+        <span class="skeleton-line short"></span>
+        <span class="skeleton-line long"></span>
+      </article>
+      <article class="skeleton-card">
+        <span class="skeleton-line medium"></span>
+        <span class="skeleton-line long"></span>
+        <span class="skeleton-line long"></span>
+      </article>
     </section>
 
     <section class="state-card error" *ngIf="!isLoading && error">
